@@ -4,18 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/styles.css" />
-    <title>Admin | Change Password</title>
+    <title>Admin | Dashboard</title>
   </head>
-  <body class="font-opensans bg-red-700">
+  <body class="font-opensans bg-white">
     <div class="min-h-screen flex">
       <!-- Sidebar -->
       <nav class="w-56 bg-[#6366f1] text-white flex flex-col">
         <header class="font-poppins text-xl font-bold px-5 py-7 flex items-center gap-2"><img class="w-8" src="/img/icon.png" alt="inventa logo" />Inventa</header>
         <ul class="flex flex-col">
-          <li class="group hover:bg-white">
-            <a href="/admin/dashboard" class="font-semibold p-4 flex items-center gap-2 hover:text-[#6366f1]">
+          <li>
+            <a href="/admin/dashboard" class="font-semibold p-4 flex items-center gap-2 bg-white text-[#6366f1]">
               <svg class="w-6" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
-                <g class="group-hover:fill-[#6366f1]" transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#ffffff" stroke="none">
+                <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#6366F1" stroke="none">
                   <path
                     d="M2443 5105 c-129 -35 -92 0 -1260 -1168 -1045 -1045 -1104 -1106
                     -1134 -1169 -86 -187 -51 -397 89 -537 94 -95 205 -141 340 -141 l72 0 0 -792
@@ -230,10 +230,10 @@
               Reports
             </a>
           </li>
-          <li>
-            <a href="/change-password" class="font-semibold p-4 flex items-center gap-2 bg-white text-[#6366f1]">
+          <li class="group hover:bg-white">
+            <a href="/change-password" class="font-semibold p-4 flex items-center gap-2 hover:text-[#6366f1]">
               <svg class="w-6" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.000000 256.000000" preserveAspectRatio="xMidYMid meet">
-                <g transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)" fill="#6366F1" stroke="#6366f1" stroke-width="30">
+                <g class="group-hover:fill-[#6366f1] group-hover:stroke-[#6366f1]" transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)" fill="#ffffff" stroke="white" stroke-width="30">
                   <path
                     d="M1845 2426 c-155 -38 -306 -153 -386 -293 l-30 -53 -582 0 -582 0
                     -130 -110 c-72 -60 -131 -118 -133 -128 -2 -14 35 -54 130 -141 73 -66 139
@@ -302,35 +302,111 @@
       <!-- Main Content -->
       <main class="flex-1 p-7 bg-white">
         <header>
-          <h1 class="font-poppins text-3xl text-[#6366f1] font-bold mb-8">Change Password</h1>
+          <h1 class="font-poppins text-3xl text-[#6366f1] font-bold mb-8">Dashboard</h1>
         </header>
 
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <!-- Form -->
-          <form action="/change-password" method="POST" class="space-y-6">
-            <div class="flex flex-col gap-1">
-              <label for="old-password" class="block font-semibold">Old Password</label>
-              <input type="password" id="old-password" name="old-password" required class="w-full border-2 border-black/10 p-2 rounded outline-none focus:border-[#6366f1]" />
+        <section class="flex flex-wrap gap-8 font-poppins">
+          <!-- Total Items -->
+          <div class="w-3/10 h-45 bg-[#2196F3] rounded-none shadow-[0_3px_3px_0_rgba(0,0,0,0.15)] flex flex-col">
+            <div class="h-8/10 px-3 py-1 flex justify-between items-center">
+              <div class="items-start">
+                <h2 class="font-bold text-2xl text-white">25</h2>
+                <p class="mt-1 font-bold text-white text-lg">Total Items</p>
+              </div>
+              <img class="h-full opacity-45" src="/img/item.svg" alt="" />
             </div>
-            <div class="flex flex-col gap-1">
-              <label for="new-password" class="block font-semibold">New Password</label>
-              <input type="password" id="new-password" name="new-password" required class="w-full border-2 border-black/10 p-2 rounded outline-none focus:border-[#6366f1]" />
+            <div class="h-2/10 bg-[#0287F0] flex items-center justify-center font-opensans">
+              <a href="/admin/items" class="flex items-center gap-2 text-white text-sm">
+                More Info
+                <img class="w-5" src="/img/right_icon.svg" alt="" />
+              </a>
             </div>
-            <div class="flex flex-col gap-1">
-              <label for="confirm-password" class="block font-semibold">Confirm New Password</label>
-              <input type="password" id="confirm-password" name="confirm-password" required class="w-full border-2 border-black/10 p-2 rounded outline-none focus:border-[#6366f1]" />
+          </div>
+
+          <!-- Items In -->
+          <div class="w-3/10 h-45 bg-[#4CAF50] rounded-none shadow-[0_3px_3px_0_rgba(0,0,0,0.15)] flex flex-col">
+            <div class="h-8/10 p-3 flex justify-between items-center">
+              <div class="items-start">
+                <h2 class="font-bold text-2xl text-white">37</h2>
+                <p class="mt-1 font-bold text-white text-lg">Items In</p>
+              </div>
+              <img class="h-full opacity-45" src="/img/items_in_icon.svg" alt="" />
             </div>
-            <button type="submit" class="w-full bg-[#4f46e5] outline-2 outline-[#4F46E5] font-poppins text-white text-lg px-6 py-2 rounded cursor-pointer hover:bg-white hover:text-[#4f46e5] font-semibold">Change Password</button>
-          </form>
-          <!-- Password Tips -->
-          <aside>
-            <h2 class="text-xl font-bold mb-2">Password must contain:</h2>
-            <ul class="list-disc list-inside flex flex-col gap-1">
-              <li>At least 1 uppercase letter (A-Z)</li>
-              <li>At least 1 number (0-9)</li>
-              <li>At least 10 characters</li>
-            </ul>
-          </aside>
+            <div class="h-2/10 bg-[#31AB36] flex items-center justify-center font-opensans">
+              <a href="/admin/reports" class="flex items-center gap-2 text-white text-sm">
+                More Info
+                <img class="w-5" src="/img/right_icon.svg" alt="" />
+              </a>
+            </div>
+          </div>
+
+          <!-- Items Out -->
+          <div class="w-3/10 h-45 bg-[#FF9800] rounded-none shadow-[0_3px_3px_0_rgba(0,0,0,0.15)] flex flex-col">
+            <div class="h-8/10 p-3 flex justify-between items-center">
+              <div class="items-start">
+                <h2 class="font-bold text-2xl text-white">12</h2>
+                <p class="mt-1 font-bold text-white text-lg">Items Out</p>
+              </div>
+              <img class="h-full opacity-45" src="/img/items_out_icon.svg" alt="" />
+            </div>
+            <div class="h-2/10 bg-[#E68900] flex items-center justify-center font-opensans">
+              <a href="/admin/reports" class="flex items-center gap-2 text-white text-sm">
+                More Info
+                <img class="w-5" src="/img/right_icon.svg" alt="" />
+              </a>
+            </div>
+          </div>
+
+          <!-- Items Lent -->
+          <div class="w-3/10 h-45 bg-[#9C27B0] rounded-none shadow-[0_3px_3px_0_rgba(0,0,0,0.15)] flex flex-col">
+            <div class="h-8/10 p-3 flex justify-between items-center">
+              <div class="items-start">
+                <h2 class="font-bold text-2xl text-white">7</h2>
+                <p class="mt-1 font-bold text-white text-lg">Items Lent</p>
+              </div>
+              <img class="h-full opacity-45" src="/img/items_lent_icon.svg" alt="" />
+            </div>
+            <div class="h-2/10 bg-[#8C00A4] flex items-center justify-center font-opensans">
+              <a href="/admin/reports" class="flex items-center gap-2 text-white text-sm">
+                More Info
+                <img class="w-5" src="/img/right_icon.svg" alt="" />
+              </a>
+            </div>
+          </div>
+
+          <!-- Suppliers -->
+          <div class="w-3/10 h-45 bg-[#00BCD4] rounded-none shadow-[0_3px_3px_0_rgba(0,0,0,0.15)] flex flex-col">
+            <div class="h-8/10 p-3 flex justify-between items-center">
+              <div class="items-start">
+                <h2 class="font-bold text-2xl text-white">6</h2>
+                <p class="mt-1 font-bold text-white text-lg">Suppliers</p>
+              </div>
+              <img class="h-full opacity-45" src="/img/supplier.svg" alt="" />
+            </div>
+            <div class="h-2/10 bg-[#00ADC3] flex items-center justify-center font-opensans">
+              <a href="/admin/suppliers" class="flex items-center gap-2 text-white text-sm">
+                More Info
+                <img class="w-5" src="/img/right_icon.svg" alt="" />
+              </a>
+            </div>
+          </div>
+
+          <!-- Transactions -->
+          <div class="w-3/10 h-45 bg-[#009688] rounded-none shadow-[0_3px_3px_0_rgba(0,0,0,0.15)] flex flex-col">
+            <div class="h-8/10 px-3 py-1 flex justify-between items-center">
+              <div class="items-start">
+                <h2 class="font-bold text-2xl text-white">10</h2>
+                <p class="mt-1 font-bold text-white text-lg">Transactions</p>
+              </div>
+              <img class="h-full opacity-45" src="/img/transaction.svg" alt="" />
+            </div>
+            <div class="h-2/10 bg-[#00877B] flex items-center justify-center font-opensans">
+              <a href="/admin/transactions" class="flex items-center gap-2 text-white text-sm">
+                More Info
+                <img class="w-5" src="/img/right_icon.svg" alt="" />
+              </a>
+            </div>
+          </div>
         </section>
       </main>
     </div>

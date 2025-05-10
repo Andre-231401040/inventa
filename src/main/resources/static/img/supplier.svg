@@ -1,12 +1,10 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
  "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
- width="256.000000pt" height="256.000000pt" viewBox="0 0 256.000000 256.000000"
- preserveAspectRatio="xMidYMid meet">
+<svg class="w-6" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.000000 256.000000" preserveAspectRatio="xMidYMid meet">
 
-<g transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)"
-fill="#ffffff" stroke="white" stroke-width="50">
+<g class="group-hover:fill-[#6366f1] group-hover:stroke-[#6366f1]" transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)"
+fill="#ffffff" stroke="white" stroke-width="10">
 <path d="M537 2409 c-116 -40 -205 -117 -257 -223 -34 -68 -32 -96 6 -96 18 0
 29 11 50 52 39 76 114 151 187 184 54 25 74 29 152 29 80 0 97 -3 155 -31 103
 -49 179 -140 207 -247 l13 -51 -65 -67 c-73 -75 -110 -145 -126 -238 -15 -84
