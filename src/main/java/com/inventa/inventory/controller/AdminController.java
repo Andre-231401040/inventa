@@ -22,6 +22,11 @@ public class AdminController {
         return "admin/dashboard.html";
     }
 
+    @GetMapping("/admin/item-management")
+    public String redirectToItemManagement() {
+        return "admin/item-management.html";
+    }
+
     @GetMapping("/admin/change-password")
     public String redirectToChangePassword() {
         return "admin/change-password.html";

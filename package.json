@@ -1,9 +1,12 @@
 {
   "scripts": {
-    "tailwind": "tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/styles.css --watch"
+    "tailwind": "npx @tailwindcss/cli -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/styles.css --watch"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.0.15",
     "tailwindcss": "^4.0.15"
+  },
+  "devDependencies": {
+    "tailwind-scrollbar": "^4.0.2"
   }
 }
