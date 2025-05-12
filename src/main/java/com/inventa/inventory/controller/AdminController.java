@@ -27,6 +27,21 @@ public class AdminController {
         return "admin/item-management.html";
     }
 
+    @GetMapping("/admin/supplier-management")
+    public String redirectToSupplierManagement() {
+        return "admin/supplier-management.html";
+    }
+
+    @GetMapping("/admin/transaction-management")
+    public String redirectToTransactionManagement() {
+        return "admin/transaction-management.html";
+    }
+
+    @GetMapping("/admin/report-management")
+    public String redirectToReportManagement() {
+        return "admin/report-management.html";
+    }
+
     @GetMapping("/admin/change-password")
     public String redirectToChangePassword() {
         return "admin/change-password.html";
