@@ -32,6 +32,11 @@ public class AdminController {
         return "admin/supplier-management.html";
     }
 
+    @GetMapping("/admin/add-supplier")
+    public String redirectToAddSupplier() {
+        return "admin/add-supplier.html";
+    }
+
     @GetMapping("/admin/transaction-management")
     public String redirectToTransactionManagement() {
         return "admin/transaction-management.html";
