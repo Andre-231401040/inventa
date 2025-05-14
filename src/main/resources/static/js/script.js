@@ -6,7 +6,7 @@ function downArrowIconHandler(downArrowIcon) {
 
 const dropdownBtn = document.getElementById("dropdownButton");
 const dropdownList = document.getElementById("dropdownList");
-const dropdownItems = document.querySelectorAll("li");
+const dropdownItems = document.querySelectorAll(".option");
 const downArrowIcon = document.getElementById("downArrowIcon");
 
 dropdownBtn.addEventListener("click", () => {
@@ -31,7 +31,7 @@ dropdownItems.forEach((item) => {
 });
 
 document.addEventListener("click", (e) => {
-  if (!dropdownBtn.parentElement.contains(e.target)) {
+  if (!dropdownBtn.parentElement.contains(e.target) && !dropdownList.classList.contains("hidden")) {
     dropdownList.classList.toggle("hidden");
     dropdownBtn.classList.toggle("border-[rgba(0,0,0,0.1)]");
     dropdownBtn.classList.toggle("border-[#4f46e5]");
