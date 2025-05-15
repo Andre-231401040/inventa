@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Admin | Input Transaction</title>
+  </head>
+  <body class="font-opensans bg-red-700">
+    <div class="flex">
+      <!-- Sidebar -->
+      <nav class="w-18/100 bg-[#6366f1] text-white flex flex-col">
+        <header class="font-poppins text-xl font-bold px-5 py-7 flex items-center gap-2"><img class="w-8" src="/img/icon.png" alt="inventa logo" />Inventa</header>
+        <ul class="flex flex-col">
+          <li class="group hover:bg-white">
+            <a href="/admin/dashboard" class="font-semibold p-4 flex items-center gap-2 group-hover:text-[#6366f1]">
+              <svg class="w-6" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                <g class="group-hover:fill-[#6366f1]" transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#ffffff" stroke="none">
+                  <path
+                    d="M2443 5105 c-129 -35 -92 0 -1260 -1168 -1045 -1045 -1104 -1106
+                    -1134 -1169 -86 -187 -51 -397 89 -537 94 -95 205 -141 340 -141 l72 0 0 -792
+                    c0 -874 0 -870 62 -996 40 -81 139 -185 220 -230 31 -18 92 -42 135 -53 75
+                    -18 108 -19 620 -17 529 3 542 3 569 24 15 11 37 33 48 48 21 27 21 39 24 622
+                    l2 594 330 0 330 0 2 -594 c3 -583 3 -595 24 -622 11 -15 33 -37 48 -48 27
+                    -21 40 -21 569 -24 512 -2 545 -1 620 17 43 11 104 35 135 53 81 45 180 149
+                    220 230 62 126 62 122 62 996 l0 792 73 0 c293 1 514 255 470 541 -23 145 -42
+                    170 -389 519 l-314 316 0 764 c0 743 -1 765 -20 805 -13 26 -34 49 -59 63 -38
+                    21 -47 22 -392 22 -395 0 -401 -1 -446 -69 -23 -33 -23 -39 -23 -332 0 -165
+                    -3 -299 -7 -299 -4 0 -147 139 -318 309 -327 326 -351 344 -472 376 -70 18
+                    -161 18 -230 0z m191 -305 c59 -28 2149 -2121 2171 -2172 58 -140 -79 -281
+                    -222 -228 -16 6 -448 431 -988 970 -853 852 -964 959 -997 965 -95 18 -29 77
+                    -1073 -965 -540 -539 -972 -964 -988 -970 -82 -30 -179 7 -216 83 -25 51 -27
+                    94 -6 145 21 50 2112 2143 2170 2172 51 25 98 25 149 0z m1476 -507 l0 -528
+                    -170 170 -170 170 0 357 0 358 170 0 170 0 0 -527z m-692 -1176 l852 -852 -2
+                    -890 c-3 -857 -4 -891 -22 -929 -25 -50 -72 -97 -122 -122 -37 -18 -67 -19
+                    -486 -22 l-448 -3 0 589 0 589 -22 33 c-13 18 -36 43 -51 54 -28 21 -36 21
+                    -557 21 -521 0 -529 0 -557 -21 -15 -11 -38 -36 -50 -54 l-23 -33 0 -588 0
+                    -589 -433 0 c-486 0 -495 1 -565 69 -21 20 -47 55 -57 76 -19 39 -20 69 -23
+                    930 l-2 890 852 852 c469 469 855 853 858 853 3 0 389 -384 858 -853z"
+                  />
+                </g>
+              </svg>
+              Dashboard
+            </a>
+          </li>
+          <li class="group hover:bg-white">
+            <a href="/admin/item-management" class="font-semibold p-4 flex items-center gap-2 group-hover:text-[#6366f1]">
+              <svg class="w-6" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.000000 256.000000" preserveAspectRatio="xMidYMid meet">
+                <g class="group-hover:fill-[#6366f1] group-hover:stroke-[#6366f1]" transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)" fill="#ffffff" stroke="white" stroke-width="30">
+                  <path
+                    d="M855 2280 c-187 -77 -347 -144 -355 -148 -12 -7 -16 -40 -20 -157
+                    l-5 -148 -109 -47 -108 -48 -115 -133 c-135 -156 -145 -171 -138 -192 4 -8 58
+                    -39 121 -68 l114 -53 0 -315 c0 -174 4 -321 8 -328 7 -11 170 -92 537 -267 72
+                    -35 212 -102 312 -151 l183 -88 507 243 c280 134 514 250 521 259 9 11 12 93
+                    12 331 l0 316 114 53 c63 29 117 60 121 68 7 21 -3 35 -136 191 l-115 133
+                    -129 58 -130 57 -5 138 c-4 109 -8 141 -20 147 -15 9 -814 289 -821 289 -2 0
+                    -157 -63 -344 -140z m687 -60 c180 -63 324 -118 320 -122 -4 -4 -82 -32 -173
+                    -62 l-167 -55 -281 123 c-155 68 -284 125 -286 128 -6 6 237 107 250 104 6 -1
+                    157 -54 337 -116z m-412 -151 c151 -66 276 -122 278 -123 1 -2 -53 -22 -120
+                    -45 l-123 -41 -267 117 c-148 64 -268 119 -268 122 0 7 199 90 215 91 6 0 134
+                    -54 285 -121z m-282 -154 l272 -119 0 -194 c0 -180 -1 -193 -17 -188 -10 3
+                    -135 53 -278 110 l-260 104 -3 207 c-1 113 1 205 5 202 5 -2 131 -57 281 -122z
+                    m1112 -89 l0 -214 -200 -80 -200 -80 2 230 3 231 185 63 c102 34 191 63 198
+                    63 9 1 12 -48 12 -213z m-480 -175 l0 -229 -99 -40 -98 -41 -42 16 -41 16 2
+                    210 3 210 125 43 c69 23 131 43 138 43 9 1 12 -51 12 -228z m629 83 c34 -15
+                    61 -30 61 -33 0 -4 -24 -15 -52 -26 -29 -10 -59 -20 -65 -23 -10 -3 -13 11
+                    -13 52 0 31 2 56 4 56 3 0 32 -12 65 -26z m-1629 -35 c0 -22 -3 -38 -7 -36 -5
+                    3 -26 12 -48 22 l-40 16 35 19 c52 28 60 26 60 -21z m274 -229 c247 -99 452
+                    -182 454 -185 4 -4 -205 -248 -218 -253 -4 -1 -70 26 -146 62 -76 35 -269 123
+                    -429 196 -160 73 -294 136 -299 140 -9 9 162 218 179 219 6 1 212 -80 459
+                    -179z m1606 79 c47 -56 85 -106 85 -111 0 -6 -56 -37 -125 -68 -69 -31 -264
+                    -121 -434 -199 -170 -78 -312 -140 -316 -139 -14 6 -222 249 -217 254 3 3 45
+                    21 94 39 48 19 250 99 448 179 198 80 365 145 370 145 6 0 48 -45 95 -100z
+                    m-1649 -478 c158 -72 293 -129 301 -126 8 3 62 60 119 126 l104 120 3 -235 c1
+                    -129 1 -342 0 -473 l-3 -239 -457 220 -458 219 0 284 0 283 53 -24 c28 -13
+                    181 -82 338 -155z m1529 -104 l0 -284 -172 -83 c-95 -46 -227 -109 -293 -140
+                    -66 -32 -195 -94 -287 -138 l-168 -81 0 475 c0 261 1 474 3 474 2 0 50 -54
+                    107 -120 57 -65 110 -122 118 -125 15 -5 84 25 482 209 113 52 206 95 208 95
+                    1 1 2 -127 2 -282z"
+                  />
+                  <path
+                    d="M896 804 c-13 -12 -16 -38 -16 -122 0 -59 4 -112 8 -119 7 -11 162
+                    -80 218 -97 14 -4 28 -1 38 9 23 23 23 226 1 249 -12 11 -214 96 -230 96 -2 0
+                    -11 -7 -19 -16z m128 -105 l56 -22 0 -59 c0 -33 -4 -58 -8 -56 -4 2 -31 12
+                    -60 22 l-52 20 0 58 c0 32 2 58 4 58 2 0 29 -10 60 -21z"
+                  />
+                  <path
+                    d="M1526 675 c-135 -58 -165 -76 -166 -97 0 -8 29 -38 37 -38 12 0 291
+                    121 309 134 16 12 16 18 6 40 -6 14 -17 26 -24 26 -7 0 -80 -29 -162 -65z"
+                  />
+                  <path
+                    d="M1526 515 c-135 -58 -165 -76 -166 -97 0 -8 29 -38 37 -38 12 0 291
+                    121 309 134 16 12 16 18 6 40 -6 14 -17 26 -24 26 -7 0 -80 -29 -162 -65z"
+                  />
+                </g>
+              </svg>
+              Items
+            </a>
+          </li>
+          <li class="group hover:bg-white">
+            <a href="/admin/supplier-management" class="font-semibold p-4 flex items-center gap-2 group-hover:text-[#6366f1]">
+              <svg class="w-6" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.000000 256.000000" preserveAspectRatio="xMidYMid meet">
+                <g class="group-hover:fill-[#6366f1] group-hover:stroke-[#6366f1]" transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)" fill="#ffffff" stroke="white" stroke-width="30">
+                  <path
+                    d="M537 2409 c-116 -40 -205 -117 -257 -223 -34 -68 -32 -96 6 -96 18 0
+                    29 11 50 52 39 76 114 151 187 184 54 25 74 29 152 29 80 0 97 -3 155 -31 103
+                    -49 179 -140 207 -247 l13 -51 -65 -67 c-73 -75 -110 -145 -126 -238 -15 -84
+                    -37 -96 -179 -96 -99 0 -109 2 -172 33 -109 53 -177 147 -199 270 -13 70 -27
+                    89 -58 72 -24 -12 -25 -18 -11 -90 13 -66 50 -150 90 -200 l30 -38 -54 -16
+                    c-121 -36 -226 -136 -278 -265 -21 -54 -22 -71 -26 -426 -4 -523 -25 -495 364
+                    -495 l252 0 4 -117 c4 -133 18 -171 71 -203 31 -19 54 -20 587 -20 533 0 556
+                    1 587 20 53 32 67 70 71 202 l4 118 252 0 c290 0 304 3 344 81 23 44 23 44 20
+                    414 -4 356 -5 372 -26 426 -48 121 -157 229 -263 260 -45 14 -47 19 -18 45 59
+                    53 109 188 109 293 0 110 -31 193 -108 289 -27 34 -40 42 -61 40 -38 -4 -38
+                    -33 1 -81 51 -64 65 -89 84 -152 34 -119 1 -254 -85 -348 -41 -44 -131 -99
+                    -184 -111 -89 -21 -251 5 -261 42 -2 9 -10 42 -17 72 -18 83 -65 168 -125 226
+                    -66 63 -68 83 -19 182 41 82 103 142 183 179 68 32 186 41 253 20 51 -16 79
+                    -8 79 22 0 10 -6 23 -12 29 -25 20 -127 35 -206 30 -181 -10 -352 -149 -392
+                    -320 -7 -26 -16 -48 -21 -48 -4 0 -34 7 -66 15 -73 19 -143 19 -217 0 -32 -8
+                    -61 -13 -66 -10 -5 3 -12 20 -15 38 -10 43 -51 123 -87 169 -104 133 -317 194
+                    -481 137z m908 -423 c195 -89 278 -320 183 -510 -27 -54 -113 -137 -169 -164
+                    -144 -70 -311 -41 -424 73 -202 202 -112 541 164 621 68 20 179 11 246 -20z
+                    m-931 -410 c81 -32 158 -41 231 -26 107 22 106 23 130 -45 12 -33 36 -82 53
+                    -108 17 -27 29 -54 26 -60 -2 -7 -32 -25 -67 -42 -44 -21 -62 -36 -62 -49 0
+                    -36 28 -41 84 -17 86 37 137 38 217 5 60 -25 82 -28 169 -28 87 0 109 3 168
+                    28 62 25 72 27 119 17 107 -23 195 -93 248 -197 l25 -49 3 -382 3 -381 -22
+                    -21 c-22 -21 -30 -21 -559 -21 -526 0 -537 0 -558 20 -22 21 -22 23 -22 385 0
+                    395 2 411 57 499 28 44 23 68 -15 74 -26 4 -63 -49 -94 -134 -19 -52 -22 -85
+                    -26 -281 l-4 -223 -244 0 c-242 0 -243 0 -271 24 l-28 24 0 364 c1 358 1 364
+                    24 422 25 64 91 142 148 177 85 53 176 61 267 25z m1772 -11 c68 -34 146 -119
+                    176 -193 22 -56 22 -65 23 -420 l0 -364 -28 -24 c-28 -24 -29 -24 -273 -24
+                    l-244 0 0 183 c0 283 -20 361 -119 469 -38 42 -74 68 -129 95 -43 20 -79 38
+                    -81 40 -2 1 10 18 28 38 38 44 70 105 86 165 8 30 17 44 26 42 111 -28 166
+                    -34 229 -23 37 6 87 20 111 31 56 25 123 20 195 -15z"
+                  />
+                </g>
+              </svg>
+              Suppliers
+            </a>
+          </li>
+          <li>
+            <a href="/admin/transaction-management" class="font-semibold p-4 flex items-center gap-2 bg-white text-[#6366f1]">
+              <svg class="w-6" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.000000 256.000000" preserveAspectRatio="xMidYMid meet">
+                <g transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)" fill="#6366F1" stroke="#6366f1" stroke-width="30">
+                  <path
+                    d="M512 2327 c-39 -40 -72 -79 -72 -87 0 -20 141 -160 161 -160 19 0 39
+                    20 39 39 0 8 -14 30 -32 48 l-32 33 721 0 c575 0 723 -3 731 -13 6 -7 12 -39
+                    14 -71 3 -66 23 -90 56 -70 14 9 17 26 17 88 0 72 -1 77 -33 108 l-32 33 -736
+                    5 -735 5 30 29 c33 32 39 54 19 74 -23 23 -44 12 -116 -61z"
+                  />
+                  <path
+                    d="M185 1935 l-25 -24 0 -631 0 -631 25 -24 24 -25 1071 0 1071 0 24 25
+                    25 24 0 631 0 631 -25 24 -24 25 -1071 0 -1071 0 -24 -25z m2135 -655 l0 -600
+                    -1040 0 -1040 0 0 600 0 600 1040 0 1040 0 0 -600z"
+                  />
+                  <path
+                    d="M443 1768 c-6 -7 -13 -25 -17 -40 -4 -19 -15 -30 -34 -34 -54 -13
+                    -52 2 -52 -414 0 -416 -2 -401 52 -414 19 -4 30 -15 34 -34 13 -55 -36 -52
+                    854 -52 890 0 841 -3 854 52 4 19 15 30 34 34 54 13 52 -2 52 414 0 416 2 401
+                    -52 414 -19 4 -30 15 -34 34 -13 55 36 52 -854 52 -650 0 -830 -3 -837 -12z
+                    m1629 -98 c9 -17 29 -35 43 -42 l25 -11 0 -337 0 -337 -25 -11 c-14 -7 -34
+                    -25 -43 -42 l-17 -30 -775 0 -775 0 -17 30 c-9 17 -29 35 -43 42 l-25 11 0
+                    336 0 336 30 17 c17 9 35 29 42 43 l11 25 776 0 776 0 17 -30z"
+                  />
+                  <path
+                    d="M1185 1627 c-109 -37 -186 -103 -232 -202 -24 -51 -28 -73 -28 -145
+                    0 -74 4 -93 31 -151 40 -83 90 -133 173 -172 95 -45 207 -45 302 0 83 39 133
+                    89 173 172 27 58 31 77 31 151 0 72 -4 94 -28 146 -57 123 -177 204 -311 211
+                    -41 1 -88 -3 -111 -10z m220 -98 c89 -42 155 -149 155 -250 0 -148 -132 -279
+                    -280 -279 -150 0 -280 130 -280 280 0 125 90 238 215 271 47 12 140 2 190 -22z"
+                  />
+                  <path
+                    d="M450 505 c-8 -10 -11 -39 -8 -85 3 -63 7 -73 36 -103 l32 -32 736 -5
+                    735 -5 -30 -29 c-17 -17 -31 -37 -31 -46 0 -20 19 -40 39 -40 20 0 161 140
+                    161 160 0 20 -141 160 -161 160 -19 0 -39 -20 -39 -39 0 -8 14 -30 32 -48 l32
+                    -33 -720 0 c-547 0 -723 3 -732 12 -7 7 -12 37 -12 68 0 31 -5 61 -12 68 -16
+                    16 -43 15 -58 -3z"
+                  />
+                </g>
+              </svg>
+              Transactions
+            </a>
+          </li>
+          <li class="group hover:bg-white">
+            <a href="/admin/report-management" class="font-semibold p-4 flex items-center gap-2 group-hover:text-[#6366f1]">
+              <svg class="w-6" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.000000 256.000000" preserveAspectRatio="xMidYMid meet">
+                <g class="group-hover:fill-[#6366f1] group-hover:stroke-[#6366f1]" transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)" fill="#ffffff" stroke="white" stroke-width="30">
+                  <path
+                    d="M410 2553 c-8 -4 -32 -23 -52 -45 l-38 -38 0 -1186 c0 -1309 -4
+                    -1223 63 -1264 31 -19 55 -20 722 -20 l690 0 222 223 223 222 0 1010 c0 984
+                    -1 1011 -20 1042 -40 66 10 63 -937 62 -472 0 -865 -3 -873 -6z m1747 -103
+                    c10 -20 13 -230 13 -981 l0 -957 -167 -4 c-143 -3 -173 -6 -199 -22 -58 -35
+                    -64 -56 -64 -240 l0 -166 -662 2 -662 3 -13 25 c-20 38 -14 2330 6 2354 12 15
+                    83 16 874 14 l861 -3 13 -25z m-187 -2165 l-145 -145 -3 132 c-2 116 0 134 15
+                    145 11 9 58 13 147 13 l131 0 -145 -145z"
+                  />
+                  <path
+                    d="M1245 2307 c-65 -17 -75 -23 -75 -50 0 -23 113 -302 132 -324 8 -10
+                    55 -13 189 -13 l179 0 12 25 c15 34 -12 143 -53 207 -81 126 -242 191 -384
+                    155z m195 -92 c82 -41 137 -105 160 -184 l9 -31 -128 0 -128 0 -47 111 c-38
+                    89 -45 114 -34 121 20 14 129 3 168 -17z"
+                  />
+                  <path
+                    d="M1056 2129 c-54 -29 -118 -96 -144 -153 -70 -149 -41 -309 77 -419
+                    79 -74 127 -92 241 -92 82 0 103 4 152 27 113 53 194 167 205 288 6 57 5 60
+                    -21 70 -15 5 -91 10 -169 10 l-142 0 -60 143 c-67 158 -71 162 -139 126z m78
+                    -181 c26 -59 46 -113 46 -120 0 -7 -38 -51 -85 -98 -81 -81 -85 -83 -100 -65
+                    -27 36 -48 125 -42 182 7 64 49 145 96 184 19 16 36 27 37 26 2 -1 23 -51 48
+                    -109z m376 -177 c0 -26 -35 -100 -65 -137 -51 -62 -122 -94 -208 -94 -72 0
+                    -167 31 -167 54 0 7 40 51 89 99 l88 87 132 0 c72 0 131 -4 131 -9z"
+                  />
+                  <path
+                    d="M656 1274 c-19 -18 -19 -20 -6 -45 10 -18 28 -19 630 -19 602 0 620
+                    1 630 19 13 25 13 27 -6 45 -14 14 -84 16 -624 16 -540 0 -610 -2 -624 -16z"
+                  />
+                  <path
+                    d="M659 951 c-20 -16 -22 -23 -13 -38 11 -17 43 -18 634 -18 591 0 623
+                    1 634 18 9 15 7 22 -13 38 -22 18 -44 19 -621 19 -577 0 -599 -1 -621 -19z"
+                  />
+                  <path
+                    d="M649 624 c-9 -11 -10 -20 -2 -32 9 -15 42 -17 329 -17 l319 0 0 30 0
+                    30 -316 3 c-280 2 -318 0 -330 -14z"
+                  />
+                  <path
+                    d="M652 308 c-16 -16 -15 -33 4 -52 13 -14 64 -16 404 -16 340 0 391 2
+                    404 16 19 19 20 36 4 52 -17 17 -799 17 -816 0z"
+                  />
+                </g>
+              </svg>
+              Reports
+            </a>
+          </li>
+          <li class="group hover:bg-white">
+            <a href="/admin/change-password" class="font-semibold p-4 flex items-center gap-2 group-hover:text-[#6366f1]">
+              <svg class="w-6" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.000000 256.000000" preserveAspectRatio="xMidYMid meet">
+                <g class="group-hover:fill-[#6366f1] group-hover:stroke-[#6366f1]" transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)" fill="#ffffff" stroke="white" stroke-width="10">
+                  <path
+                    d="M1845 2426 c-155 -38 -306 -153 -386 -293 l-30 -53 -582 0 -582 0
+                    -130 -110 c-72 -60 -131 -118 -133 -128 -2 -14 35 -54 130 -141 73 -66 139
+                    -121 146 -121 8 0 65 27 128 61 l114 61 105 -61 c57 -34 109 -61 115 -61 6 0
+                    58 27 115 60 l104 60 85 -60 85 -60 143 -1 143 0 45 -71 c75 -118 211 -215
+                    355 -253 76 -19 214 -19 290 0 374 98 561 509 388 855 -52 103 -160 211 -263
+                    263 -123 61 -269 82 -385 53z m234 -81 c91 -22 176 -70 246 -140 280 -280 158
+                    -755 -224 -869 -68 -20 -198 -21 -270 -1 -132 35 -255 130 -329 255 l-39 65
+                    -159 5 -159 5 -70 51 c-117 85 -101 84 -223 14 l-107 -62 -45 24 c-25 14 -75
+                    41 -112 62 l-67 37 -115 -61 c-133 -71 -107 -76 -235 41 l-72 66 96 79 96 79
+                    596 5 597 5 35 70 c64 126 195 232 332 269 71 19 149 19 228 1z"
+                  />
+                  <path
+                    d="M1893 2169 c-10 -10 -13 -90 -13 -330 0 -362 -4 -346 82 -335 177 24
+                    313 193 294 368 -16 156 -144 286 -299 304 -36 4 -56 2 -64 -7z m207 -149
+                    c105 -104 105 -256 1 -360 -29 -29 -65 -53 -94 -63 l-47 -16 0 259 0 259 47
+                    -16 c29 -10 65 -34 93 -63z"
+                  />
+                  <path
+                    d="M102 1099 c-26 -13 -55 -39 -70 -62 l-27 -41 0 -376 0 -376 24 -36
+                    c13 -19 40 -46 59 -59 l36 -24 1156 0 1156 0 36 24 c19 13 46 40 59 59 l24 36
+                    0 376 0 376 -24 36 c-13 19 -40 46 -59 59 l-36 24 -1145 3 -1146 2 -43 -21z
+                    m2345 -92 l28 -27 0 -360 0 -360 -28 -27 -27 -28 -1140 0 -1140 0 -27 28 -28
+                    27 0 359 c0 345 1 360 20 381 11 12 29 26 40 31 11 4 527 7 1147 6 l1128 -2
+                    27 -28z"
+                  />
+                  <path
+                    d="M1962 899 c-29 -5 -76 -21 -105 -35 -63 -32 -163 -132 -197 -197
+                    l-25 -47 25 -47 c34 -65 134 -165 195 -196 107 -54 223 -54 330 0 61 31 161
+                    131 195 196 l25 47 -25 47 c-34 65 -134 165 -196 196 -44 22 -68 29 -149 41
+                    -11 2 -44 -1 -73 -5z m176 -105 c53 -23 135 -99 161 -147 18 -34 7 -57 -61
+                    -128 -129 -135 -307 -135 -436 0 -68 71 -79 94 -61 128 22 43 102 119 148 143
+                    85 43 159 44 249 4z"
+                  />
+                  <path
+                    d="M1942 750 c-130 -79 -74 -280 78 -280 85 0 150 65 150 150 0 85 -65
+                    150 -150 150 -27 0 -58 -8 -78 -20z m128 -80 c43 -43 11 -120 -50 -120 -38 0
+                    -70 32 -70 70 0 38 32 70 70 70 17 0 39 -9 50 -20z"
+                  />
+                  <path
+                    d="M416 854 c-23 -22 -21 -30 28 -114 l44 -75 -95 -5 c-77 -4 -98 -8
+                    -107 -23 -8 -12 -8 -22 0 -35 9 -14 30 -18 107 -22 l95 -5 -44 -75 c-49 -83
+                    -53 -104 -25 -120 31 -16 47 -3 92 76 23 41 45 74 49 74 4 0 26 -33 49 -74 45
+                    -79 61 -92 92 -76 28 16 24 37 -25 120 l-44 75 95 5 c77 4 98 8 107 22 8 13 8
+                    23 0 35 -9 15 -30 19 -107 23 l-95 5 44 75 c45 77 51 106 23 123 -27 17 -45 2
+                    -90 -77 -24 -42 -46 -76 -49 -76 -4 0 -26 33 -49 74 -36 63 -56 86 -76 86 -2
+                    0 -11 -7 -19 -16z"
+                  />
+                  <path
+                    d="M1136 854 c-23 -22 -21 -30 28 -114 l44 -75 -95 -5 c-77 -4 -98 -8
+                    -107 -23 -8 -12 -8 -22 0 -35 9 -14 30 -18 107 -22 l95 -5 -44 -75 c-49 -83
+                    -53 -104 -25 -120 31 -16 47 -3 92 76 23 41 45 74 49 74 4 0 26 -33 49 -74 45
+                    -79 61 -92 92 -76 28 16 24 37 -25 120 l-44 75 95 5 c77 4 98 8 107 22 8 13 8
+                    23 0 35 -9 15 -30 19 -107 23 l-95 5 44 75 c45 77 51 106 23 123 -27 17 -45 2
+                    -90 -77 -24 -42 -46 -76 -49 -76 -4 0 -26 33 -49 74 -36 63 -56 86 -76 86 -2
+                    0 -11 -7 -19 -16z"
+                  />
+                </g>
+              </svg>
+              Change Password
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="w-82/100 flex-1 p-7 bg-white">
+        <header>
+          <h1 class="font-poppins text-3xl text-[#6366f1] font-bold mb-8">Transactions</h1>
+        </header>
+        <section class="flex flex-col font-opensans">
+          <section class="relative w-3/15 mb-5 self-end">
+            <button class="dropdownButtons group w-full px-3 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-sm text-sm text-[#bababa]">
+              Filters By
+              <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
+                  <path
+                    d="M1210 3359 c-116 -47 -174 -201 -119 -312 26 -53 1140 -1172 1218
+                    -1224 148 -99 351 -100 500 -3 72 46 1207 1188 1226 1232 39 95 1 224 -83 283
+                    l-44 30 -1336 2 c-865 1 -1346 -2 -1362 -8z"
+                  />
+                </g>
+              </svg>
+            </button>
+            <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
+              <li class="option form-option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="items-in">Items In</li>
+              <li class="option form-option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="items-out">Items Out</li>
+              <li class="option form-option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="items-lent">Items Lent</li>
+              <li class="option form-option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="items-returned">Items Returned</li>
+            </ul>
+          </section>
+
+          <section id="items-in" class="forms">
+            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="">
+              <h2 class="font-poppins text-xl text-[#6366f1] font-bold">Items In</h2>
+              <div class="flex justify-between">
+                <div class="w-49/100">
+                  <label class="font-semibold" for="name">Name</label>
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="name" id="name" />
+                </div>
+                <div class="w-49/100">
+                  <label class="font-semibold" for="category">Category</label>
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="category" id="category" />
+                </div>
+              </div>
+              <div>
+                <label class="font-semibold" for="location">Location</label>
+                <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="location" id="location" />
+              </div>
+              <div class="flex justify-between">
+                <div class="w-49/100">
+                  <label class="font-semibold" for="qty">Qty</label>
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" name="qty" id="qty" />
+                </div>
+                <div class="w-49/100">
+                  <label class="font-semibold" for="fee">Fee</label>
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" />
+                </div>
+              </div>
+              <div class="flex justify-between">
+                <div class="relative w-49/100">
+                  <p class="mb-1 font-semibold">Supplier</p>
+                  <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
+                    Choose supplier
+                    <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                      <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
+                        <path
+                          d="M1210 3359 c-116 -47 -174 -201 -119 -312 26 -53 1140 -1172 1218
+                    -1224 148 -99 351 -100 500 -3 72 46 1207 1188 1226 1232 39 95 1 224 -83 283
+                    l-44 30 -1336 2 c-865 1 -1346 -2 -1362 -8z"
+                        />
+                      </g>
+                    </svg>
+                  </button>
+                  <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="PT A">PT A</li>
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="PT B">PT B</li>
+                  </ul>
+                </div>
+                <div class="relative w-49/100">
+                  <p class="mb-1 font-semibold">Condition</p>
+                  <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
+                    Choose condition
+                    <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                      <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
+                        <path
+                          d="M1210 3359 c-116 -47 -174 -201 -119 -312 26 -53 1140 -1172 1218
+                    -1224 148 -99 351 -100 500 -3 72 46 1207 1188 1226 1232 39 95 1 224 -83 283
+                    l-44 30 -1336 2 c-865 1 -1346 -2 -1362 -8z"
+                        />
+                      </g>
+                    </svg>
+                  </button>
+                  <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Good">Good</li>
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Average">Average</li>
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Bad">Bad</li>
+                  </ul>
+                </div>
+              </div>
+              <div>
+                <label class="font-semibold" for="pic">Person In Charge</label>
+                <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" />
+              </div>
+              <div>
+                <label class="font-semibold" for="description">Description</label>
+                <textarea
+                  class="w-full h-21 mt-1 ps-2 pe-1 py-1 resize-none overflow-y-scroll scrollbar scrollbar-thumb-[#bababa] scrollbar-track-[rgba(0,0,0,0.1)] scrollbar-active:scrollbar-thumb-[#4f46e5] outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]"
+                  name="description"
+                  id="description"
+                ></textarea>
+              </div>
+              <div class="flex flex-col">
+                <p class="mb-1 font-semibold">Upload Image</p>
+                <label class="input-image w-1/7 py-2 bg-[rgba(0,0,0,0.1)] text-center text-lg text-[#bababa] cursor-pointer transition hover:bg-[#4f46e5] hover:text-white" for="image-in">
+                  Choose File
+                  <input class="hidden" type="file" name="image-in" id="image-in" accept="image/png, image/jpg, image/jpeg, image/svg" required />
+                </label>
+                <p class="file-name text-sm">No file chosen</p>
+              </div>
+              <button class="px-5 py-2 bg-[#10B981] absolute -bottom-[75px] left-0 outline-2 outline-[#10b981] rounded-sm font-poppins font-bold text-white cursor-pointer transition hover:bg-white hover:text-[#10b981]" type="submit">
+                Save Changes
+              </button>
+            </form>
+          </section>
+
+          <section id="items-out" class="forms hidden">
+            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="">
+              <h2 class="font-poppins text-xl text-[#6366f1] font-bold">Items Out</h2>
+              <div class="flex justify-between">
+                <div class="relative w-49/100">
+                  <p class="mb-1 font-semibold">Name</p>
+                  <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
+                    Select item's name
+                    <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                      <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
+                        <path
+                          d="M1210 3359 c-116 -47 -174 -201 -119 -312 26 -53 1140 -1172 1218
+                    -1224 148 -99 351 -100 500 -3 72 46 1207 1188 1226 1232 39 95 1 224 -83 283
+                    l-44 30 -1336 2 c-865 1 -1346 -2 -1362 -8z"
+                        />
+                      </g>
+                    </svg>
+                  </button>
+                  <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Kursi">Kursi</li>
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Meja">Meja</li>
+                  </ul>
+                </div>
+                <div class="relative w-49/100">
+                  <p class="mb-1 font-semibold">Category</p>
+                  <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
+                    Select item's category
+                    <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                      <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
+                        <path
+                          d="M1210 3359 c-116 -47 -174 -201 -119 -312 26 -53 1140 -1172 1218
+                    -1224 148 -99 351 -100 500 -3 72 46 1207 1188 1226 1232 39 95 1 224 -83 283
+                    l-44 30 -1336 2 c-865 1 -1346 -2 -1362 -8z"
+                        />
+                      </g>
+                    </svg>
+                  </button>
+                  <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Furnitur">Furnitur</li>
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Elektronik">Elektronik</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="flex justify-between">
+                <div class="w-49/100">
+                  <label class="font-semibold" for="qty">Qty</label>
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" name="qty" id="qty" />
+                </div>
+                <div class="w-49/100">
+                  <label class="font-semibold" for="fee">Fee</label>
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" />
+                </div>
+              </div>
+              <div class="flex justify-between">
+                <div class="w-49/100">
+                  <label class="font-semibold" for="pic">Person In Charge</label>
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" />
+                </div>
+                <div class="relative w-49/100">
+                  <p class="mb-1 font-semibold">Condition</p>
+                  <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
+                    Choose condition
+                    <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                      <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
+                        <path
+                          d="M1210 3359 c-116 -47 -174 -201 -119 -312 26 -53 1140 -1172 1218
+                    -1224 148 -99 351 -100 500 -3 72 46 1207 1188 1226 1232 39 95 1 224 -83 283
+                    l-44 30 -1336 2 c-865 1 -1346 -2 -1362 -8z"
+                        />
+                      </g>
+                    </svg>
+                  </button>
+                  <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Good">Good</li>
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Average">Average</li>
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Bad">Bad</li>
+                  </ul>
+                </div>
+              </div>
+              <div>
+                <label class="font-semibold" for="description">Description</label>
+                <textarea
+                  class="w-full h-21 mt-1 ps-2 pe-1 py-1 resize-none overflow-y-scroll scrollbar scrollbar-thumb-[#bababa] scrollbar-track-[rgba(0,0,0,0.1)] scrollbar-active:scrollbar-thumb-[#4f46e5] outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]"
+                  name="description"
+                  id="description"
+                ></textarea>
+              </div>
+              <div class="flex flex-col">
+                <p class="mb-1 font-semibold">Upload Image</p>
+                <label class="input-image w-1/7 py-2 bg-[rgba(0,0,0,0.1)] text-center text-lg text-[#bababa] cursor-pointer transition hover:bg-[#4f46e5] hover:text-white" for="image-out">
+                  Choose File
+                  <input class="hidden" type="file" name="image-out" id="image-out" accept="image/png, image/jpg, image/jpeg, image/svg" required />
+                </label>
+                <p class="file-name text-sm">No file chosen</p>
+              </div>
+              <button class="px-5 py-2 bg-[#10B981] absolute -bottom-[75px] left-0 outline-2 outline-[#10b981] rounded-sm font-poppins font-bold text-white cursor-pointer transition hover:bg-white hover:text-[#10b981]" type="submit">
+                Save Changes
+              </button>
+            </form>
+          </section>
+
+          <section id="items-lent" class="forms hidden">
+            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="">
+              <h2 class="font-poppins text-xl text-[#6366f1] font-bold">Items Lent</h2>
+              <div class="flex justify-between">
+                <div class="relative w-49/100">
+                  <p class="mb-1 font-semibold">Name</p>
+                  <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
+                    Select item's name
+                    <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                      <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
+                        <path
+                          d="M1210 3359 c-116 -47 -174 -201 -119 -312 26 -53 1140 -1172 1218
+                    -1224 148 -99 351 -100 500 -3 72 46 1207 1188 1226 1232 39 95 1 224 -83 283
+                    l-44 30 -1336 2 c-865 1 -1346 -2 -1362 -8z"
+                        />
+                      </g>
+                    </svg>
+                  </button>
+                  <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Kursi">Kursi</li>
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Meja">Meja</li>
+                  </ul>
+                </div>
+                <div class="relative w-49/100">
+                  <p class="mb-1 font-semibold">Category</p>
+                  <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
+                    Select item's category
+                    <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                      <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
+                        <path
+                          d="M1210 3359 c-116 -47 -174 -201 -119 -312 26 -53 1140 -1172 1218
+                    -1224 148 -99 351 -100 500 -3 72 46 1207 1188 1226 1232 39 95 1 224 -83 283
+                    l-44 30 -1336 2 c-865 1 -1346 -2 -1362 -8z"
+                        />
+                      </g>
+                    </svg>
+                  </button>
+                  <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Furnitur">Furnitur</li>
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Elektronik">Elektronik</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="flex justify-between">
+                <div class="w-49/100">
+                  <label class="font-semibold" for="qty">Qty</label>
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" name="qty" id="qty" />
+                </div>
+                <div class="w-49/100">
+                  <label class="font-semibold" for="fee">Fee</label>
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" />
+                </div>
+              </div>
+              <div class="flex justify-between">
+                <div class="w-49/100">
+                  <label class="font-semibold" for="pic">Person In Charge</label>
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" />
+                </div>
+                <div class="relative w-49/100">
+                  <p class="mb-1 font-semibold">Condition</p>
+                  <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
+                    Choose condition
+                    <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                      <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
+                        <path
+                          d="M1210 3359 c-116 -47 -174 -201 -119 -312 26 -53 1140 -1172 1218
+                    -1224 148 -99 351 -100 500 -3 72 46 1207 1188 1226 1232 39 95 1 224 -83 283
+                    l-44 30 -1336 2 c-865 1 -1346 -2 -1362 -8z"
+                        />
+                      </g>
+                    </svg>
+                  </button>
+                  <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Good">Good</li>
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Average">Average</li>
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Bad">Bad</li>
+                  </ul>
+                </div>
+              </div>
+              <div>
+                <label class="font-semibold" for="description">Description</label>
+                <textarea
+                  class="w-full h-21 mt-1 ps-2 pe-1 py-1 resize-none overflow-y-scroll scrollbar scrollbar-thumb-[#bababa] scrollbar-track-[rgba(0,0,0,0.1)] scrollbar-active:scrollbar-thumb-[#4f46e5] outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]"
+                  name="description"
+                  id="description"
+                ></textarea>
+              </div>
+              <div class="flex flex-col">
+                <p class="mb-1 font-semibold">Upload Image</p>
+                <label class="input-image w-1/7 py-2 bg-[rgba(0,0,0,0.1)] text-center text-lg text-[#bababa] cursor-pointer transition hover:bg-[#4f46e5] hover:text-white" for="image-lent">
+                  Choose File
+                  <input class="hidden" type="file" name="image-lent" id="image-lent" accept="image/png, image/jpg, image/jpeg, image/svg" required />
+                </label>
+                <p class="file-name text-sm">No file chosen</p>
+              </div>
+              <button class="px-5 py-2 bg-[#10B981] absolute -bottom-[75px] left-0 outline-2 outline-[#10b981] rounded-sm font-poppins font-bold text-white cursor-pointer transition hover:bg-white hover:text-[#10b981]" type="submit">
+                Save Changes
+              </button>
+            </form>
+          </section>
+
+          <section id="items-returned" class="forms hidden">
+            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="">
+              <h2 class="font-poppins text-xl text-[#6366f1] font-bold">Items Returned</h2>
+              <div class="flex justify-between">
+                <div class="relative w-49/100">
+                  <p class="mb-1 font-semibold">Name</p>
+                  <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
+                    Select item's name
+                    <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                      <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
+                        <path
+                          d="M1210 3359 c-116 -47 -174 -201 -119 -312 26 -53 1140 -1172 1218
+                    -1224 148 -99 351 -100 500 -3 72 46 1207 1188 1226 1232 39 95 1 224 -83 283
+                    l-44 30 -1336 2 c-865 1 -1346 -2 -1362 -8z"
+                        />
+                      </g>
+                    </svg>
+                  </button>
+                  <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Kursi">Kursi</li>
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Meja">Meja</li>
+                  </ul>
+                </div>
+                <div class="relative w-49/100">
+                  <p class="mb-1 font-semibold">Category</p>
+                  <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
+                    Select item's category
+                    <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                      <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
+                        <path
+                          d="M1210 3359 c-116 -47 -174 -201 -119 -312 26 -53 1140 -1172 1218
+                    -1224 148 -99 351 -100 500 -3 72 46 1207 1188 1226 1232 39 95 1 224 -83 283
+                    l-44 30 -1336 2 c-865 1 -1346 -2 -1362 -8z"
+                        />
+                      </g>
+                    </svg>
+                  </button>
+                  <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Furnitur">Furnitur</li>
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Elektronik">Elektronik</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="flex justify-between">
+                <div class="w-49/100">
+                  <label class="font-semibold" for="qty">Qty</label>
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" name="qty" id="qty" />
+                </div>
+                <div class="w-49/100">
+                  <label class="font-semibold" for="fee">Fee</label>
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" />
+                </div>
+              </div>
+              <div class="flex justify-between">
+                <div class="w-49/100">
+                  <label class="font-semibold" for="pic">Person In Charge</label>
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" />
+                </div>
+                <div class="relative w-49/100">
+                  <p class="mb-1 font-semibold">Condition</p>
+                  <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
+                    Choose condition
+                    <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                      <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
+                        <path
+                          d="M1210 3359 c-116 -47 -174 -201 -119 -312 26 -53 1140 -1172 1218
+                    -1224 148 -99 351 -100 500 -3 72 46 1207 1188 1226 1232 39 95 1 224 -83 283
+                    l-44 30 -1336 2 c-865 1 -1346 -2 -1362 -8z"
+                        />
+                      </g>
+                    </svg>
+                  </button>
+                  <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Good">Good</li>
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Average">Average</li>
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Bad">Bad</li>
+                  </ul>
+                </div>
+              </div>
+              <div>
+                <label class="font-semibold" for="description">Description</label>
+                <textarea
+                  class="w-full h-21 mt-1 ps-2 pe-1 py-1 resize-none overflow-y-scroll scrollbar scrollbar-thumb-[#bababa] scrollbar-track-[rgba(0,0,0,0.1)] scrollbar-active:scrollbar-thumb-[#4f46e5] outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]"
+                  name="description"
+                  id="description"
+                ></textarea>
+              </div>
+              <div class="flex flex-col">
+                <p class="mb-1 font-semibold">Upload Image</p>
+                <label class="input-image w-1/7 py-2 bg-[rgba(0,0,0,0.1)] text-center text-lg text-[#bababa] cursor-pointer transition hover:bg-[#4f46e5] hover:text-white" for="image-returned">
+                  Choose File
+                  <input class="hidden" type="file" name="image-returned" id="image-returned" accept="image/png, image/jpg, image/jpeg, image/svg" required />
+                </label>
+                <p class="file-name text-sm">No file chosen</p>
+              </div>
+              <button class="px-5 py-2 bg-[#10B981] absolute -bottom-[75px] left-0 outline-2 outline-[#10b981] rounded-sm font-poppins font-bold text-white cursor-pointer transition hover:bg-white hover:text-[#10b981]" type="submit">
+                Save Changes
+              </button>
+            </form>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="/js/script.js"></script>
+    <script>
+      let selectedValue = "items-in";
+      const forms = document.querySelectorAll(".forms");
+      const formOptions = document.querySelectorAll(".form-option");
+
+      formOptions.forEach((formOption) => {
+        formOption.addEventListener("click", () => {
+          forms.forEach((form) => {
+            if (form.id.includes(selectedValue)) {
+              form.classList.add("hidden");
+            }
+          });
+
+          selectedValue = formOption.dataset.value;
+
+          forms.forEach((form) => {
+            if (form.id.includes(selectedValue)) {
+              console.log(form);
+              form.classList.remove("hidden");
+            }
+          });
+        });
+      });
+
+      const inputImages = document.querySelectorAll(".input-image");
+
+      inputImages.forEach((inputImage) => {
+        const image = inputImage.querySelector("input");
+        const fileName = inputImage.parentElement.querySelector(".file-name");
+
+        image.addEventListener("change", () => {
+          const file = image.files[0];
+          fileName.textContent = file ? file.name : "No file chosen";
+        });
+      });
+    </script>
+  </body>
+</html>

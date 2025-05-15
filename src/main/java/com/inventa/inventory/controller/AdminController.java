@@ -42,6 +42,11 @@ public class AdminController {
         return "admin/transaction-management.html";
     }
 
+    @GetMapping("/admin/input-transaction")
+    public String redirectToInputTransaction() {
+        return "admin/input-transaction.html";
+    }
+
     @GetMapping("/admin/report-management")
     public String redirectToReportManagement() {
         return "admin/report-management.html";
