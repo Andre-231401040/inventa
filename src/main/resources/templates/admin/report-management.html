@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/styles.css" />
     <title>Admin | Report Management</title>
+
+    <style>
+      input[type="date"]::-webkit-calendar-picker-indicator {
+        display: none;
+      }
+    </style>
   </head>
   <body class="font-opensans bg-red-700">
     <div class="min-h-screen flex">
@@ -304,7 +310,234 @@
         <header>
           <h1 class="font-poppins text-3xl text-[#6366f1] font-bold mb-8">Reports</h1>
         </header>
+        <section class="flex flex-col font-opensans">
+          <section class="relative w-3/15 mb-2 font-opensans">
+            <div class="mb-1 flex flex-col">
+              <label class="font-semibold" for="start-date">From</label>
+              <input class="h-10 px-2 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-sm text-sm text-[#bababa] focus:border-[#4f46e5] focus:text-[#4f46e5]" type="date" />
+            </div>
+            <div class="mb-1 flex flex-col">
+              <label class="font-semibold" for="end-date">To</label>
+              <input class="h-10 px-2 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-sm text-sm text-[#bababa] focus:border-[#4f46e5] focus:text-[#4f46e5]" type="date" />
+            </div>
+            <p class="font-semibold">Types</p>
+            <button id="dropdownButton" class="group w-full h-10 px-2 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-sm text-sm text-[#bababa]">
+              Filters By
+              <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
+                  <path
+                    d="M1210 3359 c-116 -47 -174 -201 -119 -312 26 -53 1140 -1172 1218
+                    -1224 148 -99 351 -100 500 -3 72 46 1207 1188 1226 1232 39 95 1 224 -83 283
+                    l-44 30 -1336 2 c-865 1 -1346 -2 -1362 -8z"
+                  />
+                </g>
+              </svg>
+            </button>
+            <ul id="dropdownList" class="hidden absolute w-full bg-[#F2F2F2]">
+              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="category">Items In</li>
+              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="supplier">Items Out</li>
+              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="stock">Items Lent</li>
+              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="condition">Items Returned</li>
+            </ul>
+          </section>
+
+          <a class="w-2/14 py-1 mb-5 outline-2 outline-[#4F46E5] bg-[#4F46E5] rounded-sm self-end font-poppins font-bold text-center text-md text-white cursor-pointer transition hover:bg-white hover:text-[#4F46E5]" href="">Export to PDF</a>
+
+          <section class="font-opensans pb-4 overflow-x-scroll scrollbar scrollbar-thumb-[#6366f1] scrollbar-track-[#d2d3fb] scrollbar-hover:scrollbar-thumb-[#8f90fdfd] scrollbar-active:scrollbar-thumb-[#8f90fdfd]">
+            <table class="w-600">
+              <thead class="font-poppins">
+                <tr class="bg-[#6366f1] text-center text-white">
+                  <th class="w-4/100 border-2 border-[rgba(0,0,0,0.15)] py-2">No</th>
+                  <th class="w-5/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Image</th>
+                  <th class="w-13/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Name</th>
+                  <th class="w-10/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Category</th>
+                  <th class="w-10/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Person In Charge</th>
+                  <th class="w-5/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Qty</th>
+                  <th class="w-7/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Fee</th>
+                  <th class="w-5/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Condition</th>
+                  <th class="w-26/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Description</th>
+                  <th class="w-5/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Status</th>
+                  <th class="w-10/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Event Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">1</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <div class="min-h-16 flex justify-center items-center">
+                      <img class="w-10 h-fit" src="/img/picture.png" alt="" />
+                    </div>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">Meja Belajar</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">Furnitur</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">0812-3456-7890</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">30</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">Rp6.000.000</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
+                    <div class="min-h-16 flex justify-center items-center">
+                      <p class="px-2 py-1 bg-[#D4EDDA] rounded-sm">Good</p>
+                    </div>
+                  </td>
+                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex items-center">Digunakan diruang kelas</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
+                    <div class="min-h-16 flex justify-center items-center">
+                      <p class="px-2 py-1 bg-[#D4EDDA] rounded-sm">In</p>
+                    </div>
+                  </td>
+                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">2025-02-23</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">2</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <div class="min-h-16 flex justify-center items-center">
+                      <img class="w-10 h-fit" src="/img/picture.png" alt="" />
+                    </div>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">Meja Belajar</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">Furnitur</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">0812-3456-7890</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">30</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">Rp6.000.000</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
+                    <div class="min-h-16 flex justify-center items-center">
+                      <p class="px-2 py-1 bg-[#FFF3CD] rounded-sm">Average</p>
+                    </div>
+                  </td>
+                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex items-center">Digunakan diruang kelas</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
+                    <div class="min-h-16 flex justify-center items-center">
+                      <p class="px-2 py-1 bg-[#F8D7DA] rounded-sm">Out</p>
+                    </div>
+                  </td>
+                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">2025-02-23</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">3</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <div class="min-h-16 flex justify-center items-center">
+                      <img class="w-10 h-fit" src="/img/picture.png" alt="" />
+                    </div>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">Meja Belajar</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">Furnitur</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">0812-3456-7890</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">30</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">Rp6.000.000</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
+                    <div class="min-h-16 flex justify-center items-center">
+                      <p class="px-2 py-1 bg-[#D4EDDA] rounded-sm">Good</p>
+                    </div>
+                  </td>
+                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex items-center">Digunakan diruang kelas</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
+                    <div class="min-h-16 flex justify-center items-center">
+                      <p class="px-2 py-1 bg-[#FFF3CD] rounded-sm">Lent</p>
+                    </div>
+                  </td>
+                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">2025-02-23</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">4</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <div class="min-h-16 flex justify-center items-center">
+                      <img class="w-10 h-fit" src="/img/picture.png" alt="" />
+                    </div>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">Meja Belajar</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">Furnitur</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">0812-3456-7890</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">30</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">Rp6.000.000</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
+                    <div class="min-h-16 flex justify-center items-center">
+                      <p class="px-2 py-1 bg-[#F8D7DA] rounded-sm">Bad</p>
+                    </div>
+                  </td>
+                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex items-center">Digunakan diruang kelas</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
+                    <div class="min-h-16 flex justify-center items-center">
+                      <p class="px-2 py-1 bg-[#D1ECF1] rounded-sm">Returned</p>
+                    </div>
+                  </td>
+                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">2025-02-23</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <nav class="pagination w-full mt-20 flex justify-between items-center">
+            <button><img src="/img/back_icon.png" alt="" /></button>
+            <p class="font-poppins font-medium">1 of 1</p>
+            <button><img src="/img/next_icon.png" alt="" /></button>
+          </nav>
+        </section>
       </main>
     </div>
+
+    <script src="/js/script.js"></script>
   </body>
 </html>
