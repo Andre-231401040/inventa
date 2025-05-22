@@ -3,6 +3,7 @@
 @layer theme, base, components, utilities;
 @layer theme {
   :root, :host {
+    --color-red-600: oklch(0.577 0.245 27.325);
     --color-red-700: oklch(0.505 0.213 27.518);
     --color-green-950: oklch(0.266 0.065 152.934);
     --color-white: #fff;
@@ -578,6 +579,9 @@
   .self-end {
     align-self: flex-end;
   }
+  .self-start {
+    align-self: flex-start;
+  }
   .overflow-x-scroll {
     overflow-x: scroll;
   }
@@ -832,6 +836,9 @@
   }
   .text-green-950 {
     color: var(--color-green-950);
+  }
+  .text-red-600 {
+    color: var(--color-red-600);
   }
   .text-white {
     color: var(--color-white);

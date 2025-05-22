@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class GuestController {
     @GetMapping("/")
     public String redirectToGuestItems() {
-        return "guest/items.html";
+        return "guest/items";
     }
 
     @GetMapping("/suppliers")
     public String redirectToGuestSuppliers() {
-        return "guest/suppliers.html";
+        return "guest/suppliers";
     }
 }
