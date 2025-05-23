@@ -32,37 +32,86 @@ public class AdminController {
     }
 
     @GetMapping("/admin/item-management")
-    public String redirectToItemManagement() {
+    public String redirectToItemManagement(HttpSession session, Model model) {
+        Object user = session.getAttribute("user");
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+
+        model.addAttribute("user", user);
         return "admin/item-management";
     }
 
     @GetMapping("/admin/supplier-management")
-    public String redirectToSupplierManagement() {
+    public String redirectToSupplierManagement(HttpSession session, Model model) {
+        Object user = session.getAttribute("user");
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+
+        model.addAttribute("user", user);
         return "admin/supplier-management";
     }
 
     @GetMapping("/admin/add-supplier")
-    public String redirectToAddSupplier() {
+    public String redirectToAddSupplier(HttpSession session, Model model) {
+        Object user = session.getAttribute("user");
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+
+        model.addAttribute("user", user);
         return "admin/add-supplier";
     }
 
     @GetMapping("/admin/transaction-management")
-    public String redirectToTransactionManagement() {
+    public String redirectToTransactionManagement(HttpSession session, Model model) {
+        Object user = session.getAttribute("user");
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+
+        model.addAttribute("user", user);
         return "admin/transaction-management";
     }
 
     @GetMapping("/admin/input-transaction")
-    public String redirectToInputTransaction() {
+    public String redirectToInputTransaction(HttpSession session, Model model) {
+        Object user = session.getAttribute("user");
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+
+        model.addAttribute("user", user);
         return "admin/input-transaction";
     }
 
     @GetMapping("/admin/report-management")
-    public String redirectToReportManagement() {
+    public String redirectToReportManagement(HttpSession session, Model model) {
+        Object user = session.getAttribute("user");
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+
+        model.addAttribute("user", user);
         return "admin/report-management";
     }
 
     @GetMapping("/admin/change-password")
-    public String redirectToChangePassword() {
+    public String redirectToChangePassword(HttpSession session, Model model) {
+        Object user = session.getAttribute("user");
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+
+        model.addAttribute("user", user);
         return "admin/change-password";
     }
 }
