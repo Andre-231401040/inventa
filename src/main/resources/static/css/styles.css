@@ -3,8 +3,10 @@
 @layer theme, base, components, utilities;
 @layer theme {
   :root, :host {
+    --color-red-500: oklch(0.637 0.237 25.331);
     --color-red-600: oklch(0.577 0.245 27.325);
     --color-red-700: oklch(0.505 0.213 27.518);
+    --color-green-500: oklch(0.723 0.219 149.579);
     --color-green-950: oklch(0.266 0.065 152.934);
     --color-white: #fff;
     --spacing: 0.25rem;
@@ -834,8 +836,14 @@
   .text-\[\#bababa\] {
     color: #bababa;
   }
+  .text-green-500 {
+    color: var(--color-green-500);
+  }
   .text-green-950 {
     color: var(--color-green-950);
+  }
+  .text-red-500 {
+    color: var(--color-red-500);
   }
   .text-red-600 {
     color: var(--color-red-600);

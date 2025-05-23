@@ -2,6 +2,9 @@ package com.inventa.inventory.service;
 
 import com.inventa.inventory.model.User;
 import com.inventa.inventory.repository.UserRepository;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +40,32 @@ public class AuthService {
         userRepository.save(user);
 
         return newPassword;
+    }
+
+    public String changePassword(String oldPassword, String newPassword, String confirmPassword, HttpSession session) {
+        String result = "Password changed successfully.";
+        String email = (String) session.getAttribute("user");
+
+        User user = userRepository.findByEmail(email);
+
+        if(!oldPassword.equals(user.getPassword())) {
+            result = "Your old password is wrong.";
+        } else {
+            if(!newPassword.equals(confirmPassword)) {
+                result = "Confirm new password and new password must be the same.";
+            } else {
+                String pattern = "^(?=.*[A-Z])(?=.*\\d).{10,}$";
+
+                if(!newPassword.matches(pattern)) {
+                    result = "New password does not match the requirements.";
+                } else {
+                    user.setPassword(newPassword);
+                    userRepository.save(user);
+                }
+            }
+        }
+
+        return result;
     }
 
     private String generateRandomPassword(int length) {

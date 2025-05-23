@@ -40,6 +40,23 @@ public class AuthController {
         return "redirect:/admin/reset-password";
     }
 
+    @PostMapping("/change-password")
+    public String changePassword(@RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String confirmPassword, RedirectAttributes redirectAttributes, HttpSession session) {
+        String result = authService.changePassword(oldPassword, newPassword, confirmPassword, session);
+
+        if(result == "Your old password is wrong.") {
+            redirectAttributes.addFlashAttribute("errorMessage", result);
+        } else if(result == "Confirm new password and new password must be the same.") {
+            redirectAttributes.addFlashAttribute("errorMessage", result);
+        } else if(result == "New password does not match the requirements.") {
+            redirectAttributes.addFlashAttribute("errorMessage", result);
+        } else {
+            redirectAttributes.addFlashAttribute("successfulMessage", result);
+        }
+
+        return "redirect:/admin/change-password";
+    }
+
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
