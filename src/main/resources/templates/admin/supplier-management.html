@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -324,98 +324,18 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr th:if="${suppliers}" th:each="supplier, iter : ${suppliers}">
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">1</p>
+                    <p class="min-h-16 flex justify-center items-center" th:text="${((currentPage - 1) * 5) + (iter.index + 1)}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">PT Sumber Jaya Abadi</p>
+                    <p class="min-h-16 flex justify-center items-center" th:text="${supplier.name}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">021-8050-1234</p>
+                    <p class="min-h-16 flex justify-center items-center" th:text="${supplier.contact}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Jl. Merdeka No. 123, Jakarta Pusat, DKI Jakarta 10110</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <div class="min-h-16 flex justify-center items-center gap-4">
-                      <img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/edit_icon.png" alt="" />
-                      <img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/delete_icon.png" alt="" />
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">2</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">PT Sumber Jaya Abadi</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">021-8050-1234</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Jl. Merdeka No. 123, Jakarta Pusat, DKI Jakarta 10110</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <div class="min-h-16 flex justify-center items-center gap-4">
-                      <img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/edit_icon.png" alt="" />
-                      <img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/delete_icon.png" alt="" />
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">3</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">PT Sumber Jaya Abadi</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">021-8050-1234</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Jl. Merdeka No. 123, Jakarta Pusat, DKI Jakarta 10110</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <div class="min-h-16 flex justify-center items-center gap-4">
-                      <img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/edit_icon.png" alt="" />
-                      <img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/delete_icon.png" alt="" />
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">4</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">PT Sumber Jaya Abadi</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">021-8050-1234</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Jl. Merdeka No. 123, Jakarta Pusat, DKI Jakarta 10110</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <div class="min-h-16 flex justify-center items-center gap-4">
-                      <img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/edit_icon.png" alt="" />
-                      <img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/delete_icon.png" alt="" />
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">5</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">PT Mitra Teknologi Nusantara</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">022-7509-8880</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Komplek Ruko Harmoni Blok B2 No. 5, Bandung, Jawa Barat 40291</p>
+                    <p class="min-h-16 flex justify-center items-center" th:text="${supplier.address}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
                     <div class="min-h-16 flex justify-center items-center gap-4">
@@ -429,9 +349,9 @@
           </section>
 
           <nav class="pagination w-full mt-20 flex justify-between items-center">
-            <button><img src="/img/back_icon.png" alt="" /></button>
-            <p class="font-poppins font-medium">1 of 1</p>
-            <button><img src="/img/next_icon.png" alt="" /></button>
+            <a th:href="@{/admin/supplier-management(page=${currentPage - 2})}"><img th:if="${currentPage > 1}" src="/img/back_icon.png" alt="previous page icon" /></a>
+            <p class="font-poppins font-medium"><span th:text="${currentPage}"></span> of <span th:text="${totalPages}"></span></p>
+            <a th:href="@{/admin/supplier-management(page=${currentPage})}"><img th:if="${currentPage < totalPages}" src="/img/next_icon.png" alt="next page icon" /></a>
           </nav>
         </section>
       </main>

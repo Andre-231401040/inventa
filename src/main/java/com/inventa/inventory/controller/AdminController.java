@@ -4,22 +4,36 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
-    @GetMapping("/admin/login")
-    public String redirectToLogin() {
+    @GetMapping("/login")
+    public String redirectToLogin(HttpSession session) {
+        Object user = session.getAttribute("user");
+
+        if(user != null) {
+            return "redirect:/admin/dashboard";
+        }
+
         return "admin/login";
     }
     
 
-    @GetMapping("/admin/reset-password")
-    public String redirectToResetPassword() {
+    @GetMapping("/reset-password")
+    public String redirectToResetPassword(HttpSession session) {
+        Object user = session.getAttribute("user");
+
+        if(user != null) {
+            return "redirect:/admin/dashboard";
+        }
+
         return "admin/reset-password";
     }
 
-    @GetMapping("/admin/dashboard")
+    @GetMapping("/dashboard")
     public String redirectToDashboard(HttpSession session, Model model) {
         Object user = session.getAttribute("user");
 
@@ -27,11 +41,10 @@ public class AdminController {
             return "redirect:/admin/login";
         }
 
-        model.addAttribute("user", user);
         return "admin/dashboard";
     }
 
-    @GetMapping("/admin/item-management")
+    @GetMapping("/item-management")
     public String redirectToItemManagement(HttpSession session, Model model) {
         Object user = session.getAttribute("user");
 
@@ -39,35 +52,10 @@ public class AdminController {
             return "redirect:/admin/login";
         }
 
-        model.addAttribute("user", user);
         return "admin/item-management";
     }
 
-    @GetMapping("/admin/supplier-management")
-    public String redirectToSupplierManagement(HttpSession session, Model model) {
-        Object user = session.getAttribute("user");
-
-        if(user == null) {
-            return "redirect:/admin/login";
-        }
-
-        model.addAttribute("user", user);
-        return "admin/supplier-management";
-    }
-
-    @GetMapping("/admin/add-supplier")
-    public String redirectToAddSupplier(HttpSession session, Model model) {
-        Object user = session.getAttribute("user");
-
-        if(user == null) {
-            return "redirect:/admin/login";
-        }
-
-        model.addAttribute("user", user);
-        return "admin/add-supplier";
-    }
-
-    @GetMapping("/admin/transaction-management")
+    @GetMapping("/transaction-management")
     public String redirectToTransactionManagement(HttpSession session, Model model) {
         Object user = session.getAttribute("user");
 
@@ -75,11 +63,10 @@ public class AdminController {
             return "redirect:/admin/login";
         }
 
-        model.addAttribute("user", user);
         return "admin/transaction-management";
     }
 
-    @GetMapping("/admin/input-transaction")
+    @GetMapping("/input-transaction")
     public String redirectToInputTransaction(HttpSession session, Model model) {
         Object user = session.getAttribute("user");
 
@@ -87,11 +74,10 @@ public class AdminController {
             return "redirect:/admin/login";
         }
 
-        model.addAttribute("user", user);
         return "admin/input-transaction";
     }
 
-    @GetMapping("/admin/report-management")
+    @GetMapping("/report-management")
     public String redirectToReportManagement(HttpSession session, Model model) {
         Object user = session.getAttribute("user");
 
@@ -99,11 +85,10 @@ public class AdminController {
             return "redirect:/admin/login";
         }
 
-        model.addAttribute("user", user);
         return "admin/report-management";
     }
 
-    @GetMapping("/admin/change-password")
+    @GetMapping("/change-password")
     public String redirectToChangePassword(HttpSession session, Model model) {
         Object user = session.getAttribute("user");
 
@@ -111,7 +96,6 @@ public class AdminController {
             return "redirect:/admin/login";
         }
 
-        model.addAttribute("user", user);
         return "admin/change-password";
     }
 }

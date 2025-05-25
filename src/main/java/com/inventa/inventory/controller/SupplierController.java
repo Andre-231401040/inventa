@@ -1,0 +1,75 @@
+package com.inventa.inventory.controller;
+
+import com.inventa.inventory.model.Supplier;
+import com.inventa.inventory.model.User;
+import com.inventa.inventory.service.SupplierService;
+import com.inventa.inventory.repository.UserRepository;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.PostMapping;
+
+
+@Controller
+@RequestMapping("/admin")
+public class SupplierController {
+
+    @Autowired
+    private SupplierService supplierService;
+    @Autowired
+    private UserRepository userRepository;
+
+    @GetMapping("/supplier-management")
+    public String displaySupplierManagement(@RequestParam(defaultValue = "0") int page, HttpSession session, Model model) {
+        Object user = session.getAttribute("user");
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+
+        int pageSize = 5;
+        Page<Supplier> suppliersPerPage = supplierService.getSuppliersPerPage(page, pageSize);
+        
+        model.addAttribute("suppliers", suppliersPerPage.getContent());
+        model.addAttribute("currentPage", page + 1);
+        model.addAttribute("totalPages", suppliersPerPage.getTotalPages());
+
+        return "/admin/supplier-management";
+    }
+
+    @GetMapping("/add-supplier")
+    public String redirectToAddSupplier(HttpSession session, Model model) {
+        Object user = session.getAttribute("user");
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+
+        return "admin/add-supplier";
+    }
+
+    @PostMapping("/add-supplier")
+    public String addSupplier(@RequestParam String name, @RequestParam String contact, @RequestParam String address, RedirectAttributes redirectAttributes, HttpSession session) {
+        String email = (String) session.getAttribute("user");
+        User user = userRepository.findByEmail(email);
+        
+        Supplier newSupplier = new Supplier(name, contact, address, user.getId());
+
+        Supplier savedSupplier = supplierService.addSupplier(newSupplier, session);
+
+        if(savedSupplier == null) {
+            redirectAttributes.addFlashAttribute("error", "Oops! Something went wront.");
+        } else {
+            redirectAttributes.addFlashAttribute("success", "New Supplier Added Successfully.");
+        }
+        
+        return "redirect:/admin/add-supplier";
+    }
+    
+}
