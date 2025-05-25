@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -117,60 +117,30 @@
         </header>
 
         <section class="w-full flex justify-between items-center font-poppins">
-          <h2 class="font-semibold text-xl">6 Suppliers Found</h2>
+          <h2 class="font-semibold text-xl"><span th:text="${totalSuppliers}"></span> Suppliers Found</h2>
           <form class="h-10 flex gap-2">
             <input class="h-full px-2 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-sm placeholder-[#bababa] focus:border-[#4f46e5]" type="text" placeholder="Enter Supplier Name" />
             <button class="h-full px-5 bg-[#4f46e5] rounded-sm font-bold text-sm text-white" type="button">Search</button>
           </form>
         </section>
 
-        <section class="contact-list my-6 flex flex-col gap-5 font-opensans">
+        <section class="supplier-list my-6 flex flex-col gap-5 font-opensans">
           <div class="flex items-center font-poppins font-bold">
             <h3 class="w-1/10">No</h3>
             <h3 class="w-3/10">Name</h3>
             <h3 class="w-2/10">Contact</h3>
             <h3 class="w-5/10">Address</h3>
           </div>
-          <div class="min-h-15 p-2 flex items-center shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_0_rgba(0,0,0,0.06)] rounded-sm">
-            <p class="w-1/10">1</p>
-            <p class="w-3/10">PT Mitra Teknologi Nusantara</p>
-            <p class="w-2/10">0822-7509-8880</p>
-            <p class="w-5/10">Komplek Ruko Harmoni Blok B2 No. 5, Bandung, Jawa Barat 40291</p>
-          </div>
-          <div class="min-h-15 p-2 flex items-center shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_0_rgba(0,0,0,0.06)] rounded-sm">
-            <p class="w-1/10">2</p>
-            <p class="w-3/10">Prima Elektronik</p>
-            <p class="w-2/10">0812-3456-7890</p>
-            <p class="w-5/10">Jl. Gajah Mada No. 5, Yogyakarta</p>
-          </div>
-          <div class="min-h-15 p-2 flex items-center shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_0_rgba(0,0,0,0.06)] rounded-sm">
-            <p class="w-1/10">3</p>
-            <p class="w-3/10">Mega Sport Equipment</p>
-            <p class="w-2/10">0822-7509-8880</p>
-            <p class="w-5/10">Jl. Merdeka No. 45, Jakarta</p>
-          </div>
-          <div class="min-h-15 p-2 flex items-center shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_0_rgba(0,0,0,0.06)] rounded-sm">
-            <p class="w-1/10">4</p>
-            <p class="w-3/10">PT Mitra Teknologi Nusantara</p>
-            <p class="w-2/10">0822-7509-8880</p>
-            <p class="w-5/10">Komplek Ruko Harmoni Blok B2 No. 5, Bandung, Jawa Barat 40291</p>
-          </div>
-          <div class="min-h-15 p-2 flex items-center shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_0_rgba(0,0,0,0.06)] rounded-sm">
-            <p class="w-1/10">5</p>
-            <p class="w-3/10">PT Mitra Teknologi Nusantara</p>
-            <p class="w-2/10">0822-7509-8880</p>
-            <p class="w-5/10">Komplek Ruko Harmoni Blok B2 No. 5, Bandung, Jawa Barat 40291</p>
-          </div>
-          <div class="min-h-15 p-2 flex items-center shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_0_rgba(0,0,0,0.06)] rounded-sm">
-            <p class="w-1/10">6</p>
-            <p class="w-3/10">PT Mitra Teknologi Nusantara</p>
-            <p class="w-2/10">0822-7509-8880</p>
-            <p class="w-5/10">Komplek Ruko Harmoni Blok B2 No. 5, Bandung, Jawa Barat 40291</p>
+          <div th:if="${suppliers}" th:each="supplier, iter : ${suppliers}" class="min-h-15 p-2 flex items-center shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_0_rgba(0,0,0,0.06)] rounded-sm">
+            <p class="w-1/10" th:text="${((currentPage - 1) * 7) + (iter.index + 1)}"></p>
+            <p class="w-3/10" th:text="${supplier.name}"></p>
+            <p class="w-2/10" th:text="${supplier.contact}"></p>
+            <p class="w-5/10" th:text="${supplier.address}"></p>
           </div>
           <nav class="pagination w-full flex justify-between items-center">
-            <button><img src="/img/back_icon.png" alt="" /></button>
-            <p class="font-poppins font-medium">1 of 1</p>
-            <button><img src="/img/next_icon.png" alt="" /></button>
+            <a th:href="@{/suppliers(page=${currentPage - 2})}"><img th:if="${currentPage > 1}" src="/img/back_icon.png" alt="previous page icon" /></a>
+            <p class="font-poppins font-medium"><span th:text="${currentPage}"></span> of <span th:text="${totalPages}"></span></p>
+            <a th:href="@{/suppliers(page=${currentPage})}"><img th:if="${currentPage < totalPages}" src="/img/next_icon.png" alt="next page icon" /></a>
           </nav>
         </section>
       </main>
