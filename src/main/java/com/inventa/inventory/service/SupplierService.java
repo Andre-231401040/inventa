@@ -26,6 +26,15 @@ public class SupplierService {
         return supplierRepository.save(supplier);
     }
 
+    public boolean deleteSupplierById(Long id) {
+        if(supplierRepository.existsById(id)) {
+            supplierRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public Page<Supplier> searchSuppliers(int page, int size, String name) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
         return supplierRepository.findByNameContainingIgnoreCase(name, pageable);

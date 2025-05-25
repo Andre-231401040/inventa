@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/admin")
-public class SupplierController {
+public class AdminSupplierController {
 
     @Autowired
     private SupplierService supplierService;
@@ -68,7 +68,19 @@ public class SupplierController {
             redirectAttributes.addFlashAttribute("success", "New Supplier Added Successfully.");
         }
         
-        return "redirect:/admin/add-supplier";
+        return "redirect:/admin/supplier-management";
     }
     
+    @PostMapping("/delete-supplier")
+    public String deleteSupplier(@RequestParam Long id, RedirectAttributes redirectAttributes) {
+        boolean deleted = supplierService.deleteSupplierById(id);
+
+        if(deleted) {
+            redirectAttributes.addFlashAttribute("success", "Supplier Deleted Successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Oops! Something went wront.");
+        }
+
+        return "redirect:/admin/supplier-management";
+    }
 }

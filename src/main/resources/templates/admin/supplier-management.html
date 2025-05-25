@@ -303,6 +303,8 @@
       <main class="w-82/100 flex-1 p-7 bg-white">
         <header class="mb-8 flex justify-between items-center">
           <h1 class="font-poppins text-3xl text-[#6366f1] font-bold">Suppliers</h1>
+          <p th:if="${error}" class="p-2 bg-red-100 font-opensans text-red-500" th:text="${error}"></p>
+          <p th:if="${success}" class="p-2 bg-green-100 font-opensans text-green-500" th:text="${success}"></p>
           <a class="flex gap-2 font-bold" href="/auth/logout"><img class="w-6" src="/img/logout.png" alt="logout icon" />Logout</a>
         </header>
         <section class="flex flex-col font-opensans">
@@ -339,8 +341,14 @@
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
                     <div class="min-h-16 flex justify-center items-center gap-4">
-                      <img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/edit_icon.png" alt="" />
-                      <img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/delete_icon.png" alt="" />
+                      <form action="/admin/edit-supplier" method="POST">
+                        <input type="hidden" name="id" th:value="${supplier.id}" />
+                        <button type="submit"><img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/edit_icon.png" alt="delete icon" /></button>
+                      </form>
+                      <form action="/admin/delete-supplier" method="POST" onsubmit="return confirm('Do you sure want to delete?')">
+                        <input type="hidden" name="id" th:value="${supplier.id}" />
+                        <button type="submit"><img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/delete_icon.png" alt="delete icon" /></button>
+                      </form>
                     </div>
                   </td>
                 </tr>
