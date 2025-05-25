@@ -71,8 +71,51 @@ public class AdminSupplierController {
         return "redirect:/admin/supplier-management";
     }
     
+    @PostMapping("/authorize-edit")
+    public String authorizeEditSupplier(@RequestParam Long id, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
+        String email = (String) session.getAttribute("user");
+        User user = userRepository.findByEmail(email);
+        Supplier supplier = supplierService.getSupplierById(id);
+
+        if(user.getId() != supplier.getAdminId()) {
+            redirectAttributes.addFlashAttribute("error", "Unauthorized action. You are not the owner of this supplier.");
+            return "redirect:/admin/supplier-management";
+        }
+
+        model.addAttribute("supplier", supplier);
+
+        return "/admin/edit-supplier";
+    }
+
+    @GetMapping("/edit-supplier")
+    public String showEditSupplierForm() {
+        return "/admin/edit-supplier";
+    }
+
+    @PostMapping("/update-supplier")
+    public String updateSupplier(@RequestParam Long id, @RequestParam String name, @RequestParam String contact, @RequestParam String address, RedirectAttributes redirectAttributes, Model model) {
+        Supplier updatedSupplier = supplierService.updateSupplier(id, name, contact, address);
+
+        if(updatedSupplier == null) {
+            redirectAttributes.addFlashAttribute("error", "Oops! Something went wront.");
+        } else {
+            redirectAttributes.addFlashAttribute("success", "Supplier updated successfully.");
+        }
+
+        return "redirect:/admin/supplier-management";
+    }
+
     @PostMapping("/delete-supplier")
-    public String deleteSupplier(@RequestParam Long id, RedirectAttributes redirectAttributes) {
+    public String deleteSupplier(@RequestParam Long id, RedirectAttributes redirectAttributes, HttpSession session) {
+        String email = (String) session.getAttribute("user");
+        User user = userRepository.findByEmail(email);
+        Supplier supplier = supplierService.getSupplierById(id);
+
+        if(user.getId() != supplier.getAdminId()) {
+            redirectAttributes.addFlashAttribute("error", "Unauthorized action. You are not the owner of this supplier.");
+            return "redirect:/admin/supplier-management";
+        }
+
         boolean deleted = supplierService.deleteSupplierById(id);
 
         if(deleted) {
