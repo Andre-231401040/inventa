@@ -311,11 +311,26 @@
   .h-8\/10 {
     height: calc(8/10 * 100%);
   }
+  .h-9 {
+    height: calc(var(--spacing) * 9);
+  }
+  .h-9\/10 {
+    height: calc(9/10 * 100%);
+  }
   .h-10 {
     height: calc(var(--spacing) * 10);
   }
+  .h-10\/11 {
+    height: calc(10/11 * 100%);
+  }
   .h-12 {
     height: calc(var(--spacing) * 12);
+  }
+  .h-14 {
+    height: calc(var(--spacing) * 14);
+  }
+  .h-14\/15 {
+    height: calc(14/15 * 100%);
   }
   .h-21 {
     height: calc(var(--spacing) * 21);
@@ -623,6 +638,10 @@
     border-style: var(--tw-border-style);
     border-width: 2px;
   }
+  .border-none {
+    --tw-border-style: none;
+    border-style: none;
+  }
   .border-\[\#4f46e5\] {
     border-color: #4f46e5;
   }
@@ -906,6 +925,9 @@
   }
   .outline-\[\#4F46E5\] {
     outline-color: #4F46E5;
+  }
+  .outline-\[\#4f46e5\] {
+    outline-color: #4f46e5;
   }
   .outline-\[\#10B981\] {
     outline-color: #10B981;

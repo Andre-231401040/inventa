@@ -25,4 +25,9 @@ public class SupplierService {
     public Supplier addSupplier(Supplier supplier, HttpSession session) {
         return supplierRepository.save(supplier);
     }
+
+    public Page<Supplier> searchSuppliers(int page, int size, String name) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+        return supplierRepository.findByNameContainingIgnoreCase(name, pageable);
+    } 
 }

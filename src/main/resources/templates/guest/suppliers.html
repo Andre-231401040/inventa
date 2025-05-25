@@ -118,9 +118,9 @@
 
         <section class="w-full flex justify-between items-center font-poppins">
           <h2 class="font-semibold text-xl"><span th:text="${totalSuppliers}"></span> Suppliers Found</h2>
-          <form class="h-10 flex gap-2">
-            <input class="h-full px-2 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-sm placeholder-[#bababa] focus:border-[#4f46e5]" type="text" placeholder="Enter Supplier Name" />
-            <button class="h-full px-5 bg-[#4f46e5] rounded-sm font-bold text-sm text-white" type="button">Search</button>
+          <form class="h-10 flex gap-2" action="/suppliers/search" method="POST">
+            <input class="h-full px-2 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-sm placeholder-[#bababa] focus:border-[#4f46e5]" name="keyword" type="text" placeholder="Enter Supplier Name" />
+            <button class="h-full px-5 bg-[#4f46e5] outline-2 outline-[#4f46e5] rounded-sm font-bold text-sm text-white cursor-pointer transition hover:bg-white hover:text-[#4f46e5]" type="submit">Search</button>
           </form>
         </section>
 

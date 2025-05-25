@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.inventa.inventory.model.Supplier;
@@ -30,6 +31,19 @@ public class GuestController {
         model.addAttribute("currentPage", page + 1);
         model.addAttribute("totalPages", suppliersPerPage.getTotalPages());
         model.addAttribute("totalSuppliers", suppliersPerPage.getTotalElements());
+
+        return "guest/suppliers";
+    }
+
+    @PostMapping("/suppliers/search")
+    public String searchSuppliersByName(@RequestParam(defaultValue = "0") int page, @RequestParam String keyword, Model model) {
+        int pageSize = 7;
+        Page<Supplier> searchResult = supplierService.searchSuppliers(page, pageSize, keyword);
+
+        model.addAttribute("suppliers", searchResult.getContent());
+        model.addAttribute("currentPage", page + 1);
+        model.addAttribute("totalPages", searchResult.getTotalPages());
+        model.addAttribute("totalSuppliers", searchResult.getTotalElements());
 
         return "guest/suppliers";
     }
