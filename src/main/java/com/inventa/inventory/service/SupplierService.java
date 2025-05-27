@@ -2,10 +2,7 @@ package com.inventa.inventory.service;
 
 import com.inventa.inventory.model.Supplier;
 import com.inventa.inventory.repository.SupplierRepository;
-import jakarta.servlet.http.HttpSession;
-
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Page;
@@ -25,16 +22,16 @@ public class SupplierService {
         return supplierRepository.findAll(pageable);
     }
 
-    public Supplier addSupplier(Supplier supplier, HttpSession session) {
+    public Supplier addSupplier(Supplier supplier) {
         return supplierRepository.save(supplier);
     }
 
-    public Supplier getSupplierById(Long id) {
+    public Supplier getSupplierById(Integer id) {
         Optional<Supplier> supplier = supplierRepository.findById(id);
         return supplier.isPresent() ? supplier.get() : null;
     }
 
-    public Supplier updateSupplier(Long id, String name, String contact, String address) {
+    public Supplier updateSupplier(Integer id, String name, String contact, String address) {
         Optional<Supplier> supplier = supplierRepository.findById(id);
         Supplier newSupplier = supplier.isPresent() ? supplier.get() : null;
 
@@ -47,7 +44,7 @@ public class SupplierService {
         return updatedSupplier;
     }
 
-    public boolean deleteSupplierById(Long id) {
+    public boolean deleteSupplierById(Integer id) {
         if(supplierRepository.existsById(id)) {
             supplierRepository.deleteById(id);
             return true;

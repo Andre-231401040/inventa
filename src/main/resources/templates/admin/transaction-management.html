@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -303,6 +303,8 @@
       <main class="w-82/100 flex-1 p-7 bg-white">
         <header class="mb-8 flex justify-between items-center">
           <h1 class="font-poppins text-3xl text-[#6366f1] font-bold">Transactions</h1>
+          <p th:if="${error}" class="p-2 bg-red-100 font-opensans text-red-500" th:text="${error}"></p>
+          <p th:if="${success}" class="p-2 bg-green-100 font-opensans text-green-500" th:text="${success}"></p>
           <a class="flex gap-2 font-bold" href="/auth/logout"><img class="w-6" src="/img/logout.png" alt="logout icon" />Logout</a>
         </header>
         <section class="flex flex-col font-opensans">
@@ -339,18 +341,19 @@
             <table class="w-600">
               <thead class="font-poppins">
                 <tr class="bg-[#6366f1] text-center text-white">
-                  <th class="w-4/100 border-2 border-[rgba(0,0,0,0.15)] py-2">No</th>
-                  <th class="w-5/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Image</th>
-                  <th class="w-13/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Name</th>
-                  <th class="w-9/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Category</th>
-                  <th class="w-7/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Person In Charge</th>
-                  <th class="w-5/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Qty</th>
-                  <th class="w-7/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Fee</th>
-                  <th class="w-5/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Condition</th>
-                  <th class="w-25/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Description</th>
-                  <th class="w-5/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Status</th>
-                  <th class="w-10/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Event Date</th>
-                  <th class="w-5/100 border-2 border-[rgba(0,0,0,0.15)] py-2"></th>
+                  <th class="w-4/110 border-2 border-[rgba(0,0,0,0.15)] py-2">No</th>
+                  <th class="w-5/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Image</th>
+                  <th class="w-13/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Name</th>
+                  <th class="w-9/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Category</th>
+                  <th class="w-10/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Supplier</th>
+                  <th class="w-7/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Person In Charge</th>
+                  <th class="w-5/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Qty</th>
+                  <th class="w-7/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Fee</th>
+                  <th class="w-5/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Condition</th>
+                  <th class="w-25/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Description</th>
+                  <th class="w-5/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Status</th>
+                  <th class="w-10/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Event Date</th>
+                  <th class="w-5/110 border-2 border-[rgba(0,0,0,0.15)] py-2"></th>
                 </tr>
               </thead>
               <tbody>
@@ -364,19 +367,22 @@
                     </div>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Meja Belajar</p>
+                    <p class="min-h-16 h-auto flex justify-center items-center text-center">Meja Belajar</p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Furnitur</p>
+                    <p class="min-h-16 flex justify-center items-center text-center">Furnitur</p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">0812-3456-7890</p>
+                    <p class="min-h-16 flex justify-center items-center text-center">PT Sumber Jaya Abadi</p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">30</p>
+                    <p class="min-h-16 flex justify-center items-center text-center">0812-3456-7890</p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Rp6.000.000</p>
+                    <p class="min-h-16 flex justify-center items-center text-center">30</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center text-center">Rp6.000.000</p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
                     <div class="min-h-16 flex justify-center items-center">
@@ -384,7 +390,7 @@
                     </div>
                   </td>
                   <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex items-center">Digunakan diruang kelas</p>
+                    <p class="min-h-16 flex items-center">Digunakan diruang kelas.</p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
                     <div class="min-h-16 flex justify-center items-center">
@@ -415,6 +421,9 @@
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
                     <p class="min-h-16 flex justify-center items-center">Furnitur</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center text-center">PT Mitra Teknologi Nusantara</p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
                     <p class="min-h-16 flex justify-center items-center">0812-3456-7890</p>
@@ -464,6 +473,9 @@
                     <p class="min-h-16 flex justify-center items-center">Furnitur</p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">PT Sumber Jaya Abadi</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
                     <p class="min-h-16 flex justify-center items-center">0812-3456-7890</p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
@@ -509,6 +521,9 @@
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
                     <p class="min-h-16 flex justify-center items-center">Furnitur</p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center">PT Sumber Jaya Abadi</p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
                     <p class="min-h-16 flex justify-center items-center">0812-3456-7890</p>

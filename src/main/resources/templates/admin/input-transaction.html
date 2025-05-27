@@ -328,30 +328,30 @@
           </section>
 
           <section id="items-in" class="forms">
-            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="">
+            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="/admin/add-transaction-in" method="POST" enctype="multipart/form-data">
               <h2 class="font-poppins text-xl text-[#6366f1] font-bold">Items In</h2>
               <div class="flex justify-between">
                 <div class="w-49/100">
                   <label class="font-semibold" for="name">Name</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="name" id="name" />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="name" id="name" required />
                 </div>
                 <div class="w-49/100">
                   <label class="font-semibold" for="category">Category</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="category" id="category" />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="category" id="category" required />
                 </div>
               </div>
               <div>
                 <label class="font-semibold" for="location">Location</label>
-                <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="location" id="location" />
+                <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="location" id="location" required />
               </div>
               <div class="flex justify-between">
                 <div class="w-49/100">
                   <label class="font-semibold" for="qty">Qty</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" name="qty" id="qty" />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" name="qty" id="qty" required />
                 </div>
                 <div class="w-49/100">
                   <label class="font-semibold" for="fee">Fee</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" required />
                 </div>
               </div>
               <div class="flex justify-between">
@@ -370,8 +370,9 @@
                     </svg>
                   </button>
                   <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
-                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="PT A">PT A</li>
-                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="PT B">PT B</li>
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="1">PT A</li>
+                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="2">PT B</li>
+                    <input type="hidden" name="supplier_id" required />
                   </ul>
                 </div>
                 <div class="relative w-49/100">
@@ -392,12 +393,13 @@
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Good">Good</li>
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Average">Average</li>
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Bad">Bad</li>
+                    <input type="hidden" name="condition" required />
                   </ul>
                 </div>
               </div>
               <div>
                 <label class="font-semibold" for="pic">Person In Charge</label>
-                <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" />
+                <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" required />
               </div>
               <div>
                 <label class="font-semibold" for="description">Description</label>
@@ -405,13 +407,14 @@
                   class="w-full h-21 mt-1 ps-2 pe-1 py-1 resize-none overflow-y-scroll scrollbar scrollbar-thumb-[#bababa] scrollbar-track-[rgba(0,0,0,0.1)] scrollbar-active:scrollbar-thumb-[#4f46e5] outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]"
                   name="description"
                   id="description"
+                  required
                 ></textarea>
               </div>
               <div class="flex flex-col">
                 <p class="mb-1 font-semibold">Upload Image</p>
                 <label class="input-image w-1/7 py-2 bg-[rgba(0,0,0,0.1)] text-center text-lg text-[#bababa] cursor-pointer transition hover:bg-[#4f46e5] hover:text-white" for="image-in">
                   Choose File
-                  <input class="hidden" type="file" name="image-in" id="image-in" accept="image/png, image/jpg, image/jpeg, image/svg" required />
+                  <input class="hidden" type="file" name="image_in" id="image-in" accept="image/png, image/jpg, image/jpeg, image/svg" required />
                 </label>
                 <p class="file-name text-sm">No file chosen</p>
               </div>
@@ -422,7 +425,7 @@
           </section>
 
           <section id="items-out" class="forms hidden">
-            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="">
+            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="" enctype="multipart/form-data">
               <h2 class="font-poppins text-xl text-[#6366f1] font-bold">Items Out</h2>
               <div class="flex justify-between">
                 <div class="relative w-49/100">
@@ -467,17 +470,17 @@
               <div class="flex justify-between">
                 <div class="w-49/100">
                   <label class="font-semibold" for="qty">Qty</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" name="qty" id="qty" />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" name="qty" id="qty" required />
                 </div>
                 <div class="w-49/100">
                   <label class="font-semibold" for="fee">Fee</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" required />
                 </div>
               </div>
               <div class="flex justify-between">
                 <div class="w-49/100">
                   <label class="font-semibold" for="pic">Person In Charge</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" required />
                 </div>
                 <div class="relative w-49/100">
                   <p class="mb-1 font-semibold">Condition</p>
@@ -506,13 +509,14 @@
                   class="w-full h-21 mt-1 ps-2 pe-1 py-1 resize-none overflow-y-scroll scrollbar scrollbar-thumb-[#bababa] scrollbar-track-[rgba(0,0,0,0.1)] scrollbar-active:scrollbar-thumb-[#4f46e5] outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]"
                   name="description"
                   id="description"
+                  required
                 ></textarea>
               </div>
               <div class="flex flex-col">
                 <p class="mb-1 font-semibold">Upload Image</p>
                 <label class="input-image w-1/7 py-2 bg-[rgba(0,0,0,0.1)] text-center text-lg text-[#bababa] cursor-pointer transition hover:bg-[#4f46e5] hover:text-white" for="image-out">
                   Choose File
-                  <input class="hidden" type="file" name="image-out" id="image-out" accept="image/png, image/jpg, image/jpeg, image/svg" required />
+                  <input class="hidden" type="file" name="image_out" id="image-out" accept="image/png, image/jpg, image/jpeg, image/svg" required />
                 </label>
                 <p class="file-name text-sm">No file chosen</p>
               </div>
@@ -523,7 +527,7 @@
           </section>
 
           <section id="items-lent" class="forms hidden">
-            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="">
+            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="" enctype="multipart/form-data">
               <h2 class="font-poppins text-xl text-[#6366f1] font-bold">Items Lent</h2>
               <div class="flex justify-between">
                 <div class="relative w-49/100">
@@ -568,17 +572,17 @@
               <div class="flex justify-between">
                 <div class="w-49/100">
                   <label class="font-semibold" for="qty">Qty</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" name="qty" id="qty" />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" name="qty" id="qty" required />
                 </div>
                 <div class="w-49/100">
                   <label class="font-semibold" for="fee">Fee</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" required />
                 </div>
               </div>
               <div class="flex justify-between">
                 <div class="w-49/100">
                   <label class="font-semibold" for="pic">Person In Charge</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" required />
                 </div>
                 <div class="relative w-49/100">
                   <p class="mb-1 font-semibold">Condition</p>
@@ -607,13 +611,14 @@
                   class="w-full h-21 mt-1 ps-2 pe-1 py-1 resize-none overflow-y-scroll scrollbar scrollbar-thumb-[#bababa] scrollbar-track-[rgba(0,0,0,0.1)] scrollbar-active:scrollbar-thumb-[#4f46e5] outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]"
                   name="description"
                   id="description"
+                  required
                 ></textarea>
               </div>
               <div class="flex flex-col">
                 <p class="mb-1 font-semibold">Upload Image</p>
                 <label class="input-image w-1/7 py-2 bg-[rgba(0,0,0,0.1)] text-center text-lg text-[#bababa] cursor-pointer transition hover:bg-[#4f46e5] hover:text-white" for="image-lent">
                   Choose File
-                  <input class="hidden" type="file" name="image-lent" id="image-lent" accept="image/png, image/jpg, image/jpeg, image/svg" required />
+                  <input class="hidden" type="file" name="image_lent" id="image-lent" accept="image/png, image/jpg, image/jpeg, image/svg" required />
                 </label>
                 <p class="file-name text-sm">No file chosen</p>
               </div>
@@ -624,7 +629,7 @@
           </section>
 
           <section id="items-returned" class="forms hidden">
-            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="">
+            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="" enctype="multipart/form-data">
               <h2 class="font-poppins text-xl text-[#6366f1] font-bold">Items Returned</h2>
               <div class="flex justify-between">
                 <div class="relative w-49/100">
@@ -669,17 +674,17 @@
               <div class="flex justify-between">
                 <div class="w-49/100">
                   <label class="font-semibold" for="qty">Qty</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" name="qty" id="qty" />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" name="qty" id="qty" required />
                 </div>
                 <div class="w-49/100">
                   <label class="font-semibold" for="fee">Fee</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" required />
                 </div>
               </div>
               <div class="flex justify-between">
                 <div class="w-49/100">
                   <label class="font-semibold" for="pic">Person In Charge</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" required />
                 </div>
                 <div class="relative w-49/100">
                   <p class="mb-1 font-semibold">Condition</p>
@@ -708,13 +713,14 @@
                   class="w-full h-21 mt-1 ps-2 pe-1 py-1 resize-none overflow-y-scroll scrollbar scrollbar-thumb-[#bababa] scrollbar-track-[rgba(0,0,0,0.1)] scrollbar-active:scrollbar-thumb-[#4f46e5] outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]"
                   name="description"
                   id="description"
+                  required
                 ></textarea>
               </div>
               <div class="flex flex-col">
                 <p class="mb-1 font-semibold">Upload Image</p>
                 <label class="input-image w-1/7 py-2 bg-[rgba(0,0,0,0.1)] text-center text-lg text-[#bababa] cursor-pointer transition hover:bg-[#4f46e5] hover:text-white" for="image-returned">
                   Choose File
-                  <input class="hidden" type="file" name="image-returned" id="image-returned" accept="image/png, image/jpg, image/jpeg, image/svg" required />
+                  <input class="hidden" type="file" name="image_returned" id="image-returned" accept="image/png, image/jpg, image/jpeg, image/svg" required />
                 </label>
                 <p class="file-name text-sm">No file chosen</p>
               </div>
@@ -761,6 +767,13 @@
         image.addEventListener("change", () => {
           const file = image.files[0];
           fileName.textContent = file ? file.name : "No file chosen";
+        });
+      });
+
+      document.querySelectorAll("#dropdownList .option").forEach((item) => {
+        item.addEventListener("click", function () {
+          const value = this.getAttribute("data-value");
+          item.parentElement.querySelector("input").value = value;
         });
       });
     </script>

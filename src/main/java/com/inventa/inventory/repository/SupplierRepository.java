@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SupplierRepository extends JpaRepository<Supplier, Long> {
+public interface SupplierRepository extends JpaRepository<Supplier, Integer> {
     Supplier findByName(String name);
     Page<Supplier> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<Supplier> findAll(Pageable pageable);

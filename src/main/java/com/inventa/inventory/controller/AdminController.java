@@ -1,15 +1,25 @@
 package com.inventa.inventory.controller;
 
 import jakarta.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import com.inventa.inventory.model.Supplier;
+import com.inventa.inventory.service.SupplierService;
 
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
+    @Autowired
+    private SupplierService supplierService;
+
     @GetMapping("/login")
     public String redirectToLogin(HttpSession session) {
         Object user = session.getAttribute("user");
@@ -20,7 +30,6 @@ public class AdminController {
 
         return "admin/login";
     }
-    
 
     @GetMapping("/reset-password")
     public String redirectToResetPassword(HttpSession session) {
@@ -75,6 +84,40 @@ public class AdminController {
         }
 
         return "admin/input-transaction";
+    }
+
+    @GetMapping("/supplier-management")
+    public String displaySupplierManagement(@RequestParam(defaultValue = "0") int page, HttpSession session, Model model) {
+        Object user = session.getAttribute("user");
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+
+        int pageSize = 5;
+        Page<Supplier> suppliersPerPage = supplierService.getSuppliersPerPage(page, pageSize);
+        
+        model.addAttribute("suppliers", suppliersPerPage.getContent());
+        model.addAttribute("currentPage", page + 1);
+        model.addAttribute("totalPages", suppliersPerPage.getTotalPages());
+
+        return "admin/supplier-management";
+    }
+
+    @GetMapping("/add-supplier")
+    public String redirectToAddSupplier(HttpSession session, Model model) {
+        Object user = session.getAttribute("user");
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+
+        return "admin/add-supplier";
+    }
+
+    @GetMapping("/edit-supplier")
+    public String showEditSupplierForm() {
+        return "admin/edit-supplier";
     }
 
     @GetMapping("/report-management")

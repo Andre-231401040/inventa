@@ -7,27 +7,27 @@ import jakarta.persistence.*;
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String name;
     private String contact;
     private String address;
-    private Long admin_id;
+    private Integer admin_id;
 
     public Supplier() {
     }
 
-    public Supplier(String name, String contact, String address, Long admin_id) {
+    public Supplier(String name, String contact, String address, Integer admin_id) {
         setName(name);
         setContact(contact);
         setAddress(address);
         setAdminId(admin_id);
     }
 
-    public Long getId() { 
+    public Integer getId() { 
         return id; 
     }
 
-    public void setId(Long id) { 
+    public void setId(Integer id) { 
         this.id = id; 
     }
 
@@ -55,11 +55,11 @@ public class Supplier {
         this.address = address; 
     }
 
-    public Long getAdminId() { 
+    public Integer getAdminId() { 
         return admin_id; 
     }
 
-    public void setAdminId(Long admin_id) { 
+    public void setAdminId(Integer admin_id) { 
         this.admin_id = admin_id; 
     }
 }
