@@ -335,6 +335,12 @@
   .h-full {
     height: 100%;
   }
+  .max-h-40 {
+    max-height: calc(var(--spacing) * 40);
+  }
+  .max-h-50 {
+    max-height: calc(var(--spacing) * 50);
+  }
   .min-h-15 {
     min-height: calc(var(--spacing) * 15);
   }
@@ -380,6 +386,9 @@
   .w-3\/15 {
     width: calc(3/15 * 100%);
   }
+  .w-3\/110 {
+    width: calc(3/110 * 100%);
+  }
   .w-4 {
     width: calc(var(--spacing) * 4);
   }
@@ -422,11 +431,11 @@
   .w-8\/10 {
     width: calc(8/10 * 100%);
   }
+  .w-8\/110 {
+    width: calc(8/110 * 100%);
+  }
   .w-9 {
     width: calc(var(--spacing) * 9);
-  }
-  .w-9\/100 {
-    width: calc(9/100 * 100%);
   }
   .w-9\/110 {
     width: calc(9/110 * 100%);
@@ -521,20 +530,20 @@
   .w-600 {
     width: calc(var(--spacing) * 600);
   }
-  .w-fit {
-    width: fit-content;
+  .w-620 {
+    width: calc(var(--spacing) * 620);
+  }
+  .w-640 {
+    width: calc(var(--spacing) * 640);
+  }
+  .w-720 {
+    width: calc(var(--spacing) * 720);
+  }
+  .w-6400 {
+    width: calc(var(--spacing) * 6400);
   }
   .w-full {
     width: 100%;
-  }
-  .max-w-25 {
-    max-width: calc(var(--spacing) * 25);
-  }
-  .max-w-25\/110 {
-    max-width: calc(25/110 * 100%);
-  }
-  .max-w-fit {
-    max-width: fit-content;
   }
   .flex-1 {
     flex: 1;
@@ -632,6 +641,9 @@
   }
   .overflow-x-scroll {
     overflow-x: scroll;
+  }
+  .overflow-y-auto {
+    overflow-y: auto;
   }
   .overflow-y-scroll {
     overflow-y: scroll;

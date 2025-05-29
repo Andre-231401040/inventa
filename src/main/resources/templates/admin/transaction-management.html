@@ -338,17 +338,17 @@
           </div>
 
           <section class="font-opensans pb-4 overflow-x-scroll scrollbar scrollbar-thumb-[#6366f1] scrollbar-track-[#d2d3fb] scrollbar-hover:scrollbar-thumb-[#8f90fdfd] scrollbar-active:scrollbar-thumb-[#8f90fdfd]">
-            <table class="w-600">
+            <table class="w-640">
               <thead class="font-poppins">
                 <tr class="bg-[#6366f1] text-center text-white">
-                  <th class="w-4/110 border-2 border-[rgba(0,0,0,0.15)] py-2">No</th>
+                  <th class="w-3/110 border-2 border-[rgba(0,0,0,0.15)] py-2">No</th>
                   <th class="w-5/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Image</th>
-                  <th class="w-13/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Name</th>
+                  <th class="w-10/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Name</th>
                   <th class="w-9/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Category</th>
-                  <th class="w-10/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Supplier</th>
+                  <th class="w-13/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Supplier</th>
                   <th class="w-7/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Person In Charge</th>
                   <th class="w-5/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Qty</th>
-                  <th class="w-7/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Fee</th>
+                  <th class="w-8/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Fee</th>
                   <th class="w-5/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Condition</th>
                   <th class="w-25/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Description</th>
                   <th class="w-5/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Status</th>
@@ -357,203 +357,64 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr th:if="${transactions}" th:each="transaction, iter : ${transactions}">
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">1</p>
+                    <p class="min-h-16 flex justify-center items-center" th:text="${((currentPage - 1) * 5) + (iter.index + 1)}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
                     <div class="min-h-16 flex justify-center items-center">
-                      <img class="w-10 h-fit" src="/img/picture.png" alt="" />
+                      <img class="w-10 h-fit" th:src="@{'/uploads/' + ${transaction.image}}" th:alt="${transaction.name}" />
                     </div>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 h-auto flex justify-center items-center text-center">Meja Belajar</p>
+                    <p class="min-h-16 h-auto flex justify-center items-center text-center" th:text="${transaction.name}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center text-center">Furnitur</p>
+                    <p class="min-h-16 flex justify-center items-center text-center" th:text="${transaction.category}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center text-center">PT Sumber Jaya Abadi</p>
+                    <p class="min-h-16 flex justify-center items-center text-center" th:text="${transaction.supplier.name}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center text-center">0812-3456-7890</p>
+                    <p class="min-h-16 flex justify-center items-center text-center" th:text="${transaction.pic}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center text-center">30</p>
+                    <p class="min-h-16 flex justify-center items-center text-center" th:text="${transaction.qty}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center text-center">Rp6.000.000</p>
+                    <p class="min-h-16 flex justify-center items-center text-center" th:text="'Rp' + ${transaction.fee}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
                     <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#D4EDDA] rounded-sm">Good</p>
+                      <p th:if="${transaction.condition == 'Good'}" class="px-2 py-1 bg-[#D4EDDA] rounded-sm">Good</p>
+                      <p th:if="${transaction.condition == 'Average'}" class="px-2 py-1 bg-[#FFF3CD] rounded-sm">Average</p>
+                      <p th:if="${transaction.condition == 'Bad'}" class="px-2 py-1 bg-[#F8D7DA] rounded-sm">Bad</p>
                     </div>
                   </td>
                   <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex items-center">Digunakan diruang kelas.</p>
+                    <p class="min-h-16 flex items-center" th:text="${transaction.description}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
                     <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#D4EDDA] rounded-sm">In</p>
+                      <p th:if="${transaction.status == 'In'}" class="px-2 py-1 bg-[#D4EDDA] rounded-sm">In</p>
+                      <p th:if="${transaction.status == 'Lent'}" class="px-2 py-1 bg-[#FFF3CD] rounded-sm">Lent</p>
+                      <p th:if="${transaction.status == 'Returned'}" class="px-2 py-1 bg-[#D1ECF1] rounded-sm">Returned</p>
+                      <p th:if="${transaction.status == 'Out'}" class="px-2 py-1 bg-[#F8D7DA] rounded-sm">Out</p>
                     </div>
                   </td>
                   <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">2025-02-23</p>
+                    <p class="min-h-16 flex justify-center items-center" th:text="${transaction.date}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
                     <div class="min-h-16 flex justify-center items-center gap-3">
-                      <img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/edit_icon.png" alt="" />
-                      <img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/delete_icon.png" alt="" />
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">2</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <img class="w-10 h-fit" src="/img/picture.png" alt="" />
-                    </div>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Meja Belajar</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Furnitur</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center text-center">PT Mitra Teknologi Nusantara</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">0812-3456-7890</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">30</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Rp6.000.000</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#FFF3CD] rounded-sm">Average</p>
-                    </div>
-                  </td>
-                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex items-center">Digunakan diruang kelas</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#F8D7DA] rounded-sm">Out</p>
-                    </div>
-                  </td>
-                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">2025-02-23</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <div class="min-h-16 flex justify-center items-center gap-3">
-                      <img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/edit_icon.png" alt="" />
-                      <img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/delete_icon.png" alt="" />
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">3</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <img class="w-10 h-fit" src="/img/picture.png" alt="" />
-                    </div>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Meja Belajar</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Furnitur</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">PT Sumber Jaya Abadi</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">0812-3456-7890</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">30</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Rp6.000.000</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#D4EDDA] rounded-sm">Good</p>
-                    </div>
-                  </td>
-                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex items-center">Digunakan diruang kelas</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#FFF3CD] rounded-sm">Lent</p>
-                    </div>
-                  </td>
-                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">2025-02-23</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <div class="min-h-16 flex justify-center items-center gap-3">
-                      <img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/edit_icon.png" alt="" />
-                      <img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/delete_icon.png" alt="" />
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">4</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <img class="w-10 h-fit" src="/img/picture.png" alt="" />
-                    </div>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Meja Belajar</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Furnitur</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">PT Sumber Jaya Abadi</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">0812-3456-7890</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">30</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Rp6.000.000</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#F8D7DA] rounded-sm">Bad</p>
-                    </div>
-                  </td>
-                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex items-center">Digunakan diruang kelas</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#D1ECF1] rounded-sm">Returned</p>
-                    </div>
-                  </td>
-                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">2025-02-23</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <div class="min-h-16 flex justify-center items-center gap-3">
-                      <img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/edit_icon.png" alt="" />
-                      <img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/delete_icon.png" alt="" />
+                      <form action="/admin/authorize-edit" method="POST">
+                        <input type="hidden" name="id" th:value="${transaction.id}" />
+                        <button type="submit"><img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/edit_icon.png" alt="delete icon" /></button>
+                      </form>
+                      <form action="/admin/delete-transaction" method="POST" onsubmit="return confirm('Do you sure want to delete?')">
+                        <input type="hidden" name="id" th:value="${transaction.id}" />
+                        <button type="submit"><img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/delete_icon.png" alt="delete icon" /></button>
+                      </form>
                     </div>
                   </td>
                 </tr>
@@ -562,9 +423,9 @@
           </section>
 
           <nav class="pagination w-full mt-20 flex justify-between items-center">
-            <button><img src="/img/back_icon.png" alt="" /></button>
-            <p class="font-poppins font-medium">1 of 1</p>
-            <button><img src="/img/next_icon.png" alt="" /></button>
+            <a th:href="@{/admin/transaction-management(page=${currentPage - 2})}"><img th:if="${currentPage > 1}" src="/img/back_icon.png" alt="previous page icon" /></a>
+            <p class="font-poppins font-medium"><span th:text="${currentPage}"></span> of <span th:text="${totalPages}"></span></p>
+            <a th:href="@{/admin/transaction-management(page=${currentPage})}"><img th:if="${currentPage < totalPages}" src="/img/next_icon.png" alt="next page icon" /></a>
           </nav>
         </section>
       </main>

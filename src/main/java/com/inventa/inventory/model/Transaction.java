@@ -22,18 +22,21 @@ public class Transaction {
     @Column(name = "`status`")
     private String status;
     private LocalDate date;
-    private Integer supplier_id;
+    // private Integer supplier_id;
     private Integer admin_id;
+    @ManyToOne
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
 
     public Transaction() {
 
     }
 
-    public Transaction(String image, String name, String category, String pic, String location, Integer qty, Float fee, String condition, String description, String status, LocalDate date, Integer supplier_id, Integer admin_id) {
+    public Transaction(String image, String name, String category, String pic, String location, Integer qty, Float fee, String condition, String description, String status, LocalDate date, Supplier supplier, Integer admin_id) {
         setImage(image);
         setName(name);
         setCategory(category);
-        setPIC(pic);
+        setPic(pic);
         setLocation(location);
         setQty(qty);
         setFee(fee);
@@ -41,7 +44,7 @@ public class Transaction {
         setDescription(description);
         setStatus(status);
         setDate(date);
-        setSupplierId(supplier_id);
+        setSupplier(supplier);
         setAdminId(admin_id);
     }
 
@@ -77,11 +80,19 @@ public class Transaction {
         this.category = category;
     }
 
-    public String getPIC() {
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
+
+    public String getPic() {
         return pic;
     }
 
-    public void setPIC(String pic) {
+    public void setPic(String pic) {
         this.pic = pic;
     }
 
@@ -141,13 +152,13 @@ public class Transaction {
         this.date = date;
     }
 
-    public Integer getSupplierId() { 
-        return supplier_id; 
-    }
+    // public Integer getSupplierId() { 
+    //     return supplier_id; 
+    // }
 
-    public void setSupplierId(Integer supplier_id) { 
-        this.supplier_id = supplier_id;
-    }
+    // public void setSupplierId(Integer supplier_id) { 
+    //     this.supplier_id = supplier_id;
+    // }
 
     public Integer getAdminId() { 
         return admin_id; 

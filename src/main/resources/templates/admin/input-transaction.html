@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thmyeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -369,9 +369,8 @@
                       </g>
                     </svg>
                   </button>
-                  <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
-                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="1">PT A</li>
-                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="2">PT B</li>
+                  <ul id="dropdownList" class="hidden max-h-50 overflow-y-auto absolute z-40 w-full bg-[#F2F2F2]">
+                    <li th:if="${suppliers}" th:each="supplier : ${suppliers}" class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" th:attr="data-value=${supplier.id}" th:text="${supplier.name}"></li>
                     <input type="hidden" name="supplier_id" required />
                   </ul>
                 </div>
@@ -774,6 +773,7 @@
         item.addEventListener("click", function () {
           const value = this.getAttribute("data-value");
           item.parentElement.querySelector("input").value = value;
+          console.log(item.parentElement.querySelector("input").value);
         });
       });
     </script>
