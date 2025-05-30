@@ -142,6 +142,63 @@ public class TransactionController {
         return "redirect:/admin/transaction-management";
     }
 
+    @PostMapping("/add-transaction-lent")
+    public String addTransactionLent(@RequestParam MultipartFile image_lent, @RequestParam String name, @RequestParam String category, @RequestParam String pic, @RequestParam Integer qty, @RequestParam Float fee, @RequestParam String condition, @RequestParam String description, RedirectAttributes redirectAttributes, HttpSession session) {
+        try {
+            String status = "Lent";
+            String email = (String) session.getAttribute("user");
+            User user = userRepository.findByEmail(email);
+
+            LocalDate date = LocalDate.now();
+
+            redirectAttributes.addFlashAttribute("qty", qty);
+
+            // cek stok
+            Integer unavailableStock = transactionService.getQtyByNameAndStatus(name, "Out");
+            unavailableStock += transactionService.getQtyByNameAndStatus(name, "Lent");
+            Integer stock = transactionService.getQtyByNameAndStatus(name, "In");
+            if(qty + unavailableStock > stock) {
+                redirectAttributes.addFlashAttribute("error", "Qty cannot bigger than available stock.");
+                return "redirect:/admin/input-transaction/items-lent";
+            }
+            
+            // image handling
+            String fileName = image_lent.getOriginalFilename();
+            String extension = "";
+
+            int dotIndex = fileName.lastIndexOf(".");
+            if(dotIndex >= 0) {
+                extension = fileName.substring(dotIndex);
+            }
+
+            // buat nama file unik
+            String newFileName = UUID.randomUUID().toString() + extension;
+
+            String uploadDir = "uploads/";
+            Path filePath = Paths.get(uploadDir, newFileName);
+            Files.createDirectories(filePath.getParent());
+
+            // simpan file fisik
+            Files.copy(image_lent.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            // simpan transaksi ke database
+            Transaction newTransaction = new Transaction(newFileName, name, category, pic, "-", qty, fee, condition, description, status, date, null, user.getId());
+            Transaction savedTransaction = transactionService.addTransaction(newTransaction);
+
+            if(savedTransaction == null) {
+                redirectAttributes.addFlashAttribute("error", "Oops! Something went wront.");
+                return "redirect:/admin/input-transaction/items-lent";
+            } else {
+                redirectAttributes.addFlashAttribute("success", "New Transaction Lent Added Successfully.");
+            }
+        } catch(IOException e) {
+            redirectAttributes.addFlashAttribute("error", "Upload failed: " + e.getMessage());
+            return "redirect:/admin/input-transaction/items-lent";
+        }
+
+        return "redirect:/admin/transaction-management";
+    }
+
     @PostMapping("/delete-transaction")
     public String deleteTransaction(@RequestParam Integer id, RedirectAttributes redirectAttributes, HttpSession session) {
         String email = (String) session.getAttribute("user");

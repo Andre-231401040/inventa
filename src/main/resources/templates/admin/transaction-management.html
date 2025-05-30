@@ -348,11 +348,12 @@
                   <th class="w-13/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Supplier</th>
                   <th class="w-7/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Person In Charge</th>
                   <th class="w-5/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Qty</th>
-                  <th class="w-8/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Fee</th>
+                  <th class="w-7/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Fee</th>
+                  <th class="w-10/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Location</th>
                   <th class="w-5/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Condition</th>
-                  <th class="w-25/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Description</th>
+                  <th class="w-21/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Description</th>
                   <th class="w-5/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Status</th>
-                  <th class="w-10/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Event Date</th>
+                  <th class="w-5/110 border-2 border-[rgba(0,0,0,0.15)] py-2">Event Date</th>
                   <th class="w-5/110 border-2 border-[rgba(0,0,0,0.15)] py-2"></th>
                 </tr>
               </thead>
@@ -384,6 +385,9 @@
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
                     <p class="min-h-16 flex justify-center items-center text-center" th:text="'Rp' + ${transaction.fee}"></p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center text-center" th:text="${transaction.location}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
                     <div class="min-h-16 flex justify-center items-center">

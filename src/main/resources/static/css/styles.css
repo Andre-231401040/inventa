@@ -476,6 +476,12 @@
   .w-20\/100 {
     width: calc(20/100 * 100%);
   }
+  .w-21 {
+    width: calc(var(--spacing) * 21);
+  }
+  .w-21\/110 {
+    width: calc(21/110 * 100%);
+  }
   .w-25 {
     width: calc(var(--spacing) * 25);
   }
