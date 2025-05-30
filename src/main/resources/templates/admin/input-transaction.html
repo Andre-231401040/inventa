@@ -303,6 +303,7 @@
       <main class="w-82/100 flex-1 p-7 bg-white">
         <header class="mb-8 flex justify-between items-center">
           <h1 class="font-poppins text-3xl text-[#6366f1] font-bold">Transactions</h1>
+          <p th:if="${error}" class="p-2 bg-red-100 font-opensans text-red-500" th:text="${error}"></p>
           <a class="flex gap-2 font-bold" href="/auth/logout"><img class="w-6" src="/img/logout.png" alt="logout icon" />Logout</a>
         </header>
         <section class="flex flex-col font-opensans">
@@ -347,7 +348,7 @@
               <div class="flex justify-between">
                 <div class="w-49/100">
                   <label class="font-semibold" for="qty">Qty</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" name="qty" id="qty" required />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" min="1" name="qty" id="qty" required />
                 </div>
                 <div class="w-49/100">
                   <label class="font-semibold" for="fee">Fee</label>
@@ -423,8 +424,8 @@
             </form>
           </section>
 
-          <section id="items-out" class="forms hidden">
-            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="" enctype="multipart/form-data">
+          <section id="items-out" class="forms">
+            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="/admin/add-transaction-out" method="POST" enctype="multipart/form-data">
               <h2 class="font-poppins text-xl text-[#6366f1] font-bold">Items Out</h2>
               <div class="flex justify-between">
                 <div class="relative w-49/100">
@@ -441,9 +442,9 @@
                       </g>
                     </svg>
                   </button>
-                  <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
-                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Kursi">Kursi</li>
-                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Meja">Meja</li>
+                  <ul id="dropdownList" class="hidden max-h-50 absolute z-40 w-full bg-[#F2F2F2]">
+                    <li th:if="${transactionsIn}" th:each="transactionIn : ${transactionsIn}" class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" th:attr="data-value=${transactionIn.name}" th:text="${transactionIn.name}"></li>
+                    <input type="hidden" name="name" required />
                   </ul>
                 </div>
                 <div class="relative w-49/100">
@@ -460,16 +461,22 @@
                       </g>
                     </svg>
                   </button>
-                  <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
-                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Furnitur">Furnitur</li>
-                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Elektronik">Elektronik</li>
+                  <ul id="dropdownList" class="hidden max-h-50 absolute z-40 w-full bg-[#F2F2F2]">
+                    <li
+                      th:if="${transactionsIn}"
+                      th:each="transactionIn : ${transactionsIn}"
+                      class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer"
+                      th:attr="data-value=${transactionIn.category}"
+                      th:text="${transactionIn.category}"
+                    ></li>
+                    <input type="hidden" name="category" required />
                   </ul>
                 </div>
               </div>
               <div class="flex justify-between">
                 <div class="w-49/100">
                   <label class="font-semibold" for="qty">Qty</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" name="qty" id="qty" required />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" min="1" name="qty" id="qty" required />
                 </div>
                 <div class="w-49/100">
                   <label class="font-semibold" for="fee">Fee</label>
@@ -499,6 +506,7 @@
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Good">Good</li>
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Average">Average</li>
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Bad">Bad</li>
+                    <input type="hidden" name="condition" required />
                   </ul>
                 </div>
               </div>
@@ -525,7 +533,7 @@
             </form>
           </section>
 
-          <section id="items-lent" class="forms hidden">
+          <section id="items-lent" class="forms">
             <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="" enctype="multipart/form-data">
               <h2 class="font-poppins text-xl text-[#6366f1] font-bold">Items Lent</h2>
               <div class="flex justify-between">
@@ -627,7 +635,7 @@
             </form>
           </section>
 
-          <section id="items-returned" class="forms hidden">
+          <section id="items-returned" class="forms">
             <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="" enctype="multipart/form-data">
               <h2 class="font-poppins text-xl text-[#6366f1] font-bold">Items Returned</h2>
               <div class="flex justify-between">
@@ -734,46 +742,64 @@
 
     <script src="/js/script.js"></script>
     <script>
-      let selectedValue = "items-in";
-      const forms = document.querySelectorAll(".forms");
-      const formOptions = document.querySelectorAll(".form-option");
+      window.addEventListener("DOMContentLoaded", () => {
+        // const defaultPath = "items-in";
+        const path = window.location.pathname.split("/");
+        let selectedValue = path[path.length - 1];
 
-      formOptions.forEach((formOption) => {
-        formOption.addEventListener("click", () => {
-          forms.forEach((form) => {
-            if (form.id.includes(selectedValue)) {
-              form.classList.add("hidden");
-            }
-          });
+        // if (selectedValue !== defaultPath) {
+        //   window.location.href = `/admin/input-transaction/${defaultPath}`;
+        // }
 
-          selectedValue = formOption.dataset.value;
+        const forms = document.querySelectorAll(".forms");
+        const formOptions = document.querySelectorAll(".form-option");
 
-          forms.forEach((form) => {
-            if (form.id.includes(selectedValue)) {
-              console.log(form);
-              form.classList.remove("hidden");
-            }
+        forms.forEach((form) => {
+          if (!form.id.includes(selectedValue)) {
+            form.classList.add("hidden");
+          }
+        });
+
+        formOptions.forEach((formOption) => {
+          formOption.addEventListener("click", () => {
+            forms.forEach((form) => {
+              if (form.id.includes(selectedValue)) {
+                form.classList.add("hidden");
+              }
+            });
+
+            selectedValue = formOption.dataset.value;
+
+            forms.forEach((form) => {
+              if (form.id.includes(selectedValue)) {
+                console.log(form);
+                form.classList.remove("hidden");
+              }
+            });
+
+            const newUrl = `/admin/input-transaction/${selectedValue}`;
+            window.history.pushState({}, "", newUrl);
           });
         });
-      });
 
-      const inputImages = document.querySelectorAll(".input-image");
+        const inputImages = document.querySelectorAll(".input-image");
 
-      inputImages.forEach((inputImage) => {
-        const image = inputImage.querySelector("input");
-        const fileName = inputImage.parentElement.querySelector(".file-name");
+        inputImages.forEach((inputImage) => {
+          const image = inputImage.querySelector("input");
+          const fileName = inputImage.parentElement.querySelector(".file-name");
 
-        image.addEventListener("change", () => {
-          const file = image.files[0];
-          fileName.textContent = file ? file.name : "No file chosen";
+          image.addEventListener("change", () => {
+            const file = image.files[0];
+            fileName.textContent = file ? file.name : "No file chosen";
+          });
         });
-      });
 
-      document.querySelectorAll("#dropdownList .option").forEach((item) => {
-        item.addEventListener("click", function () {
-          const value = this.getAttribute("data-value");
-          item.parentElement.querySelector("input").value = value;
-          console.log(item.parentElement.querySelector("input").value);
+        document.querySelectorAll("#dropdownList .option").forEach((item) => {
+          item.addEventListener("click", function () {
+            const value = this.getAttribute("data-value");
+            item.parentElement.querySelector("input").value = value;
+            console.log(item.parentElement.querySelector("input").value);
+          });
         });
       });
     </script>

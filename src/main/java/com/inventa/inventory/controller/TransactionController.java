@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,11 +73,70 @@ public class TransactionController {
 
             if(savedTransaction == null) {
                 redirectAttributes.addFlashAttribute("error", "Oops! Something went wront.");
+                return "redirect:/admin/input-transaction/items-in";
             } else {
                 redirectAttributes.addFlashAttribute("success", "New Transaction In Added Successfully.");
             }
         } catch(IOException e) {
             redirectAttributes.addFlashAttribute("error", "Upload failed: " + e.getMessage());
+            return "redirect:/admin/input-transaction/items-in";
+        }
+
+        return "redirect:/admin/transaction-management";
+    }
+
+    @PostMapping("/add-transaction-out")
+    public String addTransactionOut(@RequestParam MultipartFile image_out, @RequestParam String name, @RequestParam String category, @RequestParam String pic, @RequestParam Integer qty, @RequestParam Float fee, @RequestParam String condition, @RequestParam String description, RedirectAttributes redirectAttributes, HttpSession session) {
+        try {
+            String status = "Out";
+            String email = (String) session.getAttribute("user");
+            User user = userRepository.findByEmail(email);
+
+            LocalDate date = LocalDate.now();
+
+            redirectAttributes.addFlashAttribute("qty", qty);
+
+            // cek stok
+            Integer unavailableStock = transactionService.getQtyByNameAndStatus(name, "Out");
+            unavailableStock += transactionService.getQtyByNameAndStatus(name, "Lent");
+            Integer stock = transactionService.getQtyByNameAndStatus(name, "In");
+            if(qty + unavailableStock > stock) {
+                redirectAttributes.addFlashAttribute("error", "Qty cannot bigger than available stock.");
+                return "redirect:/admin/input-transaction/items-out";
+            }
+            
+            // image handling
+            String fileName = image_out.getOriginalFilename();
+            String extension = "";
+
+            int dotIndex = fileName.lastIndexOf(".");
+            if(dotIndex >= 0) {
+                extension = fileName.substring(dotIndex);
+            }
+
+            // buat nama file unik
+            String newFileName = UUID.randomUUID().toString() + extension;
+
+            String uploadDir = "uploads/";
+            Path filePath = Paths.get(uploadDir, newFileName);
+            Files.createDirectories(filePath.getParent());
+
+            // simpan file fisik
+            Files.copy(image_out.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            // simpan transaksi ke database
+            Transaction newTransaction = new Transaction(newFileName, name, category, pic, "-", qty, fee, condition, description, status, date, null, user.getId());
+            Transaction savedTransaction = transactionService.addTransaction(newTransaction);
+
+            if(savedTransaction == null) {
+                redirectAttributes.addFlashAttribute("error", "Oops! Something went wront.");
+                return "redirect:/admin/input-transaction/items-out";
+            } else {
+                redirectAttributes.addFlashAttribute("success", "New Transaction Out Added Successfully.");
+            }
+        } catch(IOException e) {
+            redirectAttributes.addFlashAttribute("error", "Upload failed: " + e.getMessage());
+            return "redirect:/admin/input-transaction/items-out";
         }
 
         return "redirect:/admin/transaction-management";

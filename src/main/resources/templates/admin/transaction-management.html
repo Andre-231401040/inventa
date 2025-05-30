@@ -332,7 +332,7 @@
 
             <a
               class="w-3/15 py-1 border-2 border-[#10B981] bg-[#10B981] rounded-sm self-end font-poppins font-bold text-center text-md text-white cursor-pointer transition hover:bg-white hover:text-[#10B981]"
-              href="/admin/input-transaction"
+              href="/admin/input-transaction/items-in"
               >Add Transaction</a
             >
           </div>
@@ -373,7 +373,8 @@
                     <p class="min-h-16 flex justify-center items-center text-center" th:text="${transaction.category}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center text-center" th:text="${transaction.supplier.name}"></p>
+                    <p th:if="${transaction.supplier == null}" class="min-h-16 flex justify-center items-center text-center">-</p>
+                    <p th:if="${transaction.supplier != null}" class="min-h-16 flex justify-center items-center text-center" th:text="${transaction.supplier.name}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
                     <p class="min-h-16 flex justify-center items-center text-center" th:text="${transaction.pic}"></p>

@@ -1,5 +1,6 @@
 package com.inventa.inventory.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,12 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    public Integer getQtyByNameAndStatus(String name, String status) {
+        List<Transaction> transaction = transactionRepository.findByNameAndStatus(name, status);
+
+        return transaction.stream().mapToInt(Transaction::getQty).sum();
+    }
+
     public Page<Transaction> getTransactionsPerPage(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
         return transactionRepository.findAll(pageable);
@@ -25,6 +32,16 @@ public class TransactionService {
     public Transaction getTransactionById(Integer id) {
         Optional<Transaction> transaction = transactionRepository.findById(id);
         return transaction.isPresent() ? transaction.get() : null;
+    }
+
+    public List<Transaction> getTransactionsIn() {
+        List<Transaction> transaction = transactionRepository.findByStatus("In");
+        return transaction;
+    }
+
+    public List<Transaction> getTransactionsLent() {
+        List<Transaction> transaction = transactionRepository.findByStatus("Lent");
+        return transaction;
     }
 
     public Transaction addTransaction(Transaction transaction) {

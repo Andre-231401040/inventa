@@ -141,16 +141,20 @@ public class AdminController {
         return "admin/tes";
     }
 
-    @GetMapping("/input-transaction")
+    @GetMapping("/input-transaction/{type}")
     public String redirectToInputTransaction(HttpSession session, Model model) {
         Object user = session.getAttribute("user");
         List<Supplier> suppliers = supplierService.getAllSuppliers();
+        List<Transaction> transactionsIn = transactionService.getTransactionsIn();
+        List<Transaction> transactionsLent = transactionService.getTransactionsLent();
 
         if(user == null) {
             return "redirect:/admin/login";
         }
 
         model.addAttribute("suppliers", suppliers);
+        model.addAttribute("transactionsIn", transactionsIn);
+        model.addAttribute("transactionsLent", transactionsLent);
 
         return "admin/input-transaction";
     }
