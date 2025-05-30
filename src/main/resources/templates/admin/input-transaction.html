@@ -643,7 +643,12 @@
           </section>
 
           <section id="items-returned" class="forms">
-            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="" enctype="multipart/form-data">
+            <form
+              class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]"
+              action="/admin/add-transaction-returned"
+              method="POST"
+              enctype="multipart/form-data"
+            >
               <h2 class="font-poppins text-xl text-[#6366f1] font-bold">Items Returned</h2>
               <div class="flex justify-between">
                 <div class="relative w-49/100">
@@ -661,8 +666,14 @@
                     </svg>
                   </button>
                   <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
-                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Kursi">Kursi</li>
-                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Meja">Meja</li>
+                    <li
+                      th:if="${transactionsLent}"
+                      th:each="transactionLent : ${transactionsLent}"
+                      class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer"
+                      th:attr="data-value=${transactionLent.name}"
+                      th:text="${transactionLent.name}"
+                    ></li>
+                    <input type="hidden" name="name" required />
                   </ul>
                 </div>
                 <div class="relative w-49/100">
@@ -680,8 +691,14 @@
                     </svg>
                   </button>
                   <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
-                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Furnitur">Furnitur</li>
-                    <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Elektronik">Elektronik</li>
+                    <li
+                      th:if="${transactionsLent}"
+                      th:each="transactionLent : ${transactionsLent}"
+                      class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer"
+                      th:attr="data-value=${transactionLent.category}"
+                      th:text="${transactionLent.category}"
+                    ></li>
+                    <input type="hidden" name="category" required />
                   </ul>
                 </div>
               </div>
@@ -718,6 +735,7 @@
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Good">Good</li>
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Average">Average</li>
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Bad">Bad</li>
+                    <input type="hidden" name="condition" required />
                   </ul>
                 </div>
               </div>

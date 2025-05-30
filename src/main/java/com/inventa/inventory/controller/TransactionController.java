@@ -94,8 +94,6 @@ public class TransactionController {
 
             LocalDate date = LocalDate.now();
 
-            redirectAttributes.addFlashAttribute("qty", qty);
-
             // cek stok
             Integer unavailableStock = transactionService.getQtyByNameAndStatus(name, "Out");
             unavailableStock += transactionService.getQtyByNameAndStatus(name, "Lent");
@@ -151,8 +149,6 @@ public class TransactionController {
 
             LocalDate date = LocalDate.now();
 
-            redirectAttributes.addFlashAttribute("qty", qty);
-
             // cek stok
             Integer unavailableStock = transactionService.getQtyByNameAndStatus(name, "Out");
             unavailableStock += transactionService.getQtyByNameAndStatus(name, "Lent");
@@ -194,6 +190,59 @@ public class TransactionController {
         } catch(IOException e) {
             redirectAttributes.addFlashAttribute("error", "Upload failed: " + e.getMessage());
             return "redirect:/admin/input-transaction/items-lent";
+        }
+
+        return "redirect:/admin/transaction-management";
+    }
+
+    @PostMapping("/add-transaction-returned")
+    public String addTransactionReturned(@RequestParam MultipartFile image_returned, @RequestParam String name, @RequestParam String category, @RequestParam String pic, @RequestParam Integer qty, @RequestParam Float fee, @RequestParam String condition, @RequestParam String description, RedirectAttributes redirectAttributes, HttpSession session) {
+        try {
+            String status = "Returned";
+            String email = (String) session.getAttribute("user");
+            User user = userRepository.findByEmail(email);
+
+            LocalDate date = LocalDate.now();
+
+            // cek stok yang dipinjam
+            Integer lent = transactionService.getQtyByNameAndStatus(name, "Lent");
+            if(qty > lent) {
+                redirectAttributes.addFlashAttribute("error", "Qty cannot bigger than lent.");
+                return "redirect:/admin/input-transaction/items-returned";
+            }
+            
+            // image handling
+            String fileName = image_returned.getOriginalFilename();
+            String extension = "";
+
+            int dotIndex = fileName.lastIndexOf(".");
+            if(dotIndex >= 0) {
+                extension = fileName.substring(dotIndex);
+            }
+
+            // buat nama file unik
+            String newFileName = UUID.randomUUID().toString() + extension;
+
+            String uploadDir = "uploads/";
+            Path filePath = Paths.get(uploadDir, newFileName);
+            Files.createDirectories(filePath.getParent());
+
+            // simpan file fisik
+            Files.copy(image_returned.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            // simpan transaksi ke database
+            Transaction newTransaction = new Transaction(newFileName, name, category, pic, "-", qty, fee, condition, description, status, date, null, user.getId());
+            Transaction savedTransaction = transactionService.addTransaction(newTransaction);
+
+            if(savedTransaction == null) {
+                redirectAttributes.addFlashAttribute("error", "Oops! Something went wront.");
+                return "redirect:/admin/input-transaction/items-returned";
+            } else {
+                redirectAttributes.addFlashAttribute("success", "New Transaction Returned Added Successfully.");
+            }
+        } catch(IOException e) {
+            redirectAttributes.addFlashAttribute("error", "Upload failed: " + e.getMessage());
+            return "redirect:/admin/input-transaction/items-returned";
         }
 
         return "redirect:/admin/transaction-management";
