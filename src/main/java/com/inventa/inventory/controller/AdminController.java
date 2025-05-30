@@ -9,12 +9,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.inventa.inventory.model.Supplier;
 import com.inventa.inventory.model.Transaction;
 import com.inventa.inventory.service.SupplierService;
 import com.inventa.inventory.service.TransactionService;
+import org.springframework.web.bind.annotation.PostMapping;
+
 
 
 @Controller
@@ -100,7 +104,13 @@ public class AdminController {
     }
 
     @GetMapping("/edit-supplier")
-    public String showEditSupplierForm() {
+    public String showEditSupplierForm(HttpSession session) {
+        Object user = session.getAttribute("user");
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+
         return "admin/edit-supplier";
     }
 
@@ -122,8 +132,8 @@ public class AdminController {
         return "admin/transaction-management";
     }
 
-    @GetMapping("/tes")
-    public String redirectToTes(@RequestParam(defaultValue = "0") int page, HttpSession session, Model model) {
+    @PostMapping("/get-transaction-by-status")
+    public String getTransactionsByStatus(@RequestParam(defaultValue = "0") int page,  @RequestParam String status, HttpSession session, Model model) {
         Object user = session.getAttribute("user");
 
         if(user == null) {
@@ -131,17 +141,36 @@ public class AdminController {
         }
 
         int pageSize = 5;
-        Page<Transaction> transactionsPerPage = transactionService.getTransactionsPerPage(page, pageSize);
+        Page<Transaction> transactionsPerPage = transactionService.getTransactionsByStatus(page, pageSize, status);
         
         model.addAttribute("transactions", transactionsPerPage.getContent());
         model.addAttribute("currentPage", page + 1);
         model.addAttribute("totalPages", transactionsPerPage.getTotalPages());
 
-        // return "admin/transaction-management";
+        return "admin/transaction-management";
+    }
+    
+
+    @GetMapping("/tes")
+    public String redirectToTes(@ModelAttribute Transaction transaction, HttpSession session, Model model) {
+        Object user = session.getAttribute("user");
+        List<Supplier> suppliers = supplierService.getAllSuppliers();
+        List<Transaction> transactionsIn = transactionService.getTransactionsIn();
+        List<Transaction> transactionsLent = transactionService.getTransactionsLent();
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+
+        model.addAttribute("transaction", transaction);
+        model.addAttribute("suppliers", suppliers);
+        model.addAttribute("transactionsIn", transactionsIn);
+        model.addAttribute("transactionsLent", transactionsLent);
+
         return "admin/tes";
     }
 
-    @GetMapping("/input-transaction/{type}")
+    @GetMapping("/input-transaction/{status}")
     public String redirectToInputTransaction(HttpSession session, Model model) {
         Object user = session.getAttribute("user");
         List<Supplier> suppliers = supplierService.getAllSuppliers();
@@ -157,6 +186,25 @@ public class AdminController {
         model.addAttribute("transactionsLent", transactionsLent);
 
         return "admin/input-transaction";
+    }
+
+    @GetMapping("/edit-transaction/{status}")
+    public String showEditTransactionForm(@ModelAttribute Transaction transaction, HttpSession session, Model model) {
+        Object user = session.getAttribute("user");
+        List<Supplier> suppliers = supplierService.getAllSuppliers();
+        List<Transaction> transactionsIn = transactionService.getTransactionsIn();
+        List<Transaction> transactionsLent = transactionService.getTransactionsLent();
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+
+        model.addAttribute("transaction", transaction);
+        model.addAttribute("suppliers", suppliers);
+        model.addAttribute("transactionsIn", transactionsIn);
+        model.addAttribute("transactionsLent", transactionsLent);
+
+        return "admin/edit-transaction";
     }
 
     @GetMapping("/report-management")

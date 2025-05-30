@@ -310,7 +310,7 @@
         <section class="flex flex-col font-opensans">
           <div class="w-full mb-3 flex justify-end items-center gap-3">
             <section class="relative w-3/15">
-              <button class="dropdownButtons group w-full px-3 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-sm text-sm text-[#bababa]">
+              <button class="dropdownButtons group w-full px-3 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-sm text-sm text-[#bababa] cursor-pointer">
                 Filters By
                 <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
                   <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
@@ -323,10 +323,14 @@
                 </svg>
               </button>
               <ul id="dropdownList" class="hidden absolute w-full bg-[#F2F2F2]">
-                <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="items-in">Items In</li>
-                <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="items-out">Items Out</li>
-                <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="items-lent">Items Lent</li>
-                <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="items-returned">Items Returned</li>
+                <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="In">Items In</li>
+                <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Out">Items Out</li>
+                <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Lent">Items Lent</li>
+                <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Returned">Items Returned</li>
+                <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="All">All Transactions</li>
+                <form action="/admin/get-transaction-by-status" method="POST">
+                  <input type="hidden" name="status" />
+                </form>
               </ul>
             </section>
 
@@ -412,7 +416,7 @@
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
                     <div class="min-h-16 flex justify-center items-center gap-3">
-                      <form action="/admin/authorize-edit" method="POST">
+                      <form action="/admin/authorize-edit-transaction" method="POST">
                         <input type="hidden" name="id" th:value="${transaction.id}" />
                         <button type="submit"><img class="w-10 h-fit cursor-pointer hover:opacity-70" src="/img/edit_icon.png" alt="delete icon" /></button>
                       </form>
@@ -437,5 +441,14 @@
     </div>
 
     <script src="/js/script.js"></script>
+    <script>
+      document.querySelectorAll("#dropdownList .option").forEach((item) => {
+        item.addEventListener("click", function () {
+          const value = this.getAttribute("data-value");
+          item.parentElement.querySelector("form input").value = value;
+          item.parentElement.querySelector("form").submit();
+        });
+      });
+    </script>
   </body>
 </html>

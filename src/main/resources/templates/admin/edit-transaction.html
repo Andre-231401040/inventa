@@ -308,18 +308,7 @@
         </header>
         <section class="flex flex-col font-opensans">
           <section class="relative w-3/15 mb-5 self-end">
-            <button class="dropdownButtons group w-full px-3 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-sm text-sm text-[#bababa]">
-              Filters By
-              <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
-                <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
-                  <path
-                    d="M1210 3359 c-116 -47 -174 -201 -119 -312 26 -53 1140 -1172 1218
-                    -1224 148 -99 351 -100 500 -3 72 46 1207 1188 1226 1232 39 95 1 224 -83 283
-                    l-44 30 -1336 2 c-865 1 -1346 -2 -1362 -8z"
-                  />
-                </g>
-              </svg>
-            </button>
+            <button disabled class="dropdownButtons group w-full px-3 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-sm text-sm text-[#bababa]" th:text="${transaction.status}"></button>
             <ul id="dropdownList" class="hidden absolute z-40 w-full bg-[#F2F2F2]">
               <li class="option form-option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="items-in">Items In</li>
               <li class="option form-option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="items-out">Items Out</li>
@@ -328,38 +317,39 @@
             </ul>
           </section>
 
-          <section id="items-in" class="forms">
-            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="/admin/add-transaction-in" method="POST" enctype="multipart/form-data">
+          <section th:if="${transaction_in}" id="items-in" class="forms">
+            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="/admin/update-transaction-in" method="POST" enctype="multipart/form-data">
               <h2 class="font-poppins text-xl text-[#6366f1] font-bold">Items In</h2>
+              <input type="hidden" name="id" th:value="${transaction_in.id}" />
               <div class="flex justify-between">
                 <div class="w-49/100">
                   <label class="font-semibold" for="name">Name</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="name" id="name" required />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="name" id="name" th:value="${transaction_in.name}" required />
                 </div>
                 <div class="w-49/100">
                   <label class="font-semibold" for="category">Category</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="category" id="category" required />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="category" id="category" th:value="${transaction_in.category}" required />
                 </div>
               </div>
               <div>
                 <label class="font-semibold" for="location">Location</label>
-                <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="location" id="location" required />
+                <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="location" id="location" th:value="${transaction_in.location}" required />
               </div>
               <div class="flex justify-between">
                 <div class="w-49/100">
                   <label class="font-semibold" for="qty">Qty</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" min="1" name="qty" id="qty" required />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" min="1" name="qty" id="qty" th:value="${transaction_in.qty}" required />
                 </div>
                 <div class="w-49/100">
                   <label class="font-semibold" for="fee">Fee</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" required />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" th:value="${transaction_in.fee}" required />
                 </div>
               </div>
               <div class="flex justify-between">
                 <div class="relative w-49/100">
                   <p class="mb-1 font-semibold">Supplier</p>
                   <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
-                    Choose supplier
+                    <span th:text="${transaction_in.supplier.name}"></span>
                     <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
                       <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
                         <path
@@ -372,13 +362,13 @@
                   </button>
                   <ul id="dropdownList" class="hidden max-h-50 overflow-y-auto absolute z-40 w-full bg-[#F2F2F2]">
                     <li th:if="${suppliers}" th:each="supplier : ${suppliers}" class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" th:attr="data-value=${supplier.id}" th:text="${supplier.name}"></li>
-                    <input type="hidden" name="supplier_id" required />
+                    <input type="hidden" name="supplier_id" th:value="${transaction_in.supplier.id}" required />
                   </ul>
                 </div>
                 <div class="relative w-49/100">
                   <p class="mb-1 font-semibold">Condition</p>
                   <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
-                    Choose condition
+                    <span th:text="${transaction_in.condition}"></span>
                     <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
                       <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
                         <path
@@ -393,13 +383,13 @@
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Good">Good</li>
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Average">Average</li>
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Bad">Bad</li>
-                    <input type="hidden" name="condition" required />
+                    <input type="hidden" name="condition" th:value="${transaction_in.condition}" required />
                   </ul>
                 </div>
               </div>
               <div>
                 <label class="font-semibold" for="pic">Person In Charge</label>
-                <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" required />
+                <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" th:value="${transaction_in.pic}" required />
               </div>
               <div>
                 <label class="font-semibold" for="description">Description</label>
@@ -407,6 +397,7 @@
                   class="w-full h-21 mt-1 ps-2 pe-1 py-1 resize-none overflow-y-scroll scrollbar scrollbar-thumb-[#bababa] scrollbar-track-[rgba(0,0,0,0.1)] scrollbar-active:scrollbar-thumb-[#4f46e5] outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]"
                   name="description"
                   id="description"
+                  th:text="${transaction_in.description}"
                   required
                 ></textarea>
               </div>
@@ -424,14 +415,15 @@
             </form>
           </section>
 
-          <section id="items-out" class="forms">
-            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="/admin/add-transaction-out" method="POST" enctype="multipart/form-data">
+          <section th:if="${transaction_out}" id="items-out" class="forms">
+            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="/admin/update-transaction-out" method="POST" enctype="multipart/form-data">
               <h2 class="font-poppins text-xl text-[#6366f1] font-bold">Items Out</h2>
+              <input type="hidden" name="id" th:value="${transaction_out.id}" />
               <div class="flex justify-between">
                 <div class="relative w-49/100">
                   <p class="mb-1 font-semibold">Name</p>
                   <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
-                    Select item's name
+                    <span th:text="${transaction_out.name}"></span>
                     <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
                       <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
                         <path
@@ -444,13 +436,13 @@
                   </button>
                   <ul id="dropdownList" class="hidden max-h-50 absolute z-40 w-full bg-[#F2F2F2]">
                     <li th:if="${transactionsIn}" th:each="transactionIn : ${transactionsIn}" class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" th:attr="data-value=${transactionIn.name}" th:text="${transactionIn.name}"></li>
-                    <input type="hidden" name="name" required />
+                    <input type="hidden" name="name" th:value="${transaction_out.name}" required />
                   </ul>
                 </div>
                 <div class="relative w-49/100">
                   <p class="mb-1 font-semibold">Category</p>
                   <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
-                    Select item's category
+                    <span th:text="${transaction_out.category}"></span>
                     <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
                       <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
                         <path
@@ -469,29 +461,29 @@
                       th:attr="data-value=${transactionIn.category}"
                       th:text="${transactionIn.category}"
                     ></li>
-                    <input type="hidden" name="category" required />
+                    <input type="hidden" name="category" th:value="${transaction_out.category}" required />
                   </ul>
                 </div>
               </div>
               <div class="flex justify-between">
                 <div class="w-49/100">
                   <label class="font-semibold" for="qty">Qty</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" min="1" name="qty" id="qty" required />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" min="1" name="qty" id="qty" th:value="${transaction_out.qty}" required />
                 </div>
                 <div class="w-49/100">
                   <label class="font-semibold" for="fee">Fee</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" required />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" th:value="${transaction_out.fee}" required />
                 </div>
               </div>
               <div class="flex justify-between">
                 <div class="w-49/100">
                   <label class="font-semibold" for="pic">Person In Charge</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" required />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" th:value="${transaction_out.pic}" required />
                 </div>
                 <div class="relative w-49/100">
                   <p class="mb-1 font-semibold">Condition</p>
                   <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
-                    Choose condition
+                    <span th:text="${transaction_out.condition}"></span>
                     <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
                       <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
                         <path
@@ -506,7 +498,7 @@
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Good">Good</li>
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Average">Average</li>
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Bad">Bad</li>
-                    <input type="hidden" name="condition" required />
+                    <input type="hidden" name="condition" th:value="${transaction_out.condition}" required />
                   </ul>
                 </div>
               </div>
@@ -516,6 +508,7 @@
                   class="w-full h-21 mt-1 ps-2 pe-1 py-1 resize-none overflow-y-scroll scrollbar scrollbar-thumb-[#bababa] scrollbar-track-[rgba(0,0,0,0.1)] scrollbar-active:scrollbar-thumb-[#4f46e5] outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]"
                   name="description"
                   id="description"
+                  th:text="${transaction_out.description}"
                   required
                 ></textarea>
               </div>
@@ -533,14 +526,15 @@
             </form>
           </section>
 
-          <section id="items-lent" class="forms">
-            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="/admin/add-transaction-lent" method="POST" enctype="multipart/form-data">
+          <section th:if="${transaction_lent}" id="items-lent" class="forms">
+            <form class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]" action="/admin/update-transaction-lent" method="POST" enctype="multipart/form-data">
               <h2 class="font-poppins text-xl text-[#6366f1] font-bold">Items Lent</h2>
+              <input type="hidden" name="id" th:value="${transaction_lent.id}" />
               <div class="flex justify-between">
                 <div class="relative w-49/100">
                   <p class="mb-1 font-semibold">Name</p>
                   <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
-                    Select item's name
+                    <span th:text="${transaction_lent.name}"></span>
                     <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
                       <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
                         <path
@@ -553,13 +547,13 @@
                   </button>
                   <ul id="dropdownList" class="hidden max-h-50 absolute z-40 w-full bg-[#F2F2F2]">
                     <li th:if="${transactionsIn}" th:each="transactionIn : ${transactionsIn}" class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" th:attr="data-value=${transactionIn.name}" th:text="${transactionIn.name}"></li>
-                    <input type="hidden" name="name" required />
+                    <input type="hidden" name="name" th:value="${transaction_lent.name}" required />
                   </ul>
                 </div>
                 <div class="relative w-49/100">
                   <p class="mb-1 font-semibold">Category</p>
                   <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
-                    Select item's category
+                    <span th:text="${transaction_lent.category}"></span>
                     <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
                       <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
                         <path
@@ -578,29 +572,29 @@
                       th:attr="data-value=${transactionIn.category}"
                       th:text="${transactionIn.category}"
                     ></li>
-                    <input type="hidden" name="category" required />
+                    <input type="hidden" name="category" th:value="${transaction_lent.category}" required />
                   </ul>
                 </div>
               </div>
               <div class="flex justify-between">
                 <div class="w-49/100">
                   <label class="font-semibold" for="qty">Qty</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" min="1" name="qty" id="qty" required />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" min="1" name="qty" id="qty" th:value="${transaction_lent.qty}" required />
                 </div>
                 <div class="w-49/100">
                   <label class="font-semibold" for="fee">Fee</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" required />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" th:value="${transaction_lent.fee}" required />
                 </div>
               </div>
               <div class="flex justify-between">
                 <div class="w-49/100">
                   <label class="font-semibold" for="pic">Person In Charge</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" required />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" th:value="${transaction_lent.pic}" required />
                 </div>
                 <div class="relative w-49/100">
                   <p class="mb-1 font-semibold">Condition</p>
                   <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
-                    Choose condition
+                    <span th:text="${transaction_lent.condition}"></span>
                     <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
                       <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
                         <path
@@ -615,7 +609,7 @@
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Good">Good</li>
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Average">Average</li>
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Bad">Bad</li>
-                    <input type="hidden" name="condition" required />
+                    <input type="hidden" name="condition" th:value="${transaction_lent.condition}" required />
                   </ul>
                 </div>
               </div>
@@ -625,6 +619,7 @@
                   class="w-full h-21 mt-1 ps-2 pe-1 py-1 resize-none overflow-y-scroll scrollbar scrollbar-thumb-[#bababa] scrollbar-track-[rgba(0,0,0,0.1)] scrollbar-active:scrollbar-thumb-[#4f46e5] outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]"
                   name="description"
                   id="description"
+                  th:text="${transaction_lent.description}"
                   required
                 ></textarea>
               </div>
@@ -642,19 +637,20 @@
             </form>
           </section>
 
-          <section id="items-returned" class="forms">
+          <section th:if="${transaction_returned}" id="items-returned" class="forms">
             <form
               class="relative mb-24 px-7 pt-7 pb-10 flex flex-col gap-4 rounded-md shadow-[0_4px_16px_0_rgba(0,0,0,0.1),0_8px_32px_0_rgba(0,0,0,0.05)]"
-              action="/admin/add-transaction-returned"
+              action="/admin/update-transaction-returned"
               method="POST"
               enctype="multipart/form-data"
             >
               <h2 class="font-poppins text-xl text-[#6366f1] font-bold">Items Returned</h2>
+              <input type="hidden" name="id" th:value="${transaction_returned.id}" />
               <div class="flex justify-between">
                 <div class="relative w-49/100">
                   <p class="mb-1 font-semibold">Name</p>
                   <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
-                    Select item's name
+                    <span th:text="${transaction_returned.name}"></span>
                     <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
                       <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
                         <path
@@ -673,13 +669,13 @@
                       th:attr="data-value=${transactionLent.name}"
                       th:text="${transactionLent.name}"
                     ></li>
-                    <input type="hidden" name="name" required />
+                    <input type="hidden" name="name" th:value="${transaction_returned.name}" required />
                   </ul>
                 </div>
                 <div class="relative w-49/100">
                   <p class="mb-1 font-semibold">Category</p>
                   <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
-                    Select item's category
+                    <span th:text="${transaction_returned.category}"></span>
                     <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
                       <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
                         <path
@@ -698,29 +694,29 @@
                       th:attr="data-value=${transactionLent.category}"
                       th:text="${transactionLent.category}"
                     ></li>
-                    <input type="hidden" name="category" required />
+                    <input type="hidden" name="category" th:value="${transaction_returned.category}" required />
                   </ul>
                 </div>
               </div>
               <div class="flex justify-between">
                 <div class="w-49/100">
                   <label class="font-semibold" for="qty">Qty</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" name="qty" id="qty" required />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" name="qty" id="qty" th:value="${transaction_returned.qty}" required />
                 </div>
                 <div class="w-49/100">
                   <label class="font-semibold" for="fee">Fee</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" required />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="number" step="any" name="fee" id="fee" th:value="${transaction_returned.fee}" required />
                 </div>
               </div>
               <div class="flex justify-between">
                 <div class="w-49/100">
                   <label class="font-semibold" for="pic">Person In Charge</label>
-                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" required />
+                  <input class="w-full h-12 mt-1 px-2 py-1 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]" type="text" name="pic" id="pic" th:value="${transaction_returned.pic}" required />
                 </div>
                 <div class="relative w-49/100">
                   <p class="mb-1 font-semibold">Condition</p>
                   <button class="dropdownButtons group w-full h-12 px-2 py-1 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md text-sm text-[#bababa]">
-                    Choose condition
+                    <span th:text="${transaction_returned.condition}"></span>
                     <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
                       <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
                         <path
@@ -735,7 +731,7 @@
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Good">Good</li>
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Average">Average</li>
                     <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Bad">Bad</li>
-                    <input type="hidden" name="condition" required />
+                    <input type="hidden" name="condition" th:value="${transaction_returned.condition}" required />
                   </ul>
                 </div>
               </div>
@@ -745,6 +741,7 @@
                   class="w-full h-21 mt-1 ps-2 pe-1 py-1 resize-none overflow-y-scroll scrollbar scrollbar-thumb-[#bababa] scrollbar-track-[rgba(0,0,0,0.1)] scrollbar-active:scrollbar-thumb-[#4f46e5] outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-md focus:border-[#4f46e5]"
                   name="description"
                   id="description"
+                  th:text="${transaction_returned.description}"
                   required
                 ></textarea>
               </div>
@@ -768,13 +765,8 @@
     <script src="/js/script.js"></script>
     <script>
       window.addEventListener("DOMContentLoaded", () => {
-        // const defaultPath = "items-in";
         const path = window.location.pathname.split("/");
         let selectedValue = path[path.length - 1];
-
-        // if (selectedValue !== defaultPath) {
-        //   window.location.href = `/admin/input-transaction/${defaultPath}`;
-        // }
 
         const forms = document.querySelectorAll(".forms");
         const formOptions = document.querySelectorAll(".form-option");
@@ -784,47 +776,25 @@
             form.classList.add("hidden");
           }
         });
+      });
 
-        formOptions.forEach((formOption) => {
-          formOption.addEventListener("click", () => {
-            forms.forEach((form) => {
-              if (form.id.includes(selectedValue)) {
-                form.classList.add("hidden");
-              }
-            });
+      const inputImages = document.querySelectorAll(".input-image");
 
-            selectedValue = formOption.dataset.value;
+      inputImages.forEach((inputImage) => {
+        const image = inputImage.querySelector("input");
+        const fileName = inputImage.parentElement.querySelector(".file-name");
 
-            forms.forEach((form) => {
-              if (form.id.includes(selectedValue)) {
-                console.log(form);
-                form.classList.remove("hidden");
-              }
-            });
-
-            const newUrl = `/admin/input-transaction/${selectedValue}`;
-            window.history.pushState({}, "", newUrl);
-          });
+        image.addEventListener("change", () => {
+          const file = image.files[0];
+          fileName.textContent = file ? file.name : "No file chosen";
         });
+      });
 
-        const inputImages = document.querySelectorAll(".input-image");
-
-        inputImages.forEach((inputImage) => {
-          const image = inputImage.querySelector("input");
-          const fileName = inputImage.parentElement.querySelector(".file-name");
-
-          image.addEventListener("change", () => {
-            const file = image.files[0];
-            fileName.textContent = file ? file.name : "No file chosen";
-          });
-        });
-
-        document.querySelectorAll("#dropdownList .option").forEach((item) => {
-          item.addEventListener("click", function () {
-            const value = this.getAttribute("data-value");
-            item.parentElement.querySelector("input").value = value;
-            // console.log(item.parentElement.querySelector("input").value);
-          });
+      document.querySelectorAll("#dropdownList .option").forEach((item) => {
+        item.addEventListener("click", function () {
+          const value = this.getAttribute("data-value");
+          item.parentElement.querySelector("input").value = value;
+          console.log(item.parentElement.querySelector("input").value);
         });
       });
     </script>

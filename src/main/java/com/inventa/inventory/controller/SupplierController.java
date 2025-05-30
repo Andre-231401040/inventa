@@ -40,7 +40,7 @@ public class SupplierController {
         return "redirect:/admin/supplier-management";
     }
     
-    @PostMapping("/authorize-edit")
+    @PostMapping("/authorize-edit-supplier")
     public String authorizeEditSupplier(@RequestParam Integer id, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
         String email = (String) session.getAttribute("user");
         User user = userRepository.findByEmail(email);
@@ -57,7 +57,7 @@ public class SupplierController {
     }
 
     @PostMapping("/update-supplier")
-    public String updateSupplier(@RequestParam Integer id, @RequestParam String name, @RequestParam String contact, @RequestParam String address, RedirectAttributes redirectAttributes, Model model) {
+    public String updateSupplier(@RequestParam Integer id, @RequestParam String name, @RequestParam String contact, @RequestParam String address, RedirectAttributes redirectAttributes) {
         Supplier updatedSupplier = supplierService.updateSupplier(id, name, contact, address);
 
         if(updatedSupplier == null) {

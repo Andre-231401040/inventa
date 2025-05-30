@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -98,6 +99,7 @@ public class TransactionController {
             Integer unavailableStock = transactionService.getQtyByNameAndStatus(name, "Out");
             unavailableStock += transactionService.getQtyByNameAndStatus(name, "Lent");
             Integer stock = transactionService.getQtyByNameAndStatus(name, "In");
+            stock += transactionService.getQtyByNameAndStatus(name, "Returned");
             if(qty + unavailableStock > stock) {
                 redirectAttributes.addFlashAttribute("error", "Qty cannot bigger than available stock.");
                 return "redirect:/admin/input-transaction/items-out";
@@ -153,6 +155,7 @@ public class TransactionController {
             Integer unavailableStock = transactionService.getQtyByNameAndStatus(name, "Out");
             unavailableStock += transactionService.getQtyByNameAndStatus(name, "Lent");
             Integer stock = transactionService.getQtyByNameAndStatus(name, "In");
+            stock += transactionService.getQtyByNameAndStatus(name, "Returned");
             if(qty + unavailableStock > stock) {
                 redirectAttributes.addFlashAttribute("error", "Qty cannot bigger than available stock.");
                 return "redirect:/admin/input-transaction/items-lent";
@@ -243,6 +246,245 @@ public class TransactionController {
         } catch(IOException e) {
             redirectAttributes.addFlashAttribute("error", "Upload failed: " + e.getMessage());
             return "redirect:/admin/input-transaction/items-returned";
+        }
+
+        return "redirect:/admin/transaction-management";
+    }
+
+    @PostMapping("/authorize-edit-transaction")
+    public String authorizeEditTransaction(@RequestParam Integer id, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
+        String email = (String) session.getAttribute("user");
+        User user = userRepository.findByEmail(email);
+        Transaction transaction = transactionService.getTransactionById(id);
+        String status = transaction.getStatus();
+
+        if(user.getId() != transaction.getAdminId()) {
+            redirectAttributes.addFlashAttribute("error", "Unauthorized action. You are not the owner of this transaction.");
+            return "redirect:/admin/transaction-management";
+        }
+        
+        if(status.equalsIgnoreCase("In")) {
+            status = "items-in";
+            redirectAttributes.addFlashAttribute("transaction_in", transaction);
+        } else if(status.equalsIgnoreCase("Out")) {
+            redirectAttributes.addFlashAttribute("transaction_out", transaction);
+            status = "items-out";
+        } else if(status.equalsIgnoreCase("Lent")) {
+            redirectAttributes.addFlashAttribute("transaction_lent", transaction);
+            status = "items-lent";
+        } else {
+            redirectAttributes.addFlashAttribute("transaction_returned", transaction);
+            status = "items-returned";
+        }
+
+        return "redirect:/admin/edit-transaction/" + status;
+    }
+
+    @PostMapping("/update-transaction-in")
+    public String updateTransactionIn(@RequestParam Integer id, @RequestParam MultipartFile image_in, @RequestParam String name, @RequestParam String category, @RequestParam String pic, @RequestParam String location, @RequestParam Integer qty, @RequestParam Float fee, @RequestParam String condition, @RequestParam String description, @RequestParam Integer supplier_id, RedirectAttributes redirectAttributes, HttpSession session) {
+        try {
+            // hapus file lama
+            Transaction transaction = transactionService.getTransactionById(id);
+            File file = new File("uploads/" + transaction.getImage());
+            file.delete();
+
+            Supplier supplier = supplierService.findById(supplier_id);
+            LocalDate date = LocalDate.now();
+            
+            // image handling
+            String fileName = image_in.getOriginalFilename();
+            String extension = "";
+
+            int dotIndex = fileName.lastIndexOf(".");
+            if(dotIndex >= 0) {
+                extension = fileName.substring(dotIndex);
+            }
+
+            // buat nama file unik
+            String newFileName = UUID.randomUUID().toString() + extension;
+
+            String uploadDir = "uploads/";
+            Path filePath = Paths.get(uploadDir, newFileName);
+            Files.createDirectories(filePath.getParent());
+
+            // simpan file fisik
+            Files.copy(image_in.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            // simpan transaksi ke database
+            Transaction updatedTransaction = transactionService.updateTransaction(id, newFileName, name, category, pic, location, qty, fee, condition, description, date, supplier);
+
+            if(updatedTransaction == null) {
+            redirectAttributes.addFlashAttribute("error", "Oops! Something went wront.");
+            } else {
+                redirectAttributes.addFlashAttribute("success", "Transaction updated successfully.");
+            }
+        } catch(IOException e) {
+            redirectAttributes.addFlashAttribute("error", "Upload failed: " + e.getMessage());
+            return "redirect:/admin/input-transaction/items-in";
+        }
+
+        return "redirect:/admin/transaction-management";
+    }
+
+    @PostMapping("/update-transaction-out")
+    public String updateTransactionOut(@RequestParam Integer id, @RequestParam MultipartFile image_out, @RequestParam String name, @RequestParam String category, @RequestParam String pic, @RequestParam Integer qty, @RequestParam Float fee, @RequestParam String condition, @RequestParam String description, RedirectAttributes redirectAttributes, HttpSession session) {
+        try {
+            // hapus file lama
+            Transaction transaction = transactionService.getTransactionById(id);
+            File file = new File("uploads/" + transaction.getImage());
+            file.delete();
+
+            LocalDate date = LocalDate.now();
+            
+            // cek stok
+            Integer unavailableStock = transactionService.getQtyByNameAndStatus(name, "Out");
+            unavailableStock += transactionService.getQtyByNameAndStatus(name, "Lent");
+            unavailableStock -= transaction.getQty();
+            Integer stock = transactionService.getQtyByNameAndStatus(name, "In");
+            stock += transactionService.getQtyByNameAndStatus(name, "Returned");
+            if(qty + unavailableStock > stock) {
+                redirectAttributes.addFlashAttribute("error", "Qty cannot bigger than available stock.");
+                return "redirect:/admin/transaction-management";
+            }
+
+            // image handling
+            String fileName = image_out.getOriginalFilename();
+            String extension = "";
+
+            int dotIndex = fileName.lastIndexOf(".");
+            if(dotIndex >= 0) {
+                extension = fileName.substring(dotIndex);
+            }
+
+            // buat nama file unik
+            String newFileName = UUID.randomUUID().toString() + extension;
+
+            String uploadDir = "uploads/";
+            Path filePath = Paths.get(uploadDir, newFileName);
+            Files.createDirectories(filePath.getParent());
+
+            // simpan file fisik
+            Files.copy(image_out.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            // simpan transaksi ke database
+            Transaction updatedTransaction = transactionService.updateTransaction(id, newFileName, name, category, pic, "-", qty, fee, condition, description, date, null);
+
+            if(updatedTransaction == null) {
+                redirectAttributes.addFlashAttribute("error", "Oops! Something went wront.");
+            } else {
+                redirectAttributes.addFlashAttribute("success", "Transaction updated successfully.");
+            }
+        } catch(IOException e) {
+            redirectAttributes.addFlashAttribute("error", "Upload failed: " + e.getMessage());
+            return "redirect:/admin/transaction-management";
+        }
+
+        return "redirect:/admin/transaction-management";
+    }
+
+    @PostMapping("/update-transaction-lent")
+    public String updateTransactionLent(@RequestParam Integer id, @RequestParam MultipartFile image_lent, @RequestParam String name, @RequestParam String category, @RequestParam String pic, @RequestParam Integer qty, @RequestParam Float fee, @RequestParam String condition, @RequestParam String description, RedirectAttributes redirectAttributes, HttpSession session) {
+        try {
+            // hapus file lama
+            Transaction transaction = transactionService.getTransactionById(id);
+            File file = new File("uploads/" + transaction.getImage());
+            file.delete();
+
+            LocalDate date = LocalDate.now();
+            
+            // cek stok
+            Integer unavailableStock = transactionService.getQtyByNameAndStatus(name, "Out");
+            unavailableStock += transactionService.getQtyByNameAndStatus(name, "Lent");
+            unavailableStock -= transaction.getQty();
+            Integer stock = transactionService.getQtyByNameAndStatus(name, "In");
+            stock += transactionService.getQtyByNameAndStatus(name, "Returned");
+            if(qty + unavailableStock > stock) {
+                redirectAttributes.addFlashAttribute("error", "Qty cannot bigger than available stock.");
+                return "redirect:/admin/transaction-management";
+            }
+
+            // image handling
+            String fileName = image_lent.getOriginalFilename();
+            String extension = "";
+
+            int dotIndex = fileName.lastIndexOf(".");
+            if(dotIndex >= 0) {
+                extension = fileName.substring(dotIndex);
+            }
+
+            // buat nama file unik
+            String newFileName = UUID.randomUUID().toString() + extension;
+
+            String uploadDir = "uploads/";
+            Path filePath = Paths.get(uploadDir, newFileName);
+            Files.createDirectories(filePath.getParent());
+
+            // simpan file fisik
+            Files.copy(image_lent.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            // simpan transaksi ke database
+            Transaction updatedTransaction = transactionService.updateTransaction(id, newFileName, name, category, pic, "-", qty, fee, condition, description, date, null);
+
+            if(updatedTransaction == null) {
+                redirectAttributes.addFlashAttribute("error", "Oops! Something went wront.");
+            } else {
+                redirectAttributes.addFlashAttribute("success", "Transaction updated successfully.");
+            }
+        } catch(IOException e) {
+            redirectAttributes.addFlashAttribute("error", "Upload failed: " + e.getMessage());
+            return "redirect:/admin/transaction-management";
+        }
+
+        return "redirect:/admin/transaction-management";
+    }
+
+    @PostMapping("/update-transaction-returned")
+    public String updateTransactionReturned(@RequestParam Integer id, @RequestParam MultipartFile image_returned, @RequestParam String name, @RequestParam String category, @RequestParam String pic, @RequestParam Integer qty, @RequestParam Float fee, @RequestParam String condition, @RequestParam String description, RedirectAttributes redirectAttributes, HttpSession session) {
+        try {
+            // hapus file lama
+            Transaction transaction = transactionService.getTransactionById(id);
+            File file = new File("uploads/" + transaction.getImage());
+            file.delete();
+
+            LocalDate date = LocalDate.now();
+            
+            // cek stok yang dipinjam
+            Integer lent = transactionService.getQtyByNameAndStatus(name, "Lent");
+            if(qty > lent) {
+                redirectAttributes.addFlashAttribute("error", "Qty cannot bigger than lent.");
+                return "redirect:/admin/transaction-management";
+            }
+
+            // image handling
+            String fileName = image_returned.getOriginalFilename();
+            String extension = "";
+
+            int dotIndex = fileName.lastIndexOf(".");
+            if(dotIndex >= 0) {
+                extension = fileName.substring(dotIndex);
+            }
+
+            // buat nama file unik
+            String newFileName = UUID.randomUUID().toString() + extension;
+
+            String uploadDir = "uploads/";
+            Path filePath = Paths.get(uploadDir, newFileName);
+            Files.createDirectories(filePath.getParent());
+
+            // simpan file fisik
+            Files.copy(image_returned.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            // simpan transaksi ke database
+            Transaction updatedTransaction = transactionService.updateTransaction(id, newFileName, name, category, pic, "-", qty, fee, condition, description, date, null);
+
+            if(updatedTransaction == null) {
+                redirectAttributes.addFlashAttribute("error", "Oops! Something went wront.");
+            } else {
+                redirectAttributes.addFlashAttribute("success", "Transaction updated successfully.");
+            }
+        } catch(IOException e) {
+            redirectAttributes.addFlashAttribute("error", "Upload failed: " + e.getMessage());
+            return "redirect:/admin/transaction-management";
         }
 
         return "redirect:/admin/transaction-management";
