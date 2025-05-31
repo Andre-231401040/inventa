@@ -1,13 +1,12 @@
 package com.inventa.inventory.repository;
 
+import com.inventa.inventory.model.Item;
 import com.inventa.inventory.model.Transaction;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
 import java.util.List;
 
 
@@ -16,4 +15,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
     List<Transaction> findByStatus(@Param("status") String status);
     Page<Transaction> findByStatus(String status, Pageable pageable);
     List<Transaction> findByNameAndStatus(String name, String status);
+    @Query("SELECT new com.inventa.inventory.model.Item(t.image, t.name, t.category, SUM(t.qty), t.status) FROM Transaction t GROUP BY t.name, t.status")
+    List<Item> findByNameAndStatus();
 }

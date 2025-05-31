@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -321,131 +321,104 @@
               </svg>
             </button>
             <ul id="dropdownList" class="hidden absolute w-full bg-[#F2F2F2]">
-              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="category">Category</li>
-              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="supplier">Supplier</li>
-              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="stock">Stock</li>
-              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="condition">Condition</li>
+              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="name-asc">Name (ASC)</li>
+              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="name-desc">Name (DESC)</li>
+              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="category-asc">Category (ASC)</li>
+              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="category-desc">Category (DESC)</li>
+              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="stock-asc">Stock (ASC)</li>
+              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="stock-desc">Stock (DESC)</li>
+              <form action="/admin/sort-item" method="GET">
+                <input type="hidden" name="sortBy" />
+              </form>
             </ul>
           </section>
 
           <section class="font-opensans pb-4 overflow-x-scroll scrollbar scrollbar-thumb-[#6366f1] scrollbar-track-[#d2d3fb] scrollbar-hover:scrollbar-thumb-[#8f90fdfd] scrollbar-active:scrollbar-thumb-[#8f90fdfd]">
-            <table class="w-500">
+            <table class="w-350">
               <thead class="font-poppins">
                 <tr class="bg-[#6366f1] text-center text-white">
-                  <th class="w-5/100 border-2 border-[rgba(0,0,0,0.15)] py-2">No</th>
-                  <th class="w-5/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Image</th>
-                  <th class="w-16/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Name</th>
-                  <th class="w-16/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Category</th>
-                  <th class="w-15/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Location</th>
-                  <th class="w-6/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Stock</th>
-                  <th class="w-7/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Condition</th>
-                  <th class="w-30/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Description</th>
+                  <th class="w-15/100 border-2 border-[rgba(0,0,0,0.15)] py-2">No</th>
+                  <th class="w-30/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Name</th>
+                  <th class="w-30/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Category</th>
+                  <th class="w-25/100 border-2 border-[rgba(0,0,0,0.15)] py-2">Stock</th>
                 </tr>
               </thead>
+
               <tbody>
-                <tr>
+                <tr th:if="${items}" th:each="item, iter : ${items}">
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">1</p>
+                    <p class="min-h-16 flex justify-center items-center" th:text="${((currentPage - 1) * 5) + (iter.index + 1)}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center" th:text="${item.name}"></p>
+                  </td>
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center" th:text="${item.category}"></p>
+                  </td>
+                  <!-- <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center" th:text="${item.location}"></p>
+                  </td> -->
+                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
+                    <p class="min-h-16 flex justify-center items-center" th:text="${item.stock}"></p>
+                  </td>
+                  <!-- <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
                     <div class="min-h-16 flex justify-center items-center">
-                      <img class="w-10 h-fit" src="/img/picture.png" alt="" />
+                      <p th:if="${item.condition == 'Good'}" class="px-2 py-1 bg-[#D4EDDA] rounded-sm" th:text="${item.condition}"></p>
+                      <p th:if="${item.condition == 'Average'}" class="px-2 py-1 bg-[#FFF3CD] rounded-sm" th:text="${item.condition}"></p>
+                      <p th:if="${item.condition == 'Bad'}" class="px-2 py-1 bg-[#F8D7DA] rounded-sm" th:text="${item.condition}"></p>
                     </div>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Meja Belajar</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Furnitur</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Ruang R-101</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">30</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#D4EDDA] rounded-sm">Good</p>
-                    </div>
-                  </td>
-                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex items-center">Digunakan diruang kelas</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">2</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <img class="w-10 h-fit" src="/img/picture.png" alt="" />
-                    </div>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Proyektor Epson X1</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Elektronik</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Ruang R-202</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">10</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#FFF3CD] rounded-sm">Average</p>
-                    </div>
-                  </td>
-                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex items-center">Lampu redup, masih bisa dipakai</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">3</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <img class="w-10 h-fit" src="/img/picture.png" alt="" />
-                    </div>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Meja Belajar</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Furnitur</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Ruang R-101</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">30</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#F8D7DA] rounded-sm">Bad</p>
-                    </div>
-                  </td>
-                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex items-center">Digunakan diruang kelas</p>
-                  </td>
+                  </td> -->
                 </tr>
               </tbody>
             </table>
           </section>
 
           <nav class="pagination w-full mt-20 flex justify-between items-center">
-            <button><img src="/img/back_icon.png" alt="" /></button>
-            <p class="font-poppins font-medium">1 of 2</p>
-            <button><img src="/img/next_icon.png" alt="" /></button>
+            <!-- <form id="paginationForm" action="/admin/item-management" method="get">
+              <input type="hidden" name="page" id="pageInput" value="0" />
+
+              <button type="button" th:onclick="'goToPage(' + ${currentPage - 2} + ')'" th:if="${currentPage > 1}">
+                <img src="/img/back_icon.png" alt="previous page icon" />
+              </button>
+
+              <p class="font-poppins font-medium"><span th:text="${currentPage}"></span> of <span th:text="${totalPages}"></span></p>
+
+              <button type="button" th:onclick="'goToPage(' + ${currentPage} ')'" th:if="${currentPage < totalPages}">
+                <img src="/img/next_icon.png" alt="next page icon" />
+              </button>
+            </form> -->
+            <a id="prev" th:href="@{/admin/item-management(page=${currentPage - 2})}"><img th:if="${currentPage > 1}" src="/img/back_icon.png" alt="previous page icon" /></a>
+            <p class="font-poppins font-medium"><span id="currentPage" th:text="${currentPage}"></span> of <span id="totalPages" th:text="${totalPages}"></span></p>
+            <a id="next" th:href="@{/admin/item-management(page=${currentPage})}"><img th:if="${currentPage < totalPages}" src="/img/next_icon.png" alt="next page icon" /></a>
           </nav>
         </div>
       </main>
     </div>
 
     <script src="/js/script.js"></script>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const sortBy = params.get("sortBy");
+      const prevButton = document.querySelector("#prev");
+      const nextButton = document.querySelector("#next");
+      const currentPage = document.querySelector("#currentPage").textContent;
+
+      // cek url
+      const path = window.location.pathname.split("/");
+      const selectedValue = path[path.length - 1];
+
+      if (selectedValue == "sort-item") {
+        prevButton.setAttribute("href", `/admin/sort-item?sortBy=${sortBy}&page=${currentPage - 2}`);
+        nextButton.setAttribute("href", `/admin/sort-item?sortBy=${sortBy}&page=${currentPage}`);
+      }
+
+      document.querySelectorAll("#dropdownList .option").forEach((item) => {
+        item.addEventListener("click", function () {
+          const value = this.getAttribute("data-value");
+          item.parentElement.querySelector("form input").value = value;
+          item.parentElement.querySelector("form").submit();
+        });
+      });
+    </script>
   </body>
 </html>

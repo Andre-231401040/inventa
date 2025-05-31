@@ -2,10 +2,15 @@ package com.inventa.inventory.controller;
 
 import jakarta.servlet.http.HttpSession;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,14 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.inventa.inventory.model.Dashboard;
+import com.inventa.inventory.model.Item;
 import com.inventa.inventory.model.Supplier;
 import com.inventa.inventory.model.Transaction;
 import com.inventa.inventory.service.DashboardService;
+import com.inventa.inventory.service.ItemService;
 import com.inventa.inventory.service.SupplierService;
 import com.inventa.inventory.service.TransactionService;
-import org.springframework.web.bind.annotation.PostMapping;
-
-
 
 @Controller
 @RequestMapping("/admin")
@@ -29,6 +33,8 @@ public class AdminController {
 
     @Autowired
     private DashboardService dashboardService;
+    @Autowired
+    private ItemService itemService;
     @Autowired
     private SupplierService supplierService;
     @Autowired
@@ -72,12 +78,141 @@ public class AdminController {
     }
 
     @GetMapping("/item-management")
-    public String redirectToItemManagement(HttpSession session, Model model) {
+    public String redirectToItemManagement(@RequestParam(defaultValue = "0") int page, HttpSession session, Model model) {
         Object user = session.getAttribute("user");
 
         if(user == null) {
             return "redirect:/admin/login";
         }
+
+        int pageSize = 5;
+        // Page<Item> itemsPerPage = itemService.getItems(page, pageSize);
+        List<Item> content = itemService.getItems();
+
+        for(int i = 0; i < content.size(); i++) {
+            if(content.get(i).getStatus().equalsIgnoreCase("In")) {
+                Item itemI = content.get(i);
+                String itemInName = itemI.getName();
+                Long stock = itemI.getStock();
+
+                for(int j = 0; j < content.size(); j++) {
+                    if(i == j) continue;
+
+                    Item itemJ = content.get(j);
+                    String itemName = itemJ.getName();
+                    Long qty = itemJ.getStock();
+
+                    if(itemName.equalsIgnoreCase(itemInName)) {
+                        switch(itemJ.getStatus().toLowerCase()) {
+                            case "out":
+                            case "lent":
+                                stock -= qty;
+                                break;
+                            case "returned":
+                                stock += qty;
+                                break;
+                        }
+                    }
+                }
+
+                content.get(i).setStock(stock);
+            }
+        }
+
+        
+
+        // ambil hanya yang statusnya In
+        List<Item> filtered = content.stream().filter(item -> item.getStatus().equalsIgnoreCase("In")).collect(Collectors.toList());
+
+        int start = page * pageSize;
+        int end = Math.min(start + pageSize, filtered.size());
+        List<Item> pageContent = filtered.subList(start, end);
+        Page<Item> filteredItems = new PageImpl<>(pageContent, PageRequest.of(page, pageSize), filtered.size());
+        
+        model.addAttribute("items", filteredItems.getContent());
+        model.addAttribute("currentPage", page + 1);
+        model.addAttribute("totalPages", filteredItems.getTotalPages());
+
+        return "admin/item-management";
+    }
+
+    @GetMapping("/sort-item")
+    public String sortItem(@RequestParam(defaultValue = "0") int page, @RequestParam String sortBy, HttpSession session, Model model) {
+        Object user = session.getAttribute("user");
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+
+        int pageSize = 5;
+        // Page<Item> itemsPerPage = itemService.getItems(page, pageSize);
+        List<Item> content = itemService.getItems();
+
+        for(int i = 0; i < content.size(); i++) {
+            if(content.get(i).getStatus().equalsIgnoreCase("In")) {
+                Item itemI = content.get(i);
+                String itemInName = itemI.getName();
+                Long stock = itemI.getStock();
+
+                for(int j = 0; j < content.size(); j++) {
+                    if(i == j) continue;
+
+                    Item itemJ = content.get(j);
+                    String itemName = itemJ.getName();
+                    Long qty = itemJ.getStock();
+
+                    if(itemName.equalsIgnoreCase(itemInName)) {
+                        switch(itemJ.getStatus().toLowerCase()) {
+                            case "out":
+                            case "lent":
+                                stock -= qty;
+                                break;
+                            case "returned":
+                                stock += qty;
+                                break;
+                        }
+                    }
+                }
+
+                content.get(i).setStock(stock);
+            }
+        }
+
+        
+
+        // ambil hanya yang statusnya In
+        Stream<Item> stream = content.stream().filter(item -> item.getStatus().equalsIgnoreCase("In"));
+
+        Comparator<Item> comparator;
+        switch(sortBy.split("-")[0]) {
+            case "name":
+                comparator = Comparator.comparing(Item::getName, String.CASE_INSENSITIVE_ORDER);
+                break;
+            case "category":
+                comparator = Comparator.comparing(Item::getCategory, String.CASE_INSENSITIVE_ORDER);
+                break;
+            case "stock":
+                comparator = Comparator.comparing(Item::getStock);
+                break;
+            default:
+                comparator = Comparator.comparing(Item::getName, String.CASE_INSENSITIVE_ORDER);
+                break;
+        }
+
+        if(sortBy.split("-")[1].equals("desc")) {
+            comparator = comparator.reversed();
+        }
+
+        List<Item> filtered = stream.sorted(comparator).collect(Collectors.toList());
+
+        int start = page * pageSize;
+        int end = Math.min(start + pageSize, filtered.size());
+        List<Item> pageContent = filtered.subList(start, end);
+        Page<Item> filteredItems = new PageImpl<>(pageContent, PageRequest.of(page, pageSize), filtered.size());
+        
+        model.addAttribute("items", filteredItems.getContent());
+        model.addAttribute("currentPage", page + 1);
+        model.addAttribute("totalPages", filteredItems.getTotalPages());
 
         return "admin/item-management";
     }
@@ -140,7 +275,7 @@ public class AdminController {
         return "admin/transaction-management";
     }
 
-    @PostMapping("/get-transaction-by-status")
+    @GetMapping("/get-transaction-by-status")
     public String getTransactionsByStatus(@RequestParam(defaultValue = "0") int page,  @RequestParam String status, HttpSession session, Model model) {
         Object user = session.getAttribute("user");
 
