@@ -425,9 +425,6 @@
   .w-8\/10 {
     width: calc(8/10 * 100%);
   }
-  .w-8\/110 {
-    width: calc(8/110 * 100%);
-  }
   .w-9 {
     width: calc(var(--spacing) * 9);
   }
@@ -487,9 +484,6 @@
   }
   .w-25\/100 {
     width: calc(25/100 * 100%);
-  }
-  .w-25\/110 {
-    width: calc(25/110 * 100%);
   }
   .w-26 {
     width: calc(var(--spacing) * 26);

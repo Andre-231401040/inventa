@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.inventa.inventory.model.Dashboard;
 import com.inventa.inventory.model.Supplier;
 import com.inventa.inventory.model.Transaction;
+import com.inventa.inventory.service.DashboardService;
 import com.inventa.inventory.service.SupplierService;
 import com.inventa.inventory.service.TransactionService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +27,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping("/admin")
 public class AdminController {
 
+    @Autowired
+    private DashboardService dashboardService;
     @Autowired
     private SupplierService supplierService;
     @Autowired
@@ -59,6 +63,10 @@ public class AdminController {
         if(user == null) {
             return "redirect:/admin/login";
         }
+
+        Dashboard dashboardData = dashboardService.getDashboardData();
+
+        model.addAttribute("dashboardData", dashboardData);
 
         return "admin/dashboard";
     }

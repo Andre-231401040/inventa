@@ -311,7 +311,7 @@
           <div class="w-3/10 h-45 bg-[#2196F3] rounded-none shadow-[0_3px_3px_0_rgba(0,0,0,0.15)] flex flex-col">
             <div class="h-8/10 px-3 py-1 flex justify-between items-center">
               <div class="items-start">
-                <h2 class="font-bold text-2xl text-white">25</h2>
+                <h2 class="font-bold text-2xl text-white" th:text="${dashboardData.totalItems}"></h2>
                 <p class="mt-1 font-bold text-white text-lg">Total Items</p>
               </div>
               <img class="h-full opacity-45" src="/img/item.svg" alt="" />
@@ -328,7 +328,7 @@
           <div class="w-3/10 h-45 bg-[#4CAF50] rounded-none shadow-[0_3px_3px_0_rgba(0,0,0,0.15)] flex flex-col">
             <div class="h-8/10 p-3 flex justify-between items-center">
               <div class="items-start">
-                <h2 class="font-bold text-2xl text-white">37</h2>
+                <h2 class="font-bold text-2xl text-white" th:text="${dashboardData.itemsIn}"></h2>
                 <p class="mt-1 font-bold text-white text-lg">Items In</p>
               </div>
               <img class="h-full opacity-45" src="/img/items_in_icon.svg" alt="" />
@@ -345,7 +345,7 @@
           <div class="w-3/10 h-45 bg-[#FF9800] rounded-none shadow-[0_3px_3px_0_rgba(0,0,0,0.15)] flex flex-col">
             <div class="h-8/10 p-3 flex justify-between items-center">
               <div class="items-start">
-                <h2 class="font-bold text-2xl text-white">12</h2>
+                <h2 class="font-bold text-2xl text-white" th:text="${dashboardData.itemsOut}"></h2>
                 <p class="mt-1 font-bold text-white text-lg">Items Out</p>
               </div>
               <img class="h-full opacity-45" src="/img/items_out_icon.svg" alt="" />
@@ -362,7 +362,7 @@
           <div class="w-3/10 h-45 bg-[#9C27B0] rounded-none shadow-[0_3px_3px_0_rgba(0,0,0,0.15)] flex flex-col">
             <div class="h-8/10 p-3 flex justify-between items-center">
               <div class="items-start">
-                <h2 class="font-bold text-2xl text-white">7</h2>
+                <h2 class="font-bold text-2xl text-white" th:text="${dashboardData.itemsLent}"></h2>
                 <p class="mt-1 font-bold text-white text-lg">Items Lent</p>
               </div>
               <img class="h-full opacity-45" src="/img/items_lent_icon.svg" alt="" />
@@ -379,7 +379,7 @@
           <div class="w-3/10 h-45 bg-[#00BCD4] rounded-none shadow-[0_3px_3px_0_rgba(0,0,0,0.15)] flex flex-col">
             <div class="h-8/10 p-3 flex justify-between items-center">
               <div class="items-start">
-                <h2 class="font-bold text-2xl text-white">6</h2>
+                <h2 class="font-bold text-2xl text-white" th:text="${dashboardData.totalSuppliers}"></h2>
                 <p class="mt-1 font-bold text-white text-lg">Suppliers</p>
               </div>
               <img class="h-full opacity-45" src="/img/supplier.svg" alt="" />
@@ -396,7 +396,7 @@
           <div class="w-3/10 h-45 bg-[#009688] rounded-none shadow-[0_3px_3px_0_rgba(0,0,0,0.15)] flex flex-col">
             <div class="h-8/10 px-3 py-1 flex justify-between items-center">
               <div class="items-start">
-                <h2 class="font-bold text-2xl text-white">10</h2>
+                <h2 class="font-bold text-2xl text-white" th:text="${dashboardData.totalTransactions}"></h2>
                 <p class="mt-1 font-bold text-white text-lg">Transactions</p>
               </div>
               <img class="h-full opacity-45" src="/img/transaction.svg" alt="" />
