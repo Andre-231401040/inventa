@@ -1,7 +1,10 @@
 package com.inventa.inventory.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,12 +23,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.inventa.inventory.model.Dashboard;
 import com.inventa.inventory.model.Item;
+import com.inventa.inventory.model.PdfExporter;
 import com.inventa.inventory.model.Supplier;
 import com.inventa.inventory.model.Transaction;
 import com.inventa.inventory.service.DashboardService;
 import com.inventa.inventory.service.ItemService;
 import com.inventa.inventory.service.SupplierService;
 import com.inventa.inventory.service.TransactionService;
+import com.inventa.inventory.service.ReportService;
 
 @Controller
 @RequestMapping("/admin")
@@ -39,6 +44,8 @@ public class AdminController {
     private SupplierService supplierService;
     @Autowired
     private TransactionService transactionService;
+    @Autowired
+    private ReportService reportService;
 
     @GetMapping("/login")
     public String redirectToLogin(HttpSession session) {
@@ -351,11 +358,72 @@ public class AdminController {
     }
 
     @GetMapping("/report-management")
-    public String redirectToReportManagement(HttpSession session, Model model) {
+    public String redirectToReportManagement(@RequestParam(defaultValue = "0") int page, HttpSession session, Model model) {
         Object user = session.getAttribute("user");
 
         if(user == null) {
             return "redirect:/admin/login";
+        }
+        
+        int pageSize = 5;
+        Page<Transaction> reports = reportService.getReports(page, pageSize);
+        
+        model.addAttribute("reports", reports.getContent());
+        model.addAttribute("from", null);
+        model.addAttribute("to", null);
+        model.addAttribute("status", "");
+        model.addAttribute("currentPage", page + 1);
+        model.addAttribute("totalPages", reports.getTotalPages());
+
+        return "admin/report-management";
+    }
+
+    @GetMapping("/report-management/filter")
+    public String redirectToFilteredReportManagement(@RequestParam(defaultValue = "0") int page, @RequestParam(required = false) LocalDate from, @RequestParam(required = false) LocalDate to, @RequestParam(required = false) String status, HttpSession session, Model model) {
+        Object user = session.getAttribute("user");
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+        
+        int pageSize = 5;
+        List<Transaction> data = reportService.getFilteredReports(from, to, status);
+        
+        // buat menjadi page
+        int start = page * pageSize;
+        int end = Math.min(start + pageSize, data.size());
+        List<Transaction> pageContent = data.subList(start, end);
+        Page<Transaction> reports = new PageImpl<>(pageContent, PageRequest.of(page, pageSize), data.size());
+
+        model.addAttribute("reports", reports.getContent());
+        model.addAttribute("from", from);
+        model.addAttribute("to", to);
+        model.addAttribute("status", status);
+        model.addAttribute("currentPage", page + 1);
+        model.addAttribute("totalPages", reports.getTotalPages());
+
+        return "admin/report-management";
+    }
+
+    @GetMapping("/report-management/download-pdf")
+    public String downloadReport(HttpServletResponse response, @RequestParam(required = false) LocalDate from, @RequestParam(required = false) LocalDate to, @RequestParam(required = false) String status, HttpSession session) throws IOException {
+        Object user = session.getAttribute("user");
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+        
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=report.pdf");
+
+        List<Transaction> filteredReports = reportService.getFilteredReports(from, to, status);
+
+        try {
+            PdfExporter.export(filteredReports, from, to, status, response.getOutputStream());
+            response.getOutputStream().flush();
+        } catch(Exception e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to Download PDF");
         }
 
         return "admin/report-management";

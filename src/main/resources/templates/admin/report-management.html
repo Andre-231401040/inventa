@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -312,16 +312,16 @@
           <a class="flex gap-2 font-bold" href="/auth/logout"><img class="w-6" src="/img/logout.png" alt="logout icon" />Logout</a>
         </header>
         <section class="flex flex-col font-opensans">
-          <section class="relative w-3/15 mb-2 font-opensans">
+          <form class="relative w-3/15 mb-2 font-opensans" action="/admin/report-management/filter" method="GET">
             <div class="mb-1 flex flex-col">
               <label class="font-semibold" for="start-date">From</label>
-              <input class="h-10 px-2 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-sm text-sm text-[#bababa] cursor-pointer focus:border-[#4f46e5] focus:text-[#4f46e5]" type="date" />
+              <input class="h-10 px-2 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-sm text-sm text-[#bababa] cursor-pointer focus:border-[#4f46e5] focus:text-[#4f46e5]" type="date" name="from" />
             </div>
             <div class="mb-1 flex flex-col">
               <label class="font-semibold" for="end-date">To</label>
-              <input class="h-10 px-2 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-sm text-sm text-[#bababa] cursor-pointer focus:border-[#4f46e5] focus:text-[#4f46e5]" type="date" />
+              <input class="h-10 px-2 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-sm text-sm text-[#bababa] cursor-pointer focus:border-[#4f46e5] focus:text-[#4f46e5]" type="date" name="to" />
             </div>
-            <p class="font-semibold">Types</p>
+            <p class="font-semibold">Status</p>
             <button class="dropdownButtons group w-full h-10 px-2 flex justify-between items-center outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-sm text-sm text-[#bababa] cursor-pointer">
               Filters By
               <svg id="downArrowIcon" class="w-6 fill-[#bababa] transition-all" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
@@ -335,14 +335,22 @@
               </svg>
             </button>
             <ul id="dropdownList" class="hidden absolute w-full bg-[#F2F2F2]">
-              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="items-in">Items In</li>
-              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="items-out">Items Out</li>
-              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="items-lent">Items Lent</li>
-              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="items-returned">Items Returned</li>
+              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="In">Items In</li>
+              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Out">Items Out</li>
+              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Lent">Items Lent</li>
+              <li class="option px-4 py-2 hover:bg-[#A5B4FC] cursor-pointer" data-value="Returned">Items Returned</li>
+              <input type="hidden" name="status" />
             </ul>
-          </section>
+            <button id="filter" class="mt-4 w-full h-9 bg-[#4f46e5] outline-2 outline-[#4f46e5] rounded-sm font-poppins font-bold text-lg text-white cursor-pointer transition hover:bg-white hover:text-[#4f46e5]" type="submit">
+              Filters
+            </button>
+          </form>
 
-          <a class="w-2/14 py-1 mb-5 outline-2 outline-[#4F46E5] bg-[#4F46E5] rounded-sm self-end font-poppins font-bold text-center text-md text-white cursor-pointer transition hover:bg-white hover:text-[#4F46E5]" href="">Export to PDF</a>
+          <a
+            class="w-2/14 py-1 mb-5 outline-2 outline-[#4F46E5] bg-[#4F46E5] rounded-sm self-end font-poppins font-bold text-center text-md text-white cursor-pointer transition hover:bg-white hover:text-[#4F46E5]"
+            th:href="@{/admin/report-management/download-pdf(from=${from}, to=${to}, status=${status})}"
+            >Download PDF</a
+          >
 
           <section class="font-opensans pb-4 overflow-x-scroll scrollbar scrollbar-thumb-[#6366f1] scrollbar-track-[#d2d3fb] scrollbar-hover:scrollbar-thumb-[#8f90fdfd] scrollbar-active:scrollbar-thumb-[#8f90fdfd]">
             <table class="w-600">
@@ -362,168 +370,50 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr th:if="${reports}" th:each="report, iter : ${reports}">
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">1</p>
+                    <p class="min-h-16 flex justify-center items-center" th:text="${((currentPage - 1) * 5) + (iter.index + 1)}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
                     <div class="min-h-16 flex justify-center items-center">
-                      <img class="w-10 h-fit" src="/img/picture.png" alt="" />
+                      <img class="w-10 h-fit" th:src="@{'/uploads/' + ${report.image}}" th:alt="${report.name}" />
                     </div>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Meja Belajar</p>
+                    <p class="min-h-16 flex justify-center items-center" th:text="${report.name}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Furnitur</p>
+                    <p class="min-h-16 flex justify-center items-center" th:text="${report.category}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">0812-3456-7890</p>
+                    <p class="min-h-16 flex justify-center items-center" th:text="${report.pic}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">30</p>
+                    <p class="min-h-16 flex justify-center items-center" th:text="${report.qty}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Rp6.000.000</p>
+                    <p class="min-h-16 flex justify-center items-center">Rp<span th:text="${report.fee}"></span></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
                     <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#D4EDDA] rounded-sm">Good</p>
+                      <p th:if="${report.condition == 'Good'}" class="px-2 py-1 bg-[#D4EDDA] rounded-sm">Good</p>
+                      <p th:if="${report.condition == 'Average'}" class="px-2 py-1 bg-[#FFF3CD] rounded-sm">Average</p>
+                      <p th:if="${report.condition == 'Bad'}" class="px-2 py-1 bg-[#F8D7DA] rounded-sm">Bad</p>
                     </div>
                   </td>
                   <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex items-center">Digunakan diruang kelas</p>
+                    <p class="min-h-16 flex items-center" th:text="${report.description}"></p>
                   </td>
                   <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
                     <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#D4EDDA] rounded-sm">In</p>
+                      <p th:if="${report.status == 'In'}" class="px-2 py-1 bg-[#D4EDDA] rounded-sm">In</p>
+                      <p th:if="${report.status == 'Lent'}" class="px-2 py-1 bg-[#FFF3CD] rounded-sm">Lent</p>
+                      <p th:if="${report.status == 'Returned'}" class="px-2 py-1 bg-[#D1ECF1] rounded-sm">Returned</p>
+                      <p th:if="${report.status == 'Out'}" class="px-2 py-1 bg-[#F8D7DA] rounded-sm">Out</p>
                     </div>
                   </td>
                   <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">2025-02-23</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">2</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <img class="w-10 h-fit" src="/img/picture.png" alt="" />
-                    </div>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Meja Belajar</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Furnitur</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">0812-3456-7890</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">30</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Rp6.000.000</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#FFF3CD] rounded-sm">Average</p>
-                    </div>
-                  </td>
-                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex items-center">Digunakan diruang kelas</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#F8D7DA] rounded-sm">Out</p>
-                    </div>
-                  </td>
-                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">2025-02-23</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">3</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <img class="w-10 h-fit" src="/img/picture.png" alt="" />
-                    </div>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Meja Belajar</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Furnitur</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">0812-3456-7890</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">30</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Rp6.000.000</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#D4EDDA] rounded-sm">Good</p>
-                    </div>
-                  </td>
-                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex items-center">Digunakan diruang kelas</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#FFF3CD] rounded-sm">Lent</p>
-                    </div>
-                  </td>
-                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">2025-02-23</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">4</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <img class="w-10 h-fit" src="/img/picture.png" alt="" />
-                    </div>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Meja Belajar</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Furnitur</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">0812-3456-7890</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">30</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">Rp6.000.000</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#F8D7DA] rounded-sm">Bad</p>
-                    </div>
-                  </td>
-                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex items-center">Digunakan diruang kelas</p>
-                  </td>
-                  <td class="border-2 border-[rgba(0,0,0,0.15)] text-green-950">
-                    <div class="min-h-16 flex justify-center items-center">
-                      <p class="px-2 py-1 bg-[#D1ECF1] rounded-sm">Returned</p>
-                    </div>
-                  </td>
-                  <td class="px-3 border-2 border-[rgba(0,0,0,0.15)]">
-                    <p class="min-h-16 flex justify-center items-center">2025-02-23</p>
+                    <p class="min-h-16 flex justify-center items-center" th:text="${report.date}">2025-02-23</p>
                   </td>
                 </tr>
               </tbody>
@@ -531,14 +421,42 @@
           </section>
 
           <nav class="pagination w-full mt-20 flex justify-between items-center">
-            <button><img src="/img/back_icon.png" alt="" /></button>
-            <p class="font-poppins font-medium">1 of 1</p>
-            <button><img src="/img/next_icon.png" alt="" /></button>
+            <a id="prev" th:href="@{/admin/report-management(page=${currentPage - 2})}"><img th:if="${currentPage > 1}" src="/img/back_icon.png" alt="previous page icon" /></a>
+            <p class="font-poppins font-medium"><span id="currentPage" th:text="${currentPage}"></span> of <span id="totalPages" th:text="${totalPages}"></span></p>
+            <a id="next" th:href="@{/admin/report-management(page=${currentPage})}"><img th:if="${currentPage < totalPages}" src="/img/next_icon.png" alt="next page icon" /></a>
           </nav>
         </section>
       </main>
     </div>
 
     <script src="/js/script.js"></script>
+    <script>
+      // ambil data dari url
+      const params = new URLSearchParams(window.location.search);
+      const from = params.get("from");
+      const to = params.get("to");
+      const status = params.get("status");
+
+      const inputs = document.querySelectorAll("input");
+      const prevButton = document.querySelector("#prev");
+      const nextButton = document.querySelector("#next");
+      const currentPage = document.querySelector("#currentPage").textContent;
+      const filterForm = document.querySelector("form");
+
+      // cek url
+      const path = window.location.pathname.split("/");
+      const selectedValue = path[path.length - 1];
+      if (selectedValue == "filter") {
+        prevButton.setAttribute("href", `/admin/report-management/filter?from=${from}&to=${to}&status=${status}&page=${currentPage - 2}`);
+        nextButton.setAttribute("href", `/admin/report-management/filter?from=${from}&to=${to}&status=${status}&page=${currentPage}`);
+      }
+
+      document.querySelectorAll("#dropdownList .option").forEach((item) => {
+        item.addEventListener("click", function () {
+          const value = this.getAttribute("data-value");
+          item.parentElement.querySelector("form input").value = value;
+        });
+      });
+    </script>
   </body>
 </html>
