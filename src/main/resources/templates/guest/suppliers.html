@@ -118,7 +118,7 @@
 
         <section class="w-full flex justify-between items-center font-poppins">
           <h2 class="font-semibold text-xl"><span th:text="${totalSuppliers}"></span> Suppliers Found</h2>
-          <form class="h-10 flex gap-2" action="/suppliers/search" method="POST">
+          <form class="h-10 flex gap-2" action="/suppliers/search" method="GET">
             <input class="h-full px-2 outline-none border-2 border-[rgba(0,0,0,0.1)] rounded-sm placeholder-[#bababa] focus:border-[#4f46e5]" name="keyword" type="text" placeholder="Enter Supplier Name" />
             <button class="h-full px-5 bg-[#4f46e5] outline-2 outline-[#4f46e5] rounded-sm font-bold text-sm text-white cursor-pointer transition hover:bg-white hover:text-[#4f46e5]" type="submit">Search</button>
           </form>
@@ -138,12 +138,29 @@
             <p class="w-5/10" th:text="${supplier.address}"></p>
           </div>
           <nav class="pagination w-full flex justify-between items-center">
-            <a th:href="@{/suppliers(page=${currentPage - 2})}"><img th:if="${currentPage > 1}" src="/img/back_icon.png" alt="previous page icon" /></a>
-            <p class="font-poppins font-medium"><span th:text="${currentPage}"></span> of <span th:text="${totalPages}"></span></p>
-            <a th:href="@{/suppliers(page=${currentPage})}"><img th:if="${currentPage < totalPages}" src="/img/next_icon.png" alt="next page icon" /></a>
+            <a id="prev" th:href="@{/suppliers(page=${currentPage - 2})}"><img th:if="${currentPage > 1}" src="/img/back_icon.png" alt="previous page icon" /></a>
+            <p class="font-poppins font-medium"><span id="currentPage" th:text="${currentPage}"></span> of <span id="totalPages" th:text="${totalPages}"></span></p>
+            <a id="next" th:href="@{/suppliers(page=${currentPage})}"><img th:if="${currentPage < totalPages}" src="/img/next_icon.png" alt="next page icon" /></a>
           </nav>
         </section>
       </main>
     </div>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const keyword = params.get("keyword");
+      const prevButton = document.querySelector("#prev");
+      const nextButton = document.querySelector("#next");
+      const currentPage = document.querySelector("#currentPage").textContent;
+
+      // cek url
+      const path = window.location.pathname.split("/");
+      const selectedValue = path[path.length - 1];
+
+      if (selectedValue == "search") {
+        prevButton.setAttribute("href", `/suppliers/search?keyword=${keyword}&page=${currentPage - 2}`);
+        nextButton.setAttribute("href", `/suppliers/search?keyword=${keyword}&page=${currentPage}`);
+      }
+    </script>
   </body>
 </html>

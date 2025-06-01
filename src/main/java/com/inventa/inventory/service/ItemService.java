@@ -15,4 +15,8 @@ public class ItemService {
     public List<Item> getItems() {
         return transactionRepository.findByNameAndStatus();
     }
+
+    public List<Item> getItemsByName(String name) {
+        return transactionRepository.findByNameAndStatus(name);
+    }
 }

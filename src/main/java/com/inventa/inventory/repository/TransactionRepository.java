@@ -17,4 +17,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
     List<Transaction> findByNameAndStatus(String name, String status);
     @Query("SELECT new com.inventa.inventory.model.Item(t.image, t.name, t.category, SUM(t.qty), t.status) FROM Transaction t GROUP BY t.name, t.status")
     List<Item> findByNameAndStatus();
+    @Query("SELECT new com.inventa.inventory.model.Item(t.image, t.name, t.category, SUM(t.qty), t.status) FROM Transaction t WHERE LOWER(t.name) LIKE LOWER(CONCAT('%', :name, '%')) GROUP BY t.name, t.status")
+    List<Item> findByNameAndStatus(String name);
 }
