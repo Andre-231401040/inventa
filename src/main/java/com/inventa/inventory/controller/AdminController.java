@@ -299,26 +299,6 @@ public class AdminController {
 
         return "admin/transaction-management";
     }
-    
-
-    @GetMapping("/tes")
-    public String redirectToTes(@ModelAttribute Transaction transaction, HttpSession session, Model model) {
-        Object user = session.getAttribute("user");
-        List<Supplier> suppliers = supplierService.getAllSuppliers();
-        List<Transaction> transactionsIn = transactionService.getTransactionsIn();
-        List<Transaction> transactionsLent = transactionService.getTransactionsLent();
-
-        if(user == null) {
-            return "redirect:/admin/login";
-        }
-
-        model.addAttribute("transaction", transaction);
-        model.addAttribute("suppliers", suppliers);
-        model.addAttribute("transactionsIn", transactionsIn);
-        model.addAttribute("transactionsLent", transactionsLent);
-
-        return "admin/tes";
-    }
 
     @GetMapping("/input-transaction/{status}")
     public String redirectToInputTransaction(HttpSession session, Model model) {
