@@ -374,19 +374,6 @@
           </section>
 
           <nav class="pagination w-full mt-20 flex justify-between items-center">
-            <!-- <form id="paginationForm" action="/admin/item-management" method="get">
-              <input type="hidden" name="page" id="pageInput" value="0" />
-
-              <button type="button" th:onclick="'goToPage(' + ${currentPage - 2} + ')'" th:if="${currentPage > 1}">
-                <img src="/img/back_icon.png" alt="previous page icon" />
-              </button>
-
-              <p class="font-poppins font-medium"><span th:text="${currentPage}"></span> of <span th:text="${totalPages}"></span></p>
-
-              <button type="button" th:onclick="'goToPage(' + ${currentPage} ')'" th:if="${currentPage < totalPages}">
-                <img src="/img/next_icon.png" alt="next page icon" />
-              </button>
-            </form> -->
             <a id="prev" th:href="@{/admin/item-management(page=${currentPage - 2})}"><img th:if="${currentPage > 1}" src="/img/back_icon.png" alt="previous page icon" /></a>
             <p class="font-poppins font-medium"><span id="currentPage" th:text="${currentPage}"></span> of <span id="totalPages" th:text="${totalPages}"></span></p>
             <a id="next" th:href="@{/admin/item-management(page=${currentPage})}"><img th:if="${currentPage < totalPages}" src="/img/next_icon.png" alt="next page icon" /></a>

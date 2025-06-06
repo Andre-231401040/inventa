@@ -21,12 +21,6 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    public Integer getQtyByNameAndStatus(String name, String status) {
-        List<Transaction> transaction = transactionRepository.findByNameAndStatus(name, status);
-
-        return transaction.stream().mapToInt(Transaction::getQty).sum();
-    }
-
     public Page<Transaction> getTransactionsPerPage(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
         return transactionRepository.findAll(pageable);
@@ -50,6 +44,12 @@ public class TransactionService {
     public List<Transaction> getTransactionsLent() {
         List<Transaction> transaction = transactionRepository.findByStatus("Lent");
         return transaction;
+    }
+
+    public Integer getQtyByNameAndStatus(String name, String status) {
+        List<Transaction> transaction = transactionRepository.findByNameAndStatus(name, status);
+
+        return transaction.stream().mapToInt(Transaction::getQty).sum();
     }
 
     public Transaction addTransaction(Transaction transaction) {

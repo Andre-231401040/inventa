@@ -1,14 +1,12 @@
 package com.inventa.inventory.service;
 
-import com.inventa.inventory.model.User;
-import com.inventa.inventory.repository.UserRepository;
-
-import jakarta.servlet.http.HttpSession;
+import java.security.SecureRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.SecureRandom;
+import com.inventa.inventory.model.User;
+import com.inventa.inventory.repository.UserRepository;
 
 @Service
 public class AuthService {
@@ -42,9 +40,8 @@ public class AuthService {
         return newPassword;
     }
 
-    public String changePassword(String oldPassword, String newPassword, String confirmPassword, HttpSession session) {
+    public String changePassword(String oldPassword, String newPassword, String confirmPassword, String email) {
         String result = "Password changed successfully.";
-        String email = (String) session.getAttribute("user");
 
         User user = userRepository.findByEmail(email);
 

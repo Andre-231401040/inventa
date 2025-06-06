@@ -1,26 +1,59 @@
-package com.inventa.inventory.controller;
+package com.inventa.inventory.controller.admin;
 
-import com.inventa.inventory.model.Supplier;
-import com.inventa.inventory.model.User;
-import com.inventa.inventory.service.SupplierService;
-import com.inventa.inventory.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@Controller
+import com.inventa.inventory.model.User;
+import com.inventa.inventory.repository.UserRepository;
+import com.inventa.inventory.model.Supplier;
+import com.inventa.inventory.service.SupplierService;
+
+@Controller("adminSupplierController")
 @RequestMapping("/admin")
 public class SupplierController {
 
     @Autowired
-    private SupplierService supplierService;
-    @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private SupplierService supplierService;
+
+    @GetMapping("/supplier-management")
+    public String redirectToSupplierManagement(@RequestParam(defaultValue = "0") int page, HttpSession session, Model model) {
+        Object user = session.getAttribute("user");
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+
+        int pageSize = 5;
+        Page<Supplier> suppliersPerPage = supplierService.getSuppliersPerPage(page, pageSize);
+        
+        model.addAttribute("suppliers", suppliersPerPage.getContent());
+        model.addAttribute("currentPage", page + 1);
+        model.addAttribute("totalPages", suppliersPerPage.getTotalPages());
+
+        return "admin/supplier-management";
+    }
+
+    @GetMapping("/add-supplier-form")
+    public String redirectToAddSupplier(HttpSession session, Model model) {
+        Object user = session.getAttribute("user");
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+
+        return "admin/add-supplier";
+    }
 
     @PostMapping("/add-supplier")
     public String addSupplier(@RequestParam String name, @RequestParam String contact, @RequestParam String address, RedirectAttributes redirectAttributes, HttpSession session) {
@@ -38,6 +71,17 @@ public class SupplierController {
         }
         
         return "redirect:/admin/supplier-management";
+    }
+
+    @GetMapping("/edit-supplier")
+    public String showEditSupplierForm(HttpSession session) {
+        Object user = session.getAttribute("user");
+
+        if(user == null) {
+            return "redirect:/admin/login";
+        }
+
+        return "admin/edit-supplier";
     }
     
     @PostMapping("/authorize-edit-supplier")

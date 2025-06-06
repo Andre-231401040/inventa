@@ -768,13 +768,8 @@
     <script src="/js/script.js"></script>
     <script>
       window.addEventListener("DOMContentLoaded", () => {
-        // const defaultPath = "items-in";
         const path = window.location.pathname.split("/");
         let selectedValue = path[path.length - 1];
-
-        // if (selectedValue !== defaultPath) {
-        //   window.location.href = `/admin/input-transaction/${defaultPath}`;
-        // }
 
         const forms = document.querySelectorAll(".forms");
         const formOptions = document.querySelectorAll(".form-option");
@@ -823,7 +818,6 @@
           item.addEventListener("click", function () {
             const value = this.getAttribute("data-value");
             item.parentElement.querySelector("input").value = value;
-            // console.log(item.parentElement.querySelector("input").value);
           });
         });
       });
