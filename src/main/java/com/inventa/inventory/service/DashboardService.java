@@ -28,14 +28,17 @@ public class DashboardService {
 
         for(Transaction transaction : transactions) {
             if(transaction.getStatus().equalsIgnoreCase("In")) {
+                itemsIn += transaction.getQty();
                 totalItems += transaction.getQty();
             } else if(transaction.getStatus().equalsIgnoreCase("Out")) {
                 itemsOut += transaction.getQty();
                 totalItems -= transaction.getQty();
             } else if(transaction.getStatus().equalsIgnoreCase("Lent")) {
                 itemsLent += transaction.getQty();
+                totalItems -= transaction.getQty();
             } else {
                 itemsLent -= transaction.getQty();
+                totalItems += transaction.getQty();
             }
         }
 
